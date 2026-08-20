@@ -1,0 +1,877 @@
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ระบบบริหารพลังงานเชิงพยากรณ์</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ── palette ─────────────────────────────────────────────────────────────
+   The document commits to one visual world rather than following the reader's
+   theme: a dark ground with a solar-amber accent, taken from the subject --
+   the tariff day is literally a dark night cut by an expensive daylit band,
+   and that is the motif the whole document is built on. Because the palette is
+   deliberate rather than inherited, there is no light variant on screen; the
+   print stylesheet at the end of this file swaps in an ink-on-paper set so a
+   printed copy is not a sheet of solid black.                              */
+:root{
+  --paper:#0a0e14; --card:#121a24; --sunk:#070b10;
+  --ink:#eaf0f6; --body:#b6c3cf; --mut:#7a8896; --line:#22303c;
+  --amber:#e8a94f; --amber-soft:#4a3517;
+  --teal:#4fbcb2; --teal-soft:#0f3230;
+  --rust:#e08163; --rust-soft:#3d1f17;
+  --indigo:#87a9dd; --indigo-soft:#16243a;
+  --good:#63b788;
+  --rail:#05080c;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:"IBM Plex Sans Thai","IBM Plex Sans",system-ui,sans-serif;
+  font-weight:400; font-size:16.5px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── shell ─────────────────────────────────────────────────────────────── */
+.shell{display:grid;grid-template-columns:236px minmax(0,1fr);gap:0;max-width:1240px;margin:0 auto}
+nav.toc{
+  position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+  padding:34px 20px 34px 26px;border-right:1px solid var(--line);
+}
+nav.toc .brand{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:.94rem;
+  color:var(--ink);line-height:1.25;letter-spacing:.01em;margin-bottom:3px}
+nav.toc .brandsub{font-size:.7rem;color:var(--mut);margin-bottom:22px;line-height:1.45}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:s;display:flex;flex-direction:column;gap:1px}
+nav.toc a{
+  display:grid;grid-template-columns:26px 1fr;gap:2px;align-items:baseline;
+  padding:6px 8px;border-radius:5px;text-decoration:none;color:var(--mut);
+  font-size:.79rem;line-height:1.4;transition:background .13s,color .13s;
+}
+nav.toc a:hover{background:var(--sunk);color:var(--ink)}
+nav.toc a:focus-visible{outline:2px solid var(--indigo);outline-offset:1px}
+nav.toc a .num{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--amber);font-weight:500}
+main{padding:0 46px 120px;min-width:0}
+
+/* ── masthead ──────────────────────────────────────────────────────────── */
+header.mast{padding:64px 0 30px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);font-weight:500;margin-bottom:14px}
+h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(2.1rem,4.4vw,3.1rem);
+  line-height:1.1;color:var(--ink);margin:0 0 14px;text-wrap:balance;letter-spacing:-.005em}
+.standfirst{font-size:1.07rem;line-height:1.68;color:var(--body);max-width:62ch;margin:0}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.04em;
+  padding:4px 10px;border-radius:3px;border:1px solid var(--line);color:var(--mut);background:var(--card)}
+
+/* ── sections ──────────────────────────────────────────────────────────── */
+section{padding:52px 0 8px;scroll-margin-top:20px}
+section+section{border-top:1px solid var(--line)}
+.sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.secnum{font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600;
+  color:var(--amber);letter-spacing:.06em;flex:none}
+h2{font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:1.72rem;line-height:1.22;
+  color:var(--ink);margin:0;text-wrap:balance;letter-spacing:-.003em}
+h3{font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:1.14rem;color:var(--ink);
+  margin:34px 0 8px;text-wrap:balance}
+h4{font-size:.95rem;font-weight:600;color:var(--ink);margin:22px 0 6px}
+.dek{color:var(--mut);font-size:.95rem;margin:0 0 26px;max-width:64ch}
+p{margin:0 0 15px;max-width:68ch}
+main ul,main ol{max-width:68ch;padding-left:20px;margin:0 0 15px}
+li{margin:5px 0}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--indigo)}
+code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--sunk);
+  padding:1px 5px;border-radius:3px;color:var(--ink)}
+
+/* audience tags — which team needs this section */
+.aud{display:inline-flex;align-items:center;gap:5px;font-family:"IBM Plex Mono",monospace;
+  font-size:.63rem;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:3px;font-weight:500}
+.aud.eng{background:var(--indigo-soft);color:var(--indigo)}
+.aud.biz{background:var(--amber-soft);color:var(--amber)}
+.aud.both{background:var(--teal-soft);color:var(--teal)}
+
+/* ── the tariff-band motif: a day cut into cheap and expensive ─────────── */
+.band{display:grid;grid-template-columns:repeat(24,1fr);height:26px;border-radius:3px;
+  overflow:hidden;border:1px solid var(--line);margin:6px 0 4px}
+.band i{display:block}
+.band i.off{background:var(--sunk)}
+.band i.on{background:var(--amber-soft)}
+.bandlabels{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;
+  font-size:.65rem;color:var(--mut);margin-bottom:20px}
+
+/* ── cards, callouts, figures ──────────────────────────────────────────── */
+.card{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:20px 22px;margin:22px 0}
+.note{border-left:3px solid var(--indigo);background:var(--card);padding:15px 19px;
+  border-radius:0 6px 6px 0;margin:22px 0;font-size:.94rem}
+.note.warn{border-left-color:var(--rust)}
+.note.key{border-left-color:var(--amber)}
+.note .lbl{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mut);display:block;margin-bottom:5px}
+
+figure{margin:26px 0}
+figure svg{display:block;width:100%;height:auto;border:1px solid var(--line);
+  border-radius:7px;background:var(--card)}
+figcaption{font-size:.83rem;color:var(--mut);margin-top:9px;line-height:1.55;max-width:68ch}
+
+/* ── data ──────────────────────────────────────────────────────────────── */
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:7px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.87rem;min-width:520px}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--sunk);font-weight:600;color:var(--ink);font-size:.78rem;
+  letter-spacing:.02em;white-space:nowrap}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hi td,tr.hi th{background:var(--amber-soft)}
+tr.bad td,tr.bad th{background:var(--rust-soft)}
+tr.ok td,tr.ok th{background:var(--teal-soft)}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:.8rem;color:var(--mut)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:12px;margin:24px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:14px 16px}
+.stat .l{font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--mut);line-height:1.4}
+.stat .v{font-family:"Chakra Petch",sans-serif;font-size:1.6rem;font-weight:600;color:var(--ink);
+  line-height:1.15;margin-top:5px;font-variant-numeric:tabular-nums}
+.stat .s{font-size:.76rem;color:var(--mut);margin-top:2px;line-height:1.4}
+.stat.acc{border-color:var(--amber)}
+.stat.acc .v{color:var(--amber)}
+.stat.warn{border-color:var(--rust)}
+.stat.warn .v{color:var(--rust)}
+
+/* spec block for the optimisation model */
+.spec{background:var(--rail);border-radius:7px;padding:22px 24px;margin:22px 0;overflow-x:auto}
+.spec pre{margin:0;font-family:"IBM Plex Mono",monospace;font-size:.83rem;line-height:1.85;
+  color:#c9d6e2;white-space:pre}
+.spec .c{color:#6d8296}
+.spec .k{color:#e0a04a}
+.spec .v{color:#7fd4c6}
+
+/* pipeline steps — a real sequence, so numbering means something */
+.flow{display:grid;gap:10px;margin:24px 0}
+.step{display:grid;grid-template-columns:34px 1fr;gap:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:7px;padding:15px 18px}
+.step .i{font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:600;color:var(--amber);
+  padding-top:1px}
+.step h4{margin:0 0 3px}
+.step p{margin:0;font-size:.9rem;max-width:none}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  nav.toc{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);
+    padding:22px 20px}
+  nav.toc ol{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px}
+  main{padding:0 20px 80px}
+  .two{grid-template-columns:1fr}
+}
+footer{border-top:2px solid var(--ink);margin-top:56px;padding:26px 0 0;
+  font-size:.83rem;color:var(--mut)}
+
+/* ── print / PDF ────────────────────────────────────────────────────────
+   The screen version is a two-column app with a sticky rail; on paper that
+   rail would repeat on every sheet and eat a third of each page. Print gets
+   a single measured column, a real contents page, and the light palette
+   regardless of the reader's theme -- a dark-ground PDF is unusable in a
+   meeting room and wastes toner if anyone prints it.                     */
+@media print{
+  :root{
+    --paper:#ffffff; --card:#ffffff; --sunk:#f0f3f6;
+    --ink:#101820; --body:#28323d; --mut:#5d6b78; --line:#c4cfd8;
+    --amber:#8f5808; --amber-soft:#f7e9d3;
+    --teal:#0d4f4f; --teal-soft:#dcebe9;
+    --rust:#8a2f1a; --rust-soft:#f9e3dc;
+    --indigo:#22406e; --indigo-soft:#e2e9f4;
+    --good:#245538; --rail:#111a24;
+  }
+  @page{ size:A4; margin:16mm 15mm 18mm; }
+  html,body{background:#fff!important}
+  body{font-size:10.2pt;line-height:1.62}
+
+  .shell{display:block;max-width:none}
+  main{padding:0}
+
+  /* the nav rail becomes a contents page */
+  nav.toc{position:static;height:auto;border-right:none;padding:0;
+    break-after:page;page-break-after:always}
+  nav.toc .brand{font-size:1.6rem;margin-bottom:6px}
+  nav.toc .brandsub{font-size:.95rem;margin-bottom:26px}
+  nav.toc ol{gap:0}
+  nav.toc a{font-size:1rem;padding:7px 0;border-bottom:1px solid var(--line);
+    grid-template-columns:34px 1fr;color:var(--ink)}
+  nav.toc a .num{font-size:.85rem}
+
+  header.mast{padding:0 0 22px;break-after:avoid}
+  h1{font-size:26pt}
+  .standfirst{font-size:11pt}
+
+  section{padding:22px 0 4px;break-before:auto}
+  section+section{border-top:1px solid var(--line)}
+  h2{font-size:15pt}
+  h3{font-size:11.5pt;margin-top:20px}
+  h2,h3,h4{break-after:avoid;page-break-after:avoid}
+
+  /* nothing should be split across a sheet mid-thought */
+  figure,.card,.note,.tw,.stat,.step,.spec,.two{break-inside:avoid;page-break-inside:avoid}
+  table{break-inside:auto}
+  tr{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+
+  .tw{overflow:visible}
+  table{min-width:0;font-size:9pt}
+  th,td{padding:6px 9px}
+  .spec{background:#f4f7f9;border:1px solid var(--line)}
+  .spec pre{color:#1c2833;font-size:8.6pt;line-height:1.7;white-space:pre-wrap}
+  .spec .c{color:#5d6b78}.spec .k{color:#8f5808}.spec .v{color:#0d4f4f}
+  figure svg{border:1px solid var(--line)}
+  .stats{grid-template-columns:repeat(4,1fr);gap:8px}
+  .stat .v{font-size:1.25rem}
+  .two{grid-template-columns:1fr 1fr;gap:12px}
+  a{color:var(--ink);text-decoration:none}
+  footer{margin-top:30px}
+}
+</style>
+
+<div class="shell">
+<nav class="toc">
+  <div class="brand">ระบบบริหารพลังงาน<br>เชิงพยากรณ์</div>
+  <div class="brandsub">เอกสารประกอบระบบ<br>สำหรับทีมวิศวกรรมและทีมพัฒนาธุรกิจ</div>
+  <ol>
+    <li><a href="#s1"><span class="num">01</span><span>ที่มาของปัญหา</span></a></li>
+    <li><a href="#s2"><span class="num">02</span><span>ข้อจำกัดของการควบคุมด้วยกฎเกณฑ์</span></a></li>
+    <li><a href="#s3"><span class="num">03</span><span>ภาพรวมของวิธีการ</span></a></li>
+    <li><a href="#s4"><span class="num">04</span><span>องค์ประกอบของระบบ</span></a></li>
+    <li><a href="#s5"><span class="num">05</span><span>ที่มาของข้อมูล</span></a></li>
+    <li><a href="#s6"><span class="num">06</span><span>แบบจำลองการหาค่าเหมาะที่สุด</span></a></li>
+    <li><a href="#s7"><span class="num">07</span><span>วิธีคิดราคา</span></a></li>
+    <li><a href="#s8"><span class="num">08</span><span>ผลการจำลอง</span></a></li>
+    <li><a href="#s9"><span class="num">09</span><span>ข้อจำกัดและแผนงานถัดไป</span></a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="mast">
+  <div class="kicker">Predictive Energy Management System</div>
+  <h1>ระบบบริหารพลังงานเชิงพยากรณ์</h1>
+  <p class="standfirst">
+    ระบบโซลาร์และแบตเตอรี่สามารถกักเก็บและจ่ายพลังงานได้ แต่การกำหนดว่าควรกักเก็บหรือจ่าย
+    ณ เวลาใด เป็นปัญหาการตัดสินใจที่ต้องอาศัยการพยากรณ์และการหาค่าเหมาะที่สุด
+    เอกสารนี้อธิบายขอบเขตของปัญหา วิธีการที่ใช้แก้ องค์ประกอบของระบบ แหล่งข้อมูลที่ใช้ทดสอบ
+    แบบจำลองที่ใช้หาค่าเหมาะที่สุด วิธีกำหนดราคา ผลการจำลองบนข้อมูลวัดจริง
+    และข้อจำกัดที่ยังคงอยู่
+  </p>
+  <div class="mast-meta">
+    <span class="chip">ทดสอบบนข้อมูลวัดจริง 123 วัน</span>
+    <span class="chip">อัตราค่าไฟ TOU ไทย</span>
+    <span class="chip">ปรับปรุง สิงหาคม 2569</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════════ 01 -->
+<section id="s1">
+  <div class="sechead"><span class="secnum">01</span><h2>ที่มาของปัญหา</h2>
+    <span class="aud both">ทั้งสองทีม</span></div>
+  <p class="dek">องค์ประกอบของค่าไฟฟ้าตามอัตรา TOU และเหตุผลที่แต่ละองค์ประกอบต้องใช้วิธีแก้ต่างกัน</p>
+
+  <p>บิลค่าไฟของโรงงานหรืออาคารพาณิชย์ในไทยที่ใช้อัตรา TOU
+    <strong>ไม่ได้คิดจากจำนวนหน่วยที่ใช้อย่างเดียว</strong> แต่ประกอบด้วยสององค์ประกอบที่คิดด้วยวิธีต่างกัน
+    และต้องใช้แนวทางแก้ต่างกัน</p>
+
+  <div class="two">
+    <div class="card">
+      <h4 style="margin-top:0">องค์ประกอบที่ 1 — ค่าพลังงานไฟฟ้า</h4>
+      <p style="font-size:.92rem">คิดตามหน่วยที่ใช้ (kWh) แต่<strong>ราคาต่อหน่วยไม่เท่ากันตลอดวัน</strong></p>
+      <div class="band" role="img" aria-label="แถบแสดงช่วงเวลาอัตราค่าไฟฟ้าใน 1 วัน ช่วงเวลา 09:00 ถึง 22:00 เป็นช่วง on-peak">
+        <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+        <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+        <i class="off"></i>
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+        <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+        <i class="on"></i>
+        <i class="off"></i><i class="off"></i>
+      </div>
+      <div class="bandlabels"><span>00:00</span><span>09:00</span><span>22:00</span><span>24:00</span></div>
+      <table style="min-width:0;font-size:.85rem">
+        <tr><td>on-peak (จ–ศ 09:00–22:00)</td><td class="n"><strong>4.35 ฿</strong></td></tr>
+        <tr><td>off-peak (นอกเวลานั้น + เสาร์อาทิตย์ + วันหยุด)</td><td class="n">2.77 ฿</td></tr>
+      </table>
+      <p style="font-size:.88rem;color:var(--mut);margin:10px 0 0">
+        รวมค่า Ft แล้ว · ส่วนต่างระหว่างสองช่วงคิดเป็น <strong>57%</strong>
+        การย้ายการใช้พลังงานข้ามช่วงเวลาจึงลดค่าใช้จ่ายได้โดยตรง</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">องค์ประกอบที่ 2 — ค่าความต้องการพลังไฟฟ้า</h4>
+      <p style="font-size:.92rem">คิดจาก <strong>กำลังไฟสูงสุดเพียง 15 นาทีเดียวของทั้งเดือน</strong>
+        เฉพาะที่เกิดในช่วง on-peak</p>
+      <div style="background:var(--sunk);border-radius:5px;padding:14px 16px;margin:12px 0">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:.84rem;line-height:2;color:var(--ink)">
+          132.93 ฿ × พีคสูงสุด (kW)
+        </div>
+      </div>
+      <p style="font-size:.92rem">ถ้าเดือนนั้นมีอยู่ช่วงเดียวที่ดึงไฟถึง 1,200 kW
+        แม้จะแค่ 15 นาที ค่าใช้จ่ายส่วนนี้จะเท่ากับ <strong>159,516 บาท</strong>
+        <em>สำหรับทั้งเดือน</em> ไม่ว่าที่เหลืออีก 2,975 ช่วงจะประหยัดแค่ไหน</p>
+      <p style="font-size:.88rem;color:var(--mut);margin-bottom:0">
+        องค์ประกอบนี้ควบคุมได้ยากกว่า เนื่องจากต้องทราบล่วงหน้าว่าค่าสูงสุดจะเกิดขึ้นเมื่อใด
+        จึงจะป้องกันได้ทัน</p>
+    </div>
+  </div>
+
+  <div class="note key">
+    <span class="lbl">ลักษณะสำคัญของปัญหา</span>
+    องค์ประกอบแรกลดลงได้ด้วยการ<strong>เลื่อนเวลาใช้พลังงาน</strong>
+    องค์ประกอบที่สองลดลงได้ด้วยการ<strong>ควบคุมไม่ให้กำลังไฟพุ่งสูงแม้เพียงครั้งเดียว</strong>
+    ทั้งสองกรณีต้องตัดสินใจก่อนเหตุการณ์จะเกิดขึ้น ระบบจึงต้องมีความสามารถในการพยากรณ์เป็นพื้นฐาน
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 02 -->
+<section id="s2">
+  <div class="sechead"><span class="secnum">02</span><h2>ข้อจำกัดของการควบคุมด้วยกฎเกณฑ์</h2>
+    <span class="aud biz">ทีมธุรกิจ</span></div>
+  <p class="dek">เปรียบเทียบพฤติกรรมของฮาร์ดแวร์ชุดเดียวกันภายใต้ตรรกะการควบคุมสองแบบ</p>
+
+  <p>ตัวควบคุมมาตรฐานที่ติดตั้งกับระบบโซลาร์และแบตเตอรี่โดยทั่วไป ทำงานตามกฎเกณฑ์สามข้อ
+    ได้แก่ กักเก็บพลังงานส่วนเกินจากแผงโซลาร์ ประจุแบตเตอรี่ในช่วงที่ค่าไฟต่ำ
+    และจ่ายพลังงานจากแบตเตอรี่ในช่วงที่ค่าไฟสูง กฎเกณฑ์ทั้งสามข้อไม่ต้องอาศัยข้อมูลอนาคต
+    ซึ่งเป็นทั้งข้อดีด้านความเรียบง่ายและข้อจำกัดด้านประสิทธิภาพ</p>
+
+  <figure>
+    <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="กราฟเปรียบเทียบระดับประจุแบตเตอรี่ตลอดวัน ระหว่างตัวควบคุมมาตรฐานที่คายไฟหมดตั้งแต่เช้า กับซอฟต์แวร์พยากรณ์ที่กันประจุไว้รอช่วงพีคบ่าย">
+      <defs>
+        <linearGradient id="pkg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="currentColor" stop-opacity=".16"/>
+          <stop offset="100%" stop-color="currentColor" stop-opacity=".04"/>
+        </linearGradient>
+      </defs>
+      <g style="color:var(--amber)">
+        <rect x="330" y="30" width="358" height="212" fill="url(#pkg)"/>
+      </g>
+      <text x="509" y="24" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+            font-size="11" fill="var(--amber)" letter-spacing="1.2">ON-PEAK 09:00 – 22:00</text>
+
+      <!-- axes -->
+      <line x1="58" y1="242" x2="840" y2="242" stroke="var(--line)" stroke-width="1"/>
+      <line x1="58" y1="30" x2="58" y2="242" stroke="var(--line)" stroke-width="1"/>
+      <text x="50" y="36" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--mut)">100%</text>
+      <text x="50" y="246" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--mut)">0%</text>
+      <text x="24" y="140" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10"
+            fill="var(--mut)" transform="rotate(-90 24 140)">ระดับประจุแบตเตอรี่</text>
+
+      <!-- rule-based: dumps early, empty by noon -->
+      <path d="M58,180 L200,180 L280,176 L330,150 L390,92 L450,120 L520,172 L600,215 L680,232 L760,232 L840,208"
+            fill="none" stroke="var(--mut)" stroke-width="2.4" stroke-dasharray="6 4"/>
+      <!-- predictive: fills before the window, holds reserve, spends it on the real peak -->
+      <path d="M58,180 L180,178 L250,120 L310,48 L330,44 L420,62 L500,84 L580,104 L650,150 L700,206 L760,224 L840,196"
+            fill="none" stroke="var(--teal)" stroke-width="2.8"/>
+
+      <!-- the peak event -->
+      <line x1="648" y1="30" x2="648" y2="242" stroke="var(--rust)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <circle cx="648" cy="150" r="5" fill="var(--teal)"/>
+      <circle cx="648" cy="231" r="5" fill="var(--mut)"/>
+      <text x="660" y="272" font-family="IBM Plex Sans Thai, sans-serif" font-size="12" fill="var(--rust)" font-weight="600">ค่าสูงสุดเกิดขึ้น 16:00</text>
+      <text x="660" y="290" font-family="IBM Plex Sans Thai, sans-serif" font-size="11" fill="var(--mut)">กำลังผลิตลดลง โหลดยังสูง</text>
+
+      <text x="70" y="304" font-family="IBM Plex Sans Thai, sans-serif" font-size="12">
+        <tspan fill="var(--teal)" font-weight="600">━━ ซอฟต์แวร์พยากรณ์</tspan>
+        <tspan fill="var(--mut)" dx="18">╌╌ ตัวควบคุมมาตรฐาน</tspan>
+      </text>
+      <text x="80" y="130" font-family="IBM Plex Sans Thai, sans-serif" font-size="11" fill="var(--mut)">ประจุก่อนเข้าช่วง on-peak</text>
+      <text x="360" y="212" font-family="IBM Plex Sans Thai, sans-serif" font-size="11" fill="var(--mut)">คายประจุตั้งแต่ 09:00</text>
+    </svg>
+    <figcaption>
+      ตัวควบคุมมาตรฐานเริ่มจ่ายพลังงานจากแบตเตอรี่ทันทีที่เข้าสู่ช่วง on-peak ตามกฎเกณฑ์ที่ตั้งไว้
+      เมื่อถึงช่วงบ่ายที่กำลังผลิตจากแผงโซลาร์ลดลงแต่โหลดยังคงสูง ซึ่งเป็นช่วงที่ค่าสูงสุดรายเดือน
+      มักเกิดขึ้นจริง พลังงานในแบตเตอรี่ได้ถูกใช้หมดไปก่อนแล้ว
+      ส่วนระบบที่พยากรณ์ได้จะสำรองพลังงานไว้รองรับช่วงเวลาดังกล่าว
+    </figcaption>
+  </figure>
+
+  <p>ผลจากการจำลองบนข้อมูลจริงพบว่า ตัวควบคุมแบบกฎเกณฑ์<strong>ลดค่าความต้องการพลังไฟฟ้ารายเดือน
+    ได้ใกล้เคียงศูนย์</strong> โดยการลดลงที่เกิดขึ้นเกือบทั้งหมดมาจากแผงโซลาร์
+    ไม่ได้มาจากแบตเตอรี่ ทั้งที่แบตเตอรี่เป็นอุปกรณ์ที่มีมูลค่าสูงที่สุดในระบบ</p>
+
+  <div class="note">
+    <span class="lbl">ข้อสรุป</span>
+    ส่วนต่างของผลลัพธ์เกิดจากตรรกะการควบคุมเพียงอย่างเดียว โดยที่อุปกรณ์และการติดตั้งเหมือนกันทุกประการ
+    ส่วนต่างนี้วัดเป็นมูลค่าทางการเงินได้ และเป็นฐานในการกำหนดราคาซอฟต์แวร์ตามหัวข้อ 07
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 03 -->
+<section id="s3">
+  <div class="sechead"><span class="secnum">03</span><h2>ภาพรวมของวิธีการ</h2>
+    <span class="aud both">ทั้งสองทีม</span></div>
+  <p class="dek">โครงสร้างสามชั้นที่ทำงานคนละคาบเวลา และเชื่อมต่อกันเป็นวงปิด</p>
+
+  <p>ระบบไม่ได้ตัดสินใจเพียงครั้งเดียว แต่<strong>วางแผนล่วงหน้าและปรับแผนซ้ำระหว่างวัน</strong>
+    เนื่องจากการพยากรณ์มีความคลาดเคลื่อนเสมอ การออกแบบจึงมุ่งไปที่การรองรับความคลาดเคลื่อน
+    มากกว่าการพยายามกำจัดให้หมด</p>
+
+  <figure>
+    <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="แผนภาพสามชั้น ชั้นพยากรณ์ส่งข้อมูลให้ชั้นวางแผน ชั้นวางแผนส่งคำสั่งให้ชั้นควบคุมจริง แล้วค่าที่วัดได้ย้อนกลับมาที่ชั้นพยากรณ์">
+      <!-- layer 1 -->
+      <rect x="30" y="40" width="240" height="106" rx="7" fill="var(--card)" stroke="var(--indigo)" stroke-width="1.6"/>
+      <text x="48" y="66" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--indigo)" letter-spacing="1.4">LAYER 1</text>
+      <text x="48" y="90" font-family="Chakra Petch, sans-serif" font-size="16" font-weight="600" fill="var(--ink)">พยากรณ์</text>
+      <text x="48" y="112" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">กำลังผลิตและโหลดวันถัดไป</text>
+      <text x="48" y="130" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">พลังงานที่ยานยนต์ไฟฟ้าต้องการ</text>
+      <text x="48" y="164" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--mut)">ทุก 24 ชม.</text>
+
+      <!-- layer 2 -->
+      <rect x="320" y="40" width="240" height="106" rx="7" fill="var(--card)" stroke="var(--amber)" stroke-width="1.6"/>
+      <text x="338" y="66" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--amber)" letter-spacing="1.4">LAYER 2</text>
+      <text x="338" y="90" font-family="Chakra Petch, sans-serif" font-size="16" font-weight="600" fill="var(--ink)">วางแผน</text>
+      <text x="338" y="112" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">หาแผนที่ต้นทุนต่ำที่สุด</text>
+      <text x="338" y="130" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">ภายใต้ข้อจำกัดทางกายภาพ</text>
+      <text x="338" y="164" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--mut)">ทุก 4 ชม.</text>
+
+      <!-- layer 3 -->
+      <rect x="610" y="40" width="240" height="106" rx="7" fill="var(--card)" stroke="var(--teal)" stroke-width="1.6"/>
+      <text x="628" y="66" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--teal)" letter-spacing="1.4">LAYER 3</text>
+      <text x="628" y="90" font-family="Chakra Petch, sans-serif" font-size="16" font-weight="600" fill="var(--ink)">ควบคุมจริง</text>
+      <text x="628" y="112" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">สั่งงานแบตเตอรี่และหัวจ่าย</text>
+      <text x="628" y="130" font-family="IBM Plex Sans Thai, sans-serif" font-size="11.5" fill="var(--mut)">บังคับอัดประจุคันที่ใกล้เวลาออก</text>
+      <text x="628" y="164" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--mut)">ทุก 15 นาที</text>
+
+      <!-- arrows forward -->
+      <path d="M270,93 L314,93" stroke="var(--body)" stroke-width="1.8" marker-end="url(#ar)"/>
+      <path d="M560,93 L604,93" stroke="var(--body)" stroke-width="1.8" marker-end="url(#ar)"/>
+      <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" fill="var(--body)"/></marker></defs>
+
+      <!-- feedback loop -->
+      <path d="M730,150 L730,215 L150,215 L150,152" fill="none" stroke="var(--rust)"
+            stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+      <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 z" fill="var(--rust)"/></marker></defs>
+      <text x="440" y="238" text-anchor="middle" font-family="IBM Plex Sans Thai, sans-serif"
+            font-size="12" fill="var(--rust)" font-weight="600">ค่าที่วัดได้จริงป้อนกลับเข้าระบบ</text>
+      <text x="440" y="258" text-anchor="middle" font-family="IBM Plex Sans Thai, sans-serif"
+            font-size="11" fill="var(--mut)">แผนรอบถัดไปปรับตามความคลาดเคลื่อนที่เกิดขึ้น</text>
+      <text x="440" y="284" text-anchor="middle" font-family="IBM Plex Sans Thai, sans-serif"
+            font-size="11.5" fill="var(--mut)">ชั้นควบคุมรับเฉพาะค่าพยากรณ์ · ระบบไฟฟ้าทำงานด้วยค่าที่วัดได้จริง</text>
+    </svg>
+    <figcaption>
+      หลักการที่ใช้ตลอดทั้งระบบ: <strong>ชั้นควบคุมรับเฉพาะค่าพยากรณ์ ขณะที่ระบบไฟฟ้าจริง
+      ทำงานด้วยค่าที่วัดได้จริง</strong> โดยมีระบบจำหน่ายไฟฟ้าเป็นตัวรับส่วนต่าง
+      ความคลาดเคลื่อนของการพยากรณ์จึงปรากฏที่มิเตอร์โดยตรง
+      โครงสร้างนี้ทำให้สามารถวัดผลกระทบของความแม่นยำในหน่วยเงินได้โดยไม่ต้องอาศัยสมมติฐานเพิ่ม
+    </figcaption>
+  </figure>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 04 -->
+<section id="s4">
+  <div class="sechead"><span class="secnum">04</span><h2>องค์ประกอบของระบบ</h2>
+    <span class="aud eng">ทีมวิศวกร</span></div>
+  <p class="dek">องค์ประกอบเจ็ดส่วน แต่ละส่วนรับผิดชอบปัญหาเดียวและทดสอบแยกจากกันได้</p>
+
+  <div class="flow">
+    <div class="step"><div class="i">1</div><div>
+      <h4>เครื่องคิดค่าไฟ TOU</h4>
+      <p>แปลงอนุกรมเวลาของกำลังไฟฟ้าเป็นค่าไฟฟ้าตามโครงสร้างอัตราจริง ประกอบด้วยการแยกช่วง
+        on-peak และ off-peak การบวกค่า Ft การหาค่าสูงสุดราย 15 นาทีของเดือน
+        และการคิดค่าบริการกับภาษีมูลค่าเพิ่ม รองรับวันหยุดราชการที่กำหนดให้ทั้งวันเป็น off-peak
+        อัตราทั้งหมดกำหนดผ่านไฟล์ตั้งค่า ไม่ฝังไว้ในโปรแกรม เนื่องจากค่า Ft มีการปรับทุก 4 เดือน</p>
+    </div></div>
+
+    <div class="step"><div class="i">2</div><div>
+      <h4>ตัวพยากรณ์กำลังผลิตโซลาร์</h4>
+      <p>ใช้แบบจำลอง gradient boosting โดยกำหนดให้<strong>ตัวแปรเชิงฟิสิกส์เป็นคุณลักษณะนำเข้า</strong>
+        ได้แก่ ตำแหน่งดวงอาทิตย์และค่าความเข้มแสงในสภาพท้องฟ้าแจ่มใส ซึ่งคำนวณล่วงหน้าได้อย่างแม่นยำ
+        แบบจำลองจึงรับผิดชอบเฉพาะการประมาณผลกระทบจากเมฆ ไม่ต้องเรียนรู้วัฏจักรของดวงอาทิตย์เอง<br>
+        การฝึกใช้คู่ข้อมูล <em>(ค่าพยากรณ์อากาศ → กำลังผลิตจริง)</em>
+        แทน <em>(ค่าอากาศจริง → กำลังผลิตจริง)</em>
+        เพื่อให้แบบจำลองชดเชยความเอนเอียงเชิงระบบของแหล่งพยากรณ์อากาศได้ด้วยตัวเอง</p>
+    </div></div>
+
+    <div class="step"><div class="i">3</div><div>
+      <h4>ตัวพยากรณ์แบบ quantile</h4>
+      <p>นอกจากค่าคาดหมาย ระบบยังประมาณค่าที่ควอนไทล์ 25 ด้วย เนื่องจาก
+        <strong>ต้นทุนของความคลาดเคลื่อนทั้งสองทิศทางไม่เท่ากัน</strong>
+        การประมาณกำลังผลิตต่ำกว่าจริงทำให้เสียโอกาสเพียงเล็กน้อย
+        ขณะที่การประมาณสูงกว่าจริงทำให้แบตเตอรี่ไม่มีพลังงานสำรองเมื่อถึงช่วงค่าสูงสุด
+        ซึ่งส่งผลต่อค่าความต้องการพลังไฟฟ้าทั้งเดือน ระบบจึง<em>รายงาน</em>ค่าคาดหมาย
+        แต่<em>วางแผน</em>ด้วยค่าเชิงระมัดระวัง</p>
+    </div></div>
+
+    <div class="step"><div class="i">4</div><div>
+      <h4>ตัวพยากรณ์โหลด</h4>
+      <p>ใช้ค่าย้อนหลังที่ 48 และ 168 ชั่วโมง <strong>ไม่ใช่ 24 ชั่วโมง</strong>
+        เนื่องจากหากจัดทำแผนในเวลา 14:00 ของวันปัจจุบันสำหรับวันถัดไป
+        ค่าย้อนหลัง 24 ชั่วโมงของช่วงเวลา 22:00 ของวันถัดไปยังไม่เกิดขึ้น ณ เวลาที่ตัดสินใจ
+        การใช้ค่าดังกล่าวจึงเป็นการรั่วไหลของข้อมูลอนาคต ซึ่งทำให้ผลการทดสอบย้อนหลังดีเกินจริง
+        และไม่สามารถทำซ้ำได้เมื่อใช้งานจริง</p>
+    </div></div>
+
+    <div class="step"><div class="i">5</div><div>
+      <h4>ตัวยุบความยืดหยุ่นของ EV</h4>
+      <p>แทนการกำหนดตัวแปรตัดสินใจต่อยานพาหนะหนึ่งคัน ซึ่งทำให้ขนาดปัญหาขยายตัวและต้องพยากรณ์
+        รายคัน ระบบยุบยานพาหนะทั้งกลุ่มเป็น<strong>ขอบเขตพลังงานสะสม</strong>
+        โดยขอบบนคือพลังงานสูงสุดที่ส่งได้ทันภายในเวลาที่เหลือ
+        และขอบล่างคือพลังงานต่ำสุดที่ต้องส่งไปแล้ว เพื่อให้ทุกคันได้รับพลังงานครบก่อนเวลาออก</p>
+    </div></div>
+
+    <div class="step"><div class="i">6</div><div>
+      <h4>ตัวหาคำตอบที่ถูกที่สุด</h4>
+      <p>ใช้กำหนดการเชิงเส้นในการหาแผนการประจุและคายประจุแบตเตอรี่ รวมถึงตารางการอัดประจุยานยนต์ไฟฟ้า
+        ที่ให้ต้นทุนรวมต่ำที่สุดภายใต้ข้อจำกัดทางกายภาพทั้งหมด รายละเอียดอยู่ในหัวข้อ 06<br>
+        <em>หมายเหตุเชิงเทคนิค:</em> ใช้กำหนดการเชิงเส้นแทนกำหนดการเชิงเส้นจำนวนเต็มผสมเต็มรูปแบบ
+        โดยได้ตรวจสอบแล้วว่าให้คำตอบตรงกันเมื่อค่าเสื่อมของแบตเตอรี่มีค่ามากกว่าศูนย์
+        แต่ใช้เวลาประมวลผลน้อยกว่าอย่างมีนัยสำคัญ</p>
+    </div></div>
+
+    <div class="step"><div class="i">7</div><div>
+      <h4>ตัวสั่งงานหัวชาร์จจริง</h4>
+      <p>แปลงคำสั่งระดับกลุ่มเป็นการจ่ายพลังงานให้ยานพาหนะแต่ละคันที่เข้ามาใช้งานจริง
+        โดยจัดลำดับตามเวลาออกที่ใกล้ที่สุดก่อน และมี<strong>กลไกบังคับอัดประจุ</strong>
+        สำหรับคันที่ใกล้ถึงเวลาออกแต่พลังงานยังไม่เพียงพอ
+        กลไกนี้ทำงานโดยไม่พิจารณาค่าไฟฟ้า เนื่องจากความพร้อมใช้งานของยานพาหนะเป็นข้อกำหนด
+        ที่ยอมละเมิดไม่ได้</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 05 -->
+<section id="s5">
+  <div class="sechead"><span class="secnum">05</span><h2>ที่มาของข้อมูล</h2>
+    <span class="aud both">ทั้งสองทีม</span></div>
+  <p class="dek">ข้อมูลวัดจริงที่เผยแพร่สาธารณะทั้งหมด ยกเว้นหนึ่งรายการที่ระบุไว้ในตาราง</p>
+
+  <p>โครงการเปลี่ยนจากข้อมูลจำลองมาใช้ข้อมูลวัดจริง เนื่องจากข้อมูลจำลองยืนยันได้เพียงว่า
+    โปรแกรมทำงานตรงตามที่เขียน แต่ไม่ได้ยืนยันความถูกต้องของสมมติฐาน
+    แหล่งข้อมูลทั้งหมดถูกเลือกให้อยู่ใน<strong>ภูมิภาคเดียวกัน</strong> (แคลิฟอร์เนียตอนใต้)
+    เพื่อให้โหลด กำลังผลิตจากแสงอาทิตย์ และพฤติกรรมการอัดประจุยานยนต์ไฟฟ้า
+    ตอบสนองต่อสภาพอากาศและปฏิทินการทำงานชุดเดียวกัน
+    การนำข้อมูลจากภูมิภาคต่างกันมารวมกันจะทำให้ความสัมพันธ์ระหว่างตัวแปรไม่สอดคล้องกับความเป็นจริง
+    และแบบจำลองจะเรียนรู้ความสัมพันธ์ที่ไม่มีอยู่จริง</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>ส่วน</th><th>แหล่ง</th><th>รายละเอียด</th><th>สถานะ</th></tr></thead>
+      <tbody>
+        <tr class="ok"><th>โหลดอาคาร</th><td>UC San Diego microgrid</td>
+          <td>รวม 8 อาคารหลังมิเตอร์เดียว ราย 15 นาที · เฉลี่ย 813 kW พีค 1,331 kW</td>
+          <td>วัดจริง</td></tr>
+        <tr class="ok"><th>กำลังผลิต PV</th><td>UCSD Hopkins Parking array</td>
+          <td>ราย 15 นาที ปรับสเกลเป็น 2,000 kWp — รูปร่างจริง (เมฆ ฤดูกาล ฝุ่น) ขนาดเป็นตัวเลือกออกแบบ</td>
+          <td>วัดจริง</td></tr>
+        <tr class="ok"><th>การชาร์จ EV</th><td>ACN-Data (Caltech)</td>
+          <td>21,987 session จริง มีเวลาเสียบ เวลาถอด และพลังงานครบ · ขยายจำนวนคัน ×3</td>
+          <td>วัดจริง</td></tr>
+        <tr class="ok"><th>สภาพอากาศ</th><td>NASA POWER</td>
+          <td>ความเข้มแสงและอุณหภูมิรายชั่วโมง ที่พิกัดไซต์</td>
+          <td>วัดจริง</td></tr>
+        <tr class="bad"><th>ความคลาดเคลื่อน<br>ของการพยากรณ์</th><td>จำลองทับข้อมูลจริง</td>
+          <td>NASA POWER คือบันทึกว่าอากาศ<em>เป็น</em>อย่างไร ไม่ใช่พยากรณ์ว่า<em>จะเป็น</em>อย่างไร
+            ข้อมูลพยากรณ์ล่วงหน้าย้อนหลังไม่เปิดให้ใช้ฟรี</td>
+          <td><strong>ยังเป็นแบบจำลอง</strong></td></tr>
+        <tr class="ok"><th>อัตราค่าไฟ</th><td>PEA / MEA ประกาศทางการ</td>
+          <td>TOU ประเภท 3.2.2 · Ft 0.1623 ฿/หน่วย (พ.ค.–ส.ค. 2569)</td>
+          <td>ของจริง</td></tr>
+      </tbody>
+      <caption>ช่วงที่จำลอง 1 พ.ค. – 31 ส.ค. 2018 (123 วัน) · เทรนโมเดลด้วยข้อมูล 242 วันก่อนหน้าที่ไม่ทับกัน</caption>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="lbl">ข้อสังเกตจากการเปลี่ยนมาใช้ข้อมูลจริง</span>
+    การเปลี่ยนมาใช้ข้อมูลวัดจริงทำให้พบข้อผิดพลาดในโปรแกรม 3 รายการที่ข้อมูลจำลองตรวจไม่พบ
+    รายการที่มีนัยสำคัญที่สุดคือแบบจำลองตำแหน่งดวงอาทิตย์ ซึ่งกำหนดค่าเส้นเมริเดียนมาตรฐาน
+    ของประเทศไทยไว้คงที่ในโปรแกรม เมื่อนำไปใช้กับพิกัดในซีกโลกตะวันตกจึงคลาดเคลื่อน 12 ชั่วโมง
+    <br><br>
+    ผลกระทบคือคะแนนความสามารถในการพยากรณ์กำลังผลิตอยู่ที่ <strong>−2.19</strong>
+    ซึ่งต่ำกว่าวิธีอ้างอิงพื้นฐานที่สมมติว่าวันถัดไปเหมือนวันปัจจุบัน หลังแก้ไขปรับขึ้นเป็น
+    <strong>+0.27</strong>
+    <br><br>
+    ข้อผิดพลาดนี้ตรวจไม่พบด้วยข้อมูลจำลอง เนื่องจากข้อมูลจำลองถูกสร้างขึ้นจากฟังก์ชันเดียวกัน
+    ความคลาดเคลื่อนจึงหักล้างกันเองและไม่ปรากฏในผลลัพธ์
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 06 -->
+<section id="s6">
+  <div class="sechead"><span class="secnum">06</span><h2>แบบจำลองการหาค่าเหมาะที่สุด</h2>
+    <span class="aud eng">ทีมวิศวกร</span></div>
+  <p class="dek">แบบจำลองทั้งหมดอยู่ในรูปสมการ จึงตรวจสอบและรับประกันคุณสมบัติของผลลัพธ์ได้</p>
+
+  <h3>ตัวแปรตัดสินใจ</h3>
+  <p>ในทุกช่วงเวลา 15 นาทีตลอดช่วงที่วางแผน ระบบกำหนดค่าตัวแปร 5 ตัว ได้แก่
+    กำลังไฟฟ้าที่รับจากระบบจำหน่าย กำลังประจุแบตเตอรี่ กำลังคายประจุแบตเตอรี่
+    กำลังที่จ่ายให้ยานยนต์ไฟฟ้า และกำลังผลิตส่วนเกินที่ตัดทิ้ง</p>
+
+  <h3>ฟังก์ชันวัตถุประสงค์</h3>
+  <div class="spec">
+    <pre><span class="c">// ต้นทุนรวมตลอดช่วงที่วางแผน (บาท)</span>
+<span class="k">minimize</span>
+    Σ  <span class="v">ราคาไฟ[t]</span> × <span class="v">ดึงจากกริด[t]</span> × Δt      <span class="c">← ค่าพลังงาน + Ft</span>
+  + <span class="v">อัตราค่าพีค</span> × (<span class="v">พีคใหม่</span> − <span class="v">พีคที่เกิดไปแล้วในเดือนนี้</span>)   <span class="c">← ค่าความต้องการพลังไฟฟ้า</span>
+  + Σ  <span class="v">ค่าเสื่อมแบต</span> × (<span class="v">อัด[t]</span> + <span class="v">คาย[t]</span>) × Δt   <span class="c">← ค่าสึกหรอ</span>
+  − <span class="v">มูลค่าไฟที่เหลือในแบตตอนจบ</span>                    <span class="c">← กันไม่ให้เทแบตทิ้งตอนเที่ยงคืน</span></pre>
+  </div>
+
+  <div class="note">
+    <span class="lbl">ข้อควรระวังในการคิดค่าความต้องการพลังไฟฟ้า</span>
+    ค่าความต้องการพลังไฟฟ้าคิดจาก<strong>ค่าสูงสุดราย 15 นาทีของทั้งเดือน</strong> ไม่ใช่รายวัน
+    การเฉลี่ยค่าใช้จ่ายส่วนนี้ลงในแต่ละวันเท่า ๆ กัน จะทำให้ประเมินมูลค่าของการลดค่าสูงสุด
+    <em>สูงเกินจริงในช่วงปลายเดือน</em> และ<em>ต่ำเกินจริงในช่วงต้นเดือน</em><br><br>
+    วิธีที่ถูกต้องคือคิดเป็น<strong>ส่วนเพิ่มจากค่าสูงสุดที่เกิดขึ้นแล้วในเดือนนั้น</strong>
+    กล่าวคือ ณ วันที่ 20 ของเดือน ต้นทุนส่วนเพิ่มจะเกิดขึ้นเฉพาะเมื่อค่าสูงสุดใหม่เกินค่าเดิมเท่านั้น
+    ซึ่งเป็นสัญญาณราคาที่ถูกต้องสำหรับตัวควบคุมแบบขอบเขตเลื่อน
+  </div>
+
+  <h3>ข้อจำกัดที่ห้ามละเมิด</h3>
+  <div class="spec">
+    <pre><span class="c">// 1. พลังงานต้องสมดุลทุกวินาที — ไฟไม่หายไปไหนและไม่โผล่มาเอง</span>
+   PV[t] − ทิ้ง[t] + กริด[t] + คาย[t]  =  โหลด[t] + EV[t] + อัด[t]
+
+<span class="c">// 2. ระดับประจุแบตเปลี่ยนตามที่อัดและคายจริง (คิดประสิทธิภาพแล้ว)</span>
+   SOC[t] = SOC[t−1] + (อัด[t] × ประสิทธิภาพอัด − คาย[t] ÷ ประสิทธิภาพคาย) × Δt
+
+<span class="c">// 3. แบตห้ามเกินขอบ และห้ามอัดกับคายพร้อมกัน</span>
+   ความจุ × 10%  ≤  SOC[t]  ≤  ความจุ × 95%
+   อัด[t] ≤ กำลังสูงสุด × z[t]      คาย[t] ≤ กำลังสูงสุด × (1 − z[t])
+
+<span class="c">// 4. ทุกช่วง on-peak ห้ามดึงไฟเกินเพดานพีคที่ตั้งไว้</span>
+   ถ้า on_peak[t]:  กริด[t] ≤ พีคใหม่
+
+<span class="c">// 5. รถทุกคันต้องได้ไฟครบก่อนเวลาออก  ← ข้อที่ห้ามผิดที่สุด</span>
+   พลังงานที่ต้องส่งแล้ว[t] ≤ Σ EV[τ≤t] × Δt ≤ พลังงานที่ส่งได้มากสุด[t]
+   EV[t] ≤ กำลังรวมของหัวชาร์จที่มีรถเสียบอยู่[t]</pre>
+  </div>
+
+  <p>ข้อจำกัดข้อที่ 5 เป็นเหตุผลที่ชั้นตัดสินใจ<strong>ใช้วิธีการหาค่าเหมาะที่สุด
+    ไม่ใช่การเรียนรู้ของเครื่อง</strong> แบบจำลองการเรียนรู้ของเครื่องประมาณผลลัพธ์ที่น่าจะดีได้
+    แต่ไม่สามารถรับประกันได้ว่าข้อจำกัดจะไม่ถูกละเมิด
+    ขณะที่วิธีการหาค่าเหมาะที่สุด หากหาคำตอบที่เป็นไปได้พบ คำตอบนั้นย่อมสอดคล้องกับข้อจำกัดทุกข้อ
+    โดยนิยาม<br>
+    การแบ่งหน้าที่จึงเป็นดังนี้: การเรียนรู้ของเครื่องใช้ในชั้นพยากรณ์ซึ่งประมาณค่าอนาคต
+    ส่วนการหาค่าเหมาะที่สุดใช้ในชั้นตัดสินใจซึ่งต้องเคารพข้อจำกัดทางกายภาพและสัญญาบริการ</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 07 -->
+<section id="s7">
+  <div class="sechead"><span class="secnum">07</span><h2>วิธีคิดราคา</h2>
+    <span class="aud biz">ทีมธุรกิจ</span></div>
+  <p class="dek">กำหนดราคาจากมูลค่าที่วัดได้ ภายใต้เพดานบนจากมูลค่าและเพดานล่างจากต้นทุน</p>
+
+  <p>กลุ่มลูกค้าเป้าหมายคือ<strong>ผู้รับเหมาติดตั้งระบบโซลาร์และแบตเตอรี่</strong>
+    ซึ่งจำหน่ายและติดตั้งฮาร์ดแวร์อยู่แล้ว เงินลงทุนด้านฮาร์ดแวร์จึงไม่อยู่ในขอบเขตของผลิตภัณฑ์นี้
+    และไม่ถูกนำมารวมในการคำนวณผลตอบแทน ตัวเลขทางการเงินทั้งหมดอ้างอิงปริมาณเดียว คือ</p>
+
+  <div class="card" style="text-align:center;padding:26px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--mut);margin-bottom:10px">มูลค่าที่ซอฟต์แวร์สร้าง</div>
+    <div style="font-family:'IBM Plex Sans Thai',sans-serif;font-size:1.02rem;color:var(--body);line-height:1.9">
+      ค่าไฟเมื่อใช้<strong>ตัวควบคุมมาตรฐาน</strong>ที่ผู้รับเหมาติดตั้งอยู่แล้ว<br>
+      <span style="color:var(--amber);font-size:1.5rem;font-weight:600">−</span><br>
+      ค่าไฟเมื่อใช้<strong>ซอฟต์แวร์ของเรา</strong> บนฮาร์ดแวร์ชุดเดิม
+    </div>
+  </div>
+
+  <h3>ราคาถูกกำหนดโดยเพดานสองด้าน</h3>
+  <div class="two">
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--amber)">เพดานบน — มูลค่าที่สร้าง</h4>
+      <p style="font-size:.92rem;margin-bottom:8px">ค่าไลเซนส์ต้องไม่เกิน ~40% ของมูลค่าที่สร้าง
+        เพื่อให้ลูกค้าเก็บไว้ 60%</p>
+      <p style="font-size:.88rem;color:var(--mut);margin:0">
+        ราคาที่สูงกว่ามูลค่าที่ระบบสร้างให้ จะไม่ได้รับการต่อสัญญาในปีถัดไป</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--teal)">เพดานล่าง — ต้นทุนของเรา</h4>
+      <p style="font-size:.92rem;margin-bottom:8px">ค่า hosting 18,000 + support 25,000 บาท/ไซต์/ปี
+        และผู้รับเหมาซื้อจากเราที่ส่วนลด 30%</p>
+      <p style="font-size:.88rem;color:var(--mut);margin:0">
+        หากต่ำกว่า 61,429 บาท/ปี รายได้จะไม่ครอบคลุมต้นทุนให้บริการ และขาดทุนตามจำนวนไซต์ที่ขายได้</p>
+    </div>
+  </div>
+
+  <h3>ผู้เกี่ยวข้องสามฝ่าย</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>ฝ่าย</th><th>ได้อะไร</th><th>เสียอะไร</th></tr></thead>
+      <tbody>
+        <tr><th>เจ้าของไซต์</th><td>ค่าไฟฟ้าลดลง โดยไม่ต้องลงทุนฮาร์ดแวร์เพิ่ม</td>
+          <td>ค่าสิทธิ์การใช้งานรายปี และค่าติดตั้งระบบครั้งแรก 250,000 บาท</td></tr>
+        <tr><th>ผู้รับเหมาติดตั้ง<br>(ลูกค้าโดยตรง)</th>
+          <td>รายการขายเพิ่มเติมบนงานติดตั้งเดิม ส่วนต่างกำไร 30% และความแตกต่างจากคู่แข่ง</td>
+          <td>ต้องสื่อสารคุณค่าของผลิตภัณฑ์ที่ไม่ใช่อุปกรณ์ให้ลูกค้าปลายทางเข้าใจ</td></tr>
+        <tr><th>ผู้พัฒนาระบบ</th><td>รายได้ต่อเนื่องรายปี ขยายได้ตามจำนวนไซต์ที่ผู้รับเหมาติดตั้ง</td>
+          <td>ต้นทุนให้บริการรายไซต์ และค่าพัฒนาต่อเนื่อง</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 08 -->
+<section id="s8">
+  <div class="sechead"><span class="secnum">08</span><h2>ผลการจำลอง</h2>
+    <span class="aud both">ทั้งสองทีม</span></div>
+  <p class="dek">ผลการทดสอบนอกกลุ่มตัวอย่าง 123 วัน บนข้อมูลที่ไม่ได้ใช้ในการฝึกแบบจำลอง</p>
+
+  <div class="stats">
+    <div class="stat acc"><div class="l">ซอฟต์แวร์สร้างมูลค่า</div>
+      <div class="v">158,178</div><div class="s">บาท/ปี/ไซต์</div></div>
+    <div class="stat"><div class="l">เพดานทฤษฎี</div>
+      <div class="v">332,700</div><div class="s">จับได้ 48% ของที่เป็นไปได้</div></div>
+    <div class="stat"><div class="l">ต่อกำลังติดตั้ง</div>
+      <div class="v">79</div><div class="s">บาท/kWp/ปี</div></div>
+    <div class="stat"><div class="l">คิดเป็นสัดส่วนบิล</div>
+      <div class="v">0.9%</div><div class="s">ของค่าไฟที่ไซต์จ่าย</div></div>
+  </div>
+
+  <h3>องค์ประกอบของมูลค่า</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>ที่มา</th><th class="n">บาท/ปี</th><th>อธิบาย</th></tr></thead>
+      <tbody>
+        <tr class="hi"><th>การเลื่อนเวลาใช้พลังงาน</th><td class="n">132,040</td>
+          <td>ประจุแบตเตอรี่และอัดประจุยานยนต์ไฟฟ้าในช่วงค่าไฟต่ำ แล้วใช้ในช่วงค่าไฟสูง</td></tr>
+        <tr><th>การลดค่าความต้องการพลังไฟฟ้า</th><td class="n">15,791</td>
+          <td>ลดค่าสูงสุดรายเดือนได้เฉลี่ย 10 kW</td></tr>
+        <tr><th>รวม</th><td class="n"><strong>158,178</strong></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ความแม่นยำของการพยากรณ์</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>ตัวแปร</th><th class="n">ค่าคลาดเคลื่อน</th><th class="n">ดีกว่าการเดา</th>
+        <th class="n">R²</th><th>เทียบมาตรฐานอุตสาหกรรม</th></tr></thead>
+      <tbody>
+        <tr><th>กำลังผลิต PV</th><td class="n">9.1%</td><td class="n">+0.27</td><td class="n">0.91</td>
+          <td>5–10% ถือว่าดีสำหรับพยากรณ์ล่วงหน้า 1 วัน</td></tr>
+        <tr><th>โหลดอาคาร</th><td class="n">4.9%</td><td class="n">+0.59</td><td class="n">0.88</td>
+          <td>5–12% เป็นเกณฑ์ปกติของอาคารพาณิชย์</td></tr>
+      </tbody>
+      <caption>PV วัดเป็น nRMSE เทียบกำลังติดตั้ง (ใช้ MAPE ไม่ได้เพราะกลางคืนค่าจริงเป็นศูนย์)
+        · โหลดวัดเป็น MAPE</caption>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="lbl">การเปลี่ยนแปลงจากผลบนข้อมูลจำลอง</span>
+    ผลบนข้อมูลจำลองอยู่ที่ 294,000 บาท/ปี เมื่อเปลี่ยนมาใช้ข้อมูลวัดจริงลดลงเหลือ
+    158,178 บาท/ปี สาเหตุมาจากสมมติฐานสองข้อที่คลาดเคลื่อน
+    <br><br>
+    <strong>1. ระยะเวลาจอดจริงมีค่ามัธยฐาน 5.1 ชั่วโมง</strong> ขณะที่สมมติฐานเดิมอยู่ที่
+    9–13 ชั่วโมง ความยืดหยุ่นในการเลื่อนเวลาอัดประจุจึงต่ำกว่าที่ประเมินไว้มาก<br>
+    <strong>2. สัดส่วนที่มาของมูลค่าเปลี่ยนไป</strong> บนข้อมูลจำลอง มูลค่าส่วนใหญ่มาจาก
+    การลดค่าความต้องการพลังไฟฟ้า แต่บนข้อมูลจริง 84% มาจากการเลื่อนเวลาใช้พลังงาน
+    เนื่องจากโหลดของอาคารสถาบันการศึกษามีความผันผวนต่ำกว่าโรงงานอุตสาหกรรม
+    ค่าสูงสุดที่ลดได้จึงมีน้อย
+    <br><br>
+    <strong>ตัวเลขนี้ควรถือเป็นขอบล่าง</strong> ไซต์อุตสาหกรรมที่มีรอบการผลิตชัดเจน
+    และค่าสูงสุดที่แหลมกว่า มีแนวโน้มให้ผลสูงกว่านี้ แต่ต้องยืนยันด้วยข้อมูลจากไซต์จริง
+  </div>
+
+  <h3>ความเป็นไปได้ทางธุรกิจ</h3>
+  <p>เมื่อนำมูลค่า 158,178 บาท/ปี มาประเมินร่วมกับโครงสร้างต้นทุนการให้บริการจริง
+    ได้ผลตามตารางด้านล่าง ซึ่งเป็นข้อมูลประกอบการตัดสินใจว่าจะลงทุนพัฒนาต่อหรือไม่</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th class="n">ค่าไลเซนส์<br>(฿/ปี)</th><th class="n">กำไรส่วนเพิ่ม<br>ต่อไซต์</th>
+        <th class="n">ต้องมีกี่ไซต์<br>ถึงคุ้มทุน</th><th class="n">คิดเป็น %<br>ของมูลค่า</th>
+        <th>ผลลัพธ์</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td class="n">60,000</td><td class="n">−1,000</td><td class="n">ไม่คุ้มทุน</td>
+          <td class="n">38%</td><td>ขาดทุนตามจำนวนไซต์ที่ขาย</td></tr>
+        <tr class="bad"><td class="n">90,000</td><td class="n">20,000</td><td class="n">175</td>
+          <td class="n">57%</td><td>แพงเกินมูลค่าที่สร้าง</td></tr>
+        <tr class="bad"><td class="n">120,000</td><td class="n">41,000</td><td class="n">85</td>
+          <td class="n">76%</td><td>แพงเกินมูลค่าที่สร้าง</td></tr>
+        <tr class="bad"><td class="n">180,000</td><td class="n">83,000</td><td class="n">42</td>
+          <td class="n">114%</td><td>สูงกว่ามูลค่าที่ระบบสร้างทั้งหมด</td></tr>
+      </tbody>
+      <caption>ต้นทุนต่อไซต์ 43,000 ฿/ปี (hosting + support) · ส่วนลดผู้รับเหมา 30% ·
+        ค่าพัฒนาต่อเนื่อง 3.5 ล้าน ฿/ปี</caption>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <span class="lbl">ข้อค้นพบสำคัญสำหรับทีมพัฒนาธุรกิจ</span>
+    ช่วงราคาที่ทั้งคุ้มค่าสำหรับลูกค้าและครอบคลุมต้นทุนของผู้พัฒนา อยู่ระหว่าง
+    <strong>61,429 ถึง 63,271 บาท/ปี</strong> คิดเป็นช่วงกว้างเพียง <strong>1,842 บาท</strong>
+    ซึ่งในทางปฏิบัติถือว่าไม่มีช่วงราคาที่ใช้ได้จริงสำหรับไซต์ลักษณะนี้
+    <br><br>
+    ข้อสรุปนี้ไม่ได้บ่งชี้ว่าผลิตภัณฑ์ใช้งานไม่ได้ แต่บ่งชี้ว่า
+    <strong>ไซต์ที่ใช้ทดสอบไม่ตรงกับกลุ่มเป้าหมายที่เหมาะสม</strong>
+    จากการคำนวณย้อนกลับ ไซต์ที่ทำให้โครงสร้างธุรกิจเป็นไปได้ต้องมีมูลค่าอย่างน้อย
+    <strong>450,000 บาท/ปี</strong> (ที่ค่าสิทธิ์ 180,000 บาท/ปี และจุดคุ้มทุนที่ 42 ไซต์)
+    หรือคิดเป็น <strong>2.8 เท่า</strong>ของไซต์ที่ทดสอบ
+    <br><br>
+    <strong>ขั้นตอนถัดไปคือการจัดหาข้อมูลจากไซต์อุตสาหกรรมที่มีค่าสูงสุดแหลมชัดมาทดสอบ</strong>
+    ก่อนตัดสินใจดำเนินการเชิงพาณิชย์ การปรับราคาให้เข้าเป้าหมายโดยไม่เปลี่ยนกลุ่มไซต์
+    ไม่สามารถแก้ปัญหานี้ได้
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ 09 -->
+<section id="s9">
+  <div class="sechead"><span class="secnum">09</span><h2>ข้อจำกัดและแผนงานถัดไป</h2>
+    <span class="aud both">ทั้งสองทีม</span></div>
+  <p class="dek">รายการข้อจำกัดที่ทราบทั้งหมด และลำดับงานที่ควรดำเนินการต่อ</p>
+
+  <h3>ข้อจำกัดที่ทราบ</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>เรื่อง</th><th>สถานะ</th><th>ผลกระทบ</th></tr></thead>
+      <tbody>
+        <tr class="bad"><th>ยานยนต์ไฟฟ้าได้รับพลังงาน<br>ครบ 99.1% ไม่ใช่ 100%</th>
+          <td>กลไกบังคับอัดประจุเริ่มทำงานช้าเกินไป ทำให้บางคันได้รับพลังงานไม่ครบก่อนเวลาออก</td>
+          <td><strong>ต้องแก้ไขก่อนใช้งานจริง</strong> แนวทางที่เหมาะสมคือกำหนดเวลาออกรายคัน
+            เป็นข้อจำกัดในแบบจำลอง แทนการยุบเป็นขอบเขตรวม</td></tr>
+        <tr><th>ความคลาดเคลื่อนของ<br>การพยากรณ์อากาศเป็นค่าจำลอง</th>
+          <td>ข้อมูลพยากรณ์อากาศเชิงตัวเลขย้อนหลังไม่มีให้ใช้แบบเปิด</td>
+          <td>ค่าความแม่นยำจะเปลี่ยนแปลงเมื่อเชื่อมต่อกับบริการพยากรณ์จริง</td></tr>
+        <tr><th>ไซต์ทดสอบเป็นอาคาร<br>สถาบันการศึกษาในแคลิฟอร์เนีย</th>
+          <td>ลักษณะโหลดและทรัพยากรแสงอาทิตย์ต่างจากโรงงานอุตสาหกรรมในประเทศไทย</td>
+          <td><strong>ผลที่ยืนยันได้คือความถูกต้องของวิธีการ ไม่ใช่ค่าตัวเลข</strong></td></tr>
+        <tr><th>แบบจำลองในแอปสาธิต<br>ให้ค่าสูงกว่าแบบจำลองหลัก</th>
+          <td>แบบจำลองประมวลผลเร็วในเบราว์เซอร์ยุบข้อจำกัดเวลาออกของยานพาหนะ</td>
+          <td>ได้แยกป้ายกำกับผลลัพธ์ทั้งสองไว้ชัดเจนแล้ว แต่ยังต้องปรับให้สอดคล้องกัน</td></tr>
+        <tr><th>ยังไม่รองรับ V2G<br>และการขายพลังงานเข้าระบบ</th>
+          <td>อยู่นอกขอบเขตของงานรอบนี้</td>
+          <td>มีศักยภาพเพิ่มมูลค่า แต่ขึ้นอยู่กับความชัดเจนของกฎระเบียบ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ลำดับงานที่ควรดำเนินการต่อ</h3>
+  <ol>
+    <li><strong>จัดหาข้อมูลโหลดจากไซต์อุตสาหกรรมที่มีค่าสูงสุดแหลมชัด</strong>
+      เป็นปัจจัยชี้ขาดความเป็นไปได้ทางธุรกิจ และเป็นเงื่อนไขของงานลำดับถัดไปทั้งหมด</li>
+    <li><strong>แก้ไขให้ยานยนต์ไฟฟ้าได้รับพลังงานครบ 100%</strong>
+      เป็นข้อจำกัดที่ตรวจพบได้ทันทีในการสาธิต</li>
+    <li>เชื่อมต่อบริการพยากรณ์อากาศจริง แทนการจำลองความคลาดเคลื่อน</li>
+    <li>ปรับแบบจำลองในแอปสาธิตให้สอดคล้องกับแบบจำลองหลัก</li>
+    <li>ทดสอบกับข้อมูลจากไซต์ลูกค้ารายแรก เพื่อจัดทำตัวเลขที่ใช้เสนอได้จริง</li>
+  </ol>
+
+  <div class="note key">
+    <span class="lbl">สรุป</span>
+    ระบบทำงานได้ตามที่ออกแบบบนข้อมูลวัดจริง และมูลค่าที่สร้างได้วัดออกมาที่ 158,178 บาท/ปี
+    บนไซต์ที่ใช้ทดสอบ อย่างไรก็ตาม มูลค่าดังกล่าว<strong>ยังไม่เพียงพอต่อการดำเนินธุรกิจ
+    ซอฟต์แวร์ภายใต้โครงสร้างต้นทุนปัจจุบัน</strong>
+    <br><br>
+    ประเด็นที่ต้องพิจารณาต่อจึงไม่ใช่การปรับปรุงอัลกอริทึม แต่เป็น
+    <strong>การกำหนดคุณลักษณะของไซต์ที่ระบบนี้สร้างมูลค่าได้ถึงระดับ 450,000 บาท/ปี</strong>
+    และการจัดหาข้อมูลจากไซต์ประเภทดังกล่าวมาทดสอบ
+  </div>
+</section>
+
+<footer>
+  ตัวเลขทั้งหมดในเอกสารนี้มาจากผลการจำลองในโครงการ ตรวจสอบย้อนกลับได้จากไฟล์
+  <code>outputs_real/summary.json</code> และทำซ้ำผลได้ด้วยคำสั่ง
+  <code>python3 scripts/run_real.py</code>
+</footer>
+</main>
+</div>

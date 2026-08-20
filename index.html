@@ -1,0 +1,91 @@
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ระบบบริหารพลังงานเชิงพยากรณ์</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#0a0e14; --card:#121a24; --sunk:#070b10;
+  --ink:#eaf0f6; --body:#b6c3cf; --mut:#7a8896; --line:#22303c;
+  --amber:#e8a94f; --teal:#4fbcb2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark}
+body{background:var(--paper);color:var(--body);min-height:100vh;
+  font-family:"IBM Plex Sans Thai","IBM Plex Sans",system-ui,sans-serif;
+  line-height:1.7;padding:0 20px 60px}
+.wrap{max-width:760px;margin:0 auto}
+header{padding:56px 0 30px;border-bottom:2px solid var(--ink);margin-bottom:34px}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+h1{font-family:"Chakra Petch",sans-serif;font-weight:700;color:var(--ink);
+  font-size:clamp(1.7rem,5.5vw,2.5rem);line-height:1.15;margin-bottom:12px;text-wrap:balance}
+.sub{font-size:1rem;max-width:56ch}
+.cards{display:grid;gap:14px}
+a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:22px 24px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+a.card:hover{border-color:var(--amber);transform:translateY(-2px)}
+a.card:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.card .t{font-family:"Chakra Petch",sans-serif;font-weight:600;font-size:1.16rem;
+  color:var(--ink);margin-bottom:5px;display:flex;align-items:center;gap:9px}
+.card .d{font-size:.92rem;color:var(--body)}
+.card .m{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--mut);
+  margin-top:9px;letter-spacing:.03em}
+.ico{width:26px;height:26px;flex:none}
+.note{background:var(--card);border-left:3px solid var(--amber);padding:14px 18px;
+  border-radius:0 7px 7px 0;margin-top:30px;font-size:.88rem;color:var(--mut)}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.8rem;color:var(--mut)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">Predictive Energy Management System</div>
+  <h1>ระบบบริหารพลังงานเชิงพยากรณ์</h1>
+  <p class="sub">ซอฟต์แวร์ควบคุมโรงไฟฟ้าโซลาร์ แบตเตอรี่ และหัวชาร์จรถไฟฟ้า
+    ให้ต้นทุนค่าไฟต่ำที่สุดภายใต้อัตรา TOU ของไทย</p>
+</header>
+
+<div class="cards">
+  <a class="card" href="report.html">
+    <div class="t">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#e8a94f" stroke-width="1.6">
+        <path d="M6 3h8l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+        <path d="M14 3v5h5M8 13h8M8 17h5"/></svg>
+      เอกสารประกอบระบบ
+    </div>
+    <div class="d">อ่านตั้งแต่ที่มาของปัญหา วิธีการ องค์ประกอบของระบบ แหล่งข้อมูล
+      แบบจำลอง การกำหนดราคา ผลการจำลอง และข้อจำกัด</div>
+    <div class="m">9 หัวข้อ · อ่านบนมือถือได้</div>
+  </a>
+
+  <a class="card" href="simulator.html">
+    <div class="t">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#4fbcb2" stroke-width="1.6">
+        <path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/></svg>
+      โปรแกรมสาธิต 3 มิติ
+    </div>
+    <div class="d">ดูการไหลของกระแสไฟตามเวลาจริง ปรับขนาดระบบและอัตราค่าไฟได้
+      สลับเทียบระหว่างตัวควบคุมมาตรฐานกับซอฟต์แวร์ของเรา</div>
+    <div class="m">ใช้งานได้ดีที่สุดบนคอมพิวเตอร์ · ต้องรองรับ WebGL</div>
+  </a>
+
+  <a class="card" href="report.pdf">
+    <div class="t">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#b6c3cf" stroke-width="1.6">
+        <path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg>
+      ดาวน์โหลดรายงาน PDF
+    </div>
+    <div class="d">ฉบับเดียวกันในรูปแบบ PDF 12 หน้า สำหรับส่งต่อหรือเก็บไว้อ่านออฟไลน์</div>
+    <div class="m">340 KB · A4</div>
+  </a>
+</div>
+
+<div class="note">
+  ตัวเลขทั้งหมดมาจากการจำลองบนข้อมูลวัดจริงที่เผยแพร่สาธารณะ
+  (UCSD microgrid, ACN-Data, NASA POWER) คิดค่าไฟด้วยอัตรา TOU ของไทย
+  ยังไม่ใช่ข้อมูลจากไซต์ลูกค้า สิ่งที่ยืนยันได้คือความถูกต้องของวิธีการ ไม่ใช่ค่าตัวเลข
+</div>
+
+<footer>เอกสารภายในสำหรับทีมวิศวกรรมและทีมพัฒนาธุรกิจ</footer>
+</div>

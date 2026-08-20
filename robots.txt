@@ -1,0 +1,4 @@
+# Internal team document. Publicly reachable by link, but kept out of search
+# indexes so it does not surface to competitors or prospective customers.
+User-agent: *
+Disallow: /
