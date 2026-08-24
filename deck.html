@@ -17,7 +17,8 @@ body{background:var(--paper);color:var(--body);overflow:hidden;
   -webkit-font-smoothing:antialiased}
 /* print / PDF: every slide becomes its own landscape page */
 body.printing{overflow:visible;height:auto}
-body.printing #deck{position:static}
+body.printing #deck{position:static;display:block;bottom:auto}
+body.printing #fit{width:auto;height:auto;transform:none!important}
 body.printing .slide{position:relative;inset:auto;display:flex!important;
   width:1280px;height:720px;break-after:page;page-break-after:always;
   border-bottom:1px solid var(--line)}
@@ -27,15 +28,24 @@ body.printing #chrome,body.printing #bar{display:none}
   body{overflow:visible;height:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #chrome,#bar{display:none!important}
-  #deck{position:static}
+  #deck{position:static;display:block;bottom:auto}
+  #fit{width:auto;height:auto;transform:none!important}
   .slide{position:relative!important;inset:auto!important;display:flex!important;
     width:1280px;height:720px;break-after:page;page-break-after:always;border:none}
 }
 
-/* ---- frame ---- */
-#deck{position:fixed;inset:0}
+/* ---- frame ----------------------------------------------------------
+   The deck is authored at a fixed 1280x720 and scaled to fit whatever window
+   it lands in, exactly as presentation software does. Letting slides stretch
+   to fill the viewport looks correct on a 16:9 laptop and falls apart on any
+   other shape: text hugs the left edge and cards grow into tall empty boxes.
+   Fixing the stage also guarantees the screen and the PDF are identical.   */
+#deck{position:fixed;left:0;right:0;top:0;bottom:52px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+#fit{width:1280px;height:720px;flex:none;position:relative;
+  transform-origin:center center}
 .slide{position:absolute;inset:0;display:none;flex-direction:column;
-  padding:52px 64px 74px;overflow:hidden}
+  padding:48px 60px 44px;overflow:hidden}
 .slide.on{display:flex}
 #chrome{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;
   align-items:center;gap:14px;padding:0 24px;border-top:1px solid var(--line);
@@ -136,16 +146,16 @@ canvas.chart{width:100%;display:block}
 </style>
 
 <div id="bar"></div>
-<div id="deck">
+<div id="deck"><div id="fit">
 
 <!-- 01 ─────────────────────────────────────────────────────────── TITLE -->
 <section class="slide on">
-  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:60ch">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:72ch">
     <div class="eyebrow">Predictive Energy Management</div>
     <h1>Intelligent Solar<br>Energy Optimization</h1>
-    <p class="lede">A control layer for solar, battery storage and EV charging that
-      plans a day ahead instead of reacting — validated on measured field data
-      under Thai time-of-use tariffs.</p>
+    <p class="lede" style="max-width:none">A control layer for solar, battery storage and
+      EV charging that plans a day ahead instead of reacting — validated on measured
+      field data under Thai time-of-use tariffs.</p>
     <div class="rule" style="margin:34px 0 20px"></div>
     <div class="cols c3">
       <div><div class="lbl">Validated on</div><div class="sub"><span data-v="days"></span> days of measured data</div></div>
@@ -160,7 +170,7 @@ canvas.chart{width:100%;display:block}
   <div class="eyebrow">Agenda</div>
   <h2>What we would like to agree today</h2>
   <div class="body">
-    <ol class="steps" style="max-width:76ch">
+    <ol class="steps" style="max-width:92ch">
       <li><div><h3>Requirements &amp; key objectives</h3>
         <div class="sub">What "success" means for your sites — cost reduction, peak control,
         EV readiness, or reporting. These lead to different designs.</div></div></li>
@@ -248,7 +258,7 @@ canvas.chart{width:100%;display:block}
   <div class="eyebrow">Approach</div>
   <h2>Three layers, three timescales</h2>
   <div class="body">
-    <div class="cols c3" style="flex:1">
+    <div class="cols c3" style="align-items:start">
       <div class="card">
         <div class="lbl">Layer 1 · daily</div>
         <h3>Predict</h3>
@@ -539,7 +549,7 @@ canvas.chart{width:100%;display:block}
   <div class="eyebrow">Next steps</div>
   <h2>What we would need to make this real</h2>
   <div class="body">
-    <div class="cols c2" style="flex:1">
+    <div class="cols c2" style="align-items:start">
       <div class="card">
         <h3>From you — data for one candidate site</h3>
         <table style="margin-top:10px">
@@ -577,7 +587,7 @@ canvas.chart{width:100%;display:block}
   </div>
 </section>
 
-</div>
+</div></div>
 
 <div id="chrome">
   <button id="prev">←</button><button id="next">→</button>
@@ -995,11 +1005,40 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const fmt = (v, d = 0) => v.toLocaleString('en-US',
   { minimumFractionDigits: d, maximumFractionDigits: d });
 
+/* ------------------------------------------------------------------ fit -- */
+const STAGE_W = 1280, STAGE_H = 720;
+
+function fitDeck() {
+  const wrap = $('#deck'), fit = $('#fit');
+  if (!wrap || !fit || document.body.classList.contains('printing')) return;
+  const s = Math.min(wrap.clientWidth / STAGE_W, wrap.clientHeight / STAGE_H);
+  fit.style.transform = `scale(${s})`;
+}
+addEventListener('resize', fitDeck);
+
+// A window resize event does not cover every way the stage can change size --
+// entering full screen, a tablet rotating, or the browser chrome collapsing.
+// Observing the container directly catches all of them.
+if (window.ResizeObserver) {
+  const ro = new ResizeObserver(() => { fitDeck(); sizeGL(); drawAll(); });
+  const startObserving = () => { const d = $('#deck'); if (d) ro.observe(d); };
+  if (document.readyState === 'loading') {
+    addEventListener('DOMContentLoaded', startObserving);
+  } else {
+    startObserving();
+  }
+}
+
 /* ---------------------------------------------------------------- slides -- */
 const slides = $$('.slide');
 let cur = 0;
 
 function show(i) {
+  // Re-fit on every slide change as well as on resize. Some environments --
+  // projectors switching mode, remote-desktop sessions, browsers that resize
+  // without firing an event -- leave the stage mis-scaled otherwise, and a
+  // presenter pressing the arrow key should never see a half-sized slide.
+  fitDeck();
   cur = Math.max(0, Math.min(slides.length - 1, i));
   slides.forEach((s, n) => s.classList.toggle('on', n === cur));
   $('#pos').textContent = `${cur + 1} / ${slides.length}`;
@@ -1034,6 +1073,7 @@ if (new URLSearchParams(location.search).get('print') === '1') {
     document.body.dataset.ready = '1';
   }, 1200);
 } else {
+  fitDeck();
   show(0);
 }
   if (e.key === 'End') show(slides.length - 1);
@@ -1100,7 +1140,7 @@ function sizeGL() {
   env.renderer.setSize(w, h, false);
   env.camera.aspect = w / h; env.camera.updateProjectionMatrix();
 }
-addEventListener('resize', () => { sizeGL(); drawAll(); });
+addEventListener('resize', () => { fitDeck(); sizeGL(); drawAll(); });
 
 /* Timeline for the 3D slide: replay one representative day, 15-min steps. */
 // start mid-morning: opening on a black night scene wastes the first
@@ -1537,6 +1577,7 @@ if (new URLSearchParams(location.search).get('print') === '1') {
     document.body.dataset.ready = '1';
   }, 1200);
 } else {
+  fitDeck();
   show(0);
 }
 
