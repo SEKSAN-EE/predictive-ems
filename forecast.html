@@ -162,25 +162,25 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <!-- 6 -->
 <section class="slide">
   <div class="eyebrow">ขั้นตอนการพยากรณ์ PV</div>
-  <h2>ML เรียนจากพยากรณ์อากาศ 2.4 ปี ให้ทายความใสของท้องฟ้าวันพรุ่งนี้</h2>
+  <h2>ML เรียนจากพยากรณ์อากาศ 2.4 ปี ให้ทายว่าพรุ่งนี้เมฆจะบังแดดมากแค่ไหน</h2>
   <div class="flow" style="margin-top:22px">
     <div class="b"><b>พยากรณ์อากาศ</b><span>ECMWF + GFS · 9 จุด</span></div><div class="ar">→</div>
     <div class="b"><b>โมเดล ML</b><span>gradient boosting · 91,182 ชม.</span></div><div class="ar">→</div>
-    <div class="b"><b>ความใสของท้องฟ้า</b><span>ของวันพรุ่งนี้</span></div><div class="ar">→</div>
+    <div class="b"><b>เมฆบังแค่ไหน</b><span>พรุ่งนี้ได้กี่ % ของฟ้าใส</span></div><div class="ar">→</div>
     <div class="b"><b>× กำลังผลิตวันฟ้าใส</b><span>ของไซต์ ATVXX</span></div><div class="ar">→</div>
     <div class="b last"><b>พยากรณ์ PV</b><span>รายชั่วโมง</span></div>
   </div>
   <div class="body" style="margin-top:18px">
     <div class="col" style="flex:1">
       <div class="step"><div class="no">1</div><div><h3>หาตำแหน่งไซต์</h3><p class="small">จากดาวเทียม (หน้าก่อน)</p></div></div>
-      <div class="step"><div class="no">2</div><div><h3>ตัดผลของมุมดวงอาทิตย์ออก</h3><p class="small">ความใสของท้องฟ้า = แสงจริง ÷ แสงเมื่อฟ้าใส เหลือเฉพาะผลของเมฆ</p></div></div>
+      <div class="step"><div class="no">2</div><div><h3>วัดว่าเมฆบังแดดมากแค่ไหน</h3><p class="small">ตอนเช้าและเย็นแผงผลิตได้น้อยอยู่แล้วแม้ฟ้าใส จึงไม่ดูที่ kW ตรง ๆ แต่ดูว่าได้กี่ % ของวันฟ้าใส (ดูตัวอย่างด้านขวา)</p></div></div>
       <div class="step"><div class="no">3</div><div><h3>เทรนด้วยข้อมูลภูมิภาค</h3><p class="small">ค่าจริงที่ใช้สอนคือดาวเทียม Himawari-9 โมเดลเรียนเองว่าควรเชื่อแหล่งไหน</p></div></div>
       <div class="step"><div class="no">4</div><div><h3>แปลงเป็นกำลังผลิตของไซต์</h3><p class="small">ปรับเทียบด้วยข้อมูลไซต์ก่อนวันที่พยากรณ์เท่านั้น</p></div></div>
     </div>
     <div class="card" style="flex:1.25"><h3>ตัวอย่าง: วันที่ 3 มิ.ย. (เมฆมาก)</h3>
       <div class="key"><span><i class="ln" style="background:#8A9AA4"></i>ถ้าฟ้าใส ไซต์นี้ผลิตได้เท่าไร</span><span><i class="ln" style="background:#0F6E6C"></i>ผลิตได้จริงวันนั้น</span></div>
       <div id="c-csi"></div>
-      <p class="small" style="margin:2px 0 0"><b style="color:#B8752B">แท่งสีส้ม = ความใสของท้องฟ้า</b> คือผลิตได้จริงกี่ % ของวันฟ้าใส (จริง ÷ ฟ้าใส) ตัดผลของเวลาออก เหลือเฉพาะผลของเมฆ</p>
+      <p class="small" style="margin:2px 0 0;color:#3B4C57"><b style="color:#B8752B">แท่งสีส้ม:</b> ชั่วโมงนั้นผลิตได้กี่ % ของที่ควรได้ถ้าฟ้าใส · 100% = ไม่มีเมฆบัง · ยิ่งต่ำ เมฆยิ่งบังมาก</p>
       <div id="c-csi2"></div></div>
   </div>
 </section>
