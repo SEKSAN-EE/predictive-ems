@@ -41,6 +41,7 @@ h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:4px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.g5 .card h3{font-size:1.12rem}.g5 .card p{font-size:1rem;line-height:1.65;margin-top:6px}
 .chip{display:inline-block;font-size:.76rem;font-weight:600;padding:1px 10px;border-radius:999px;white-space:nowrap}
 .chip.ok{color:var(--green);background:#2F7A3E1C}.chip.wait{color:#8A6212;background:#C9A22726}.chip.info{color:var(--mut);background:var(--sunk)}
 table{border-collapse:collapse;width:100%;font-size:.95rem}
@@ -87,11 +88,11 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:80ch">
     <div class="eyebrow">ATVXX · Altervim</div>
     <h1>การพัฒนาการพยากรณ์<br>สำหรับระบบ PV ของ ATVXX</h1>
-    <p class="lede" style="margin-top:18px">เราพยากรณ์อะไร แต่ละค่าสำคัญกับระบบ PV อย่างไร ใช้ข้อมูลจากไหน พยากรณ์อย่างไร ผลเป็นอย่างไร และจะแม่นขึ้นได้อีกด้วยข้อมูลอะไร</p>
+    <p class="lede" style="margin-top:18px">เราทายอะไรล่วงหน้า ใช้ข้อมูลจากไหน ทำอย่างไร ทายได้แม่นแค่ไหน และต้องการข้อมูลอะไรเพิ่มเพื่อให้แม่นขึ้น</p>
     <div style="display:flex;gap:40px;margin-top:34px" class="small">
-      <div><b style="color:var(--ink)">ระบบ</b><br>PV 2,372 kWp · แบต 2,236 kWh · ไม่ส่งไฟออกกริด</div>
-      <div><b style="color:var(--ink)">ระยะพยากรณ์</b><br>ล่วงหน้า 1 วัน</div>
-      <div><b style="color:var(--ink)">ข้อมูลไซต์</b><br>รายนาที มิถุนายน 2569</div>
+      <div><b style="color:var(--ink)">ระบบ</b><br>แผง PV 2,372 kWp · แบตเตอรี่ 2,236 kWh<br>ระบบควบคุมไม่ให้ส่งไฟออกกริด</div>
+      <div><b style="color:var(--ink)">ทายล่วงหน้า</b><br>1 วัน</div>
+      <div><b style="color:var(--ink)">ข้อมูลไซต์</b><br>บันทึกทุก 1 นาที มิถุนายน 2569</div>
     </div>
   </div>
 </section>
@@ -99,19 +100,19 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <!-- 2 : 3D site -->
 <section class="slide" data-scene="site">
   <div class="eyebrow">ทำไมต้องพยากรณ์</div>
-  <h2>เมฆกำหนดว่า PV ผลิตได้เท่าไร และ PV ส่วนเกินจะไปที่ไหน</h2>
+  <h2>เมฆเป็นตัวกำหนดว่าแผงผลิตไฟได้เท่าไร และไฟส่วนเกินจะไปที่ไหน</h2>
   <div class="body">
     <div class="stage3d" style="flex:2.1"><canvas id="gl-site"></canvas><div class="clock" id="s-clock">06:00</div>
-      <div class="hud"><div><span>PV ผลิตได้</span><b id="s-pot">–</b></div><div><span>โหลดโรงงาน</span><b id="s-ld">–</b></div>
-        <div><span>ระดับแบต</span><b id="s-soc">–</b></div><div><span style="color:var(--red)">PV ถูกทิ้ง</span><b id="s-cur" style="color:var(--red)">–</b></div></div>
+      <div class="hud"><div><span>แผงผลิตได้</span><b id="s-pot">–</b></div><div><span>โรงงานใช้</span><b id="s-ld">–</b></div>
+        <div><span>แบตเตอรี่</span><b id="s-soc">–</b></div><div><span style="color:var(--red)">ไฟที่ต้องทิ้ง</span><b id="s-cur" style="color:var(--red)">–</b></div></div>
       <div class="hint">ลากเพื่อหมุน · เลื่อนเพื่อซูม</div></div>
     <div class="col" style="flex:1">
       <div class="ctrls"><button data-day="22" class="on">22 มิ.ย. แดดดี</button><button data-day="03">3 มิ.ย. เมฆมาก</button><button id="s-play">หยุด</button></div>
       <label class="small" style="display:flex;align-items:center;gap:8px">เวลา <input id="s-time" type="range" min="20" max="79" step="1" value="30" style="flex:1"></label>
-      <div class="card"><h3>ข้อมูลจริงของไซต์ ทุก 15 นาที</h3><p>เมฆในภาพเปลี่ยนตามความใสของท้องฟ้าที่วัดได้จริงในวันนั้น</p></div>
-      <div class="card"><h3>วันแดดดี</h3><p>PV เกินโหลดตั้งแต่เช้า แบตเต็มเวลา 10:37 น. หลังจากนั้นส่วนเกินไม่มีที่ไป แผงจึงถูกลดกำลัง <span style="color:var(--red)">(แผงเป็นสีแดง)</span></p></div>
-      <div class="card"><h3>วันเมฆมาก</h3><p>PV ผลิตได้ไม่ถึงครึ่งของวันแดดดี ต่ำกว่าโหลดเกือบทั้งวัน แบตแทบไม่ได้ใช้</p></div>
-      <p class="small">การรู้ล่วงหน้าว่าวันพรุ่งนี้จะเป็นแบบไหน คือสิ่งที่การพยากรณ์ต้องตอบ</p>
+      <div class="card"><h3>ภาพนี้มาจากข้อมูลจริง</h3><p>ตัวเลขมุมขวาบนคือค่าที่บันทึกได้จริงทุก 15 นาที ปริมาณเมฆในภาพเปลี่ยนตามแดดที่แผงได้รับจริงในเวลานั้น</p></div>
+      <div class="card"><h3>วันแดดดี</h3><p>แผงผลิตไฟเกินกว่าที่โรงงานใช้ตั้งแต่เช้า ไฟส่วนเกินเข้าไปเก็บในแบต แบตเต็มเวลา 10:37 น. หลังจากนั้นไฟส่วนเกินไม่มีที่ไป ระบบจึงต้องลดกำลังแผงลง <span style="color:var(--red)">(แผงเป็นสีแดง)</span> ไฟส่วนนี้เสียไป</p></div>
+      <div class="card"><h3>วันเมฆมาก</h3><p>แผงผลิตได้ไม่ถึงครึ่งของวันแดดดี น้อยกว่าที่โรงงานใช้เกือบทั้งวัน ไม่มีไฟเหลือเก็บเข้าแบต</p></div>
+      <p class="small">การพยากรณ์ต้องตอบให้ได้ล่วงหน้าว่า พรุ่งนี้จะเป็นวันแบบไหน</p>
     </div>
   </div>
 </section>
@@ -119,15 +120,16 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <!-- 3 -->
 <section class="slide">
   <div class="eyebrow">สิ่งที่พยากรณ์</div>
-  <h2>เราพยากรณ์ 5 อย่าง แต่ละอย่างสำคัญกับระบบ PV ต่างกัน</h2>
-  <div class="g5" style="margin-top:26px;flex:1">
-    <div class="card top"><h3>แสงแดด</h3><p>ตัวกำหนดหลักว่า PV ผลิตได้เท่าไร ฤดูฝนเมฆเปลี่ยนเร็ว กำลังผลิตจึงเปลี่ยนมาก</p></div>
-    <div class="card top"><h3>กำลังผลิต PV ของไซต์</h3><p>แสงแดดเท่ากัน แต่ละไซต์ผลิตได้ต่างกันตามขนาด ทิศ มุมแผง และการสูญเสีย</p></div>
-    <div class="card top"><h3>อุณหภูมิ</h3><p>แผงร้อนขึ้น 1 °C ผลิตได้ลดลงประมาณ 0.3–0.5% (ค่าทั่วไปของแผงซิลิคอน)</p></div>
-    <div class="card top"><h3>โหลดของโรงงาน</h3><p>ระบบส่งไฟออกกริดไม่ได้ PV จ่ายได้เท่าที่โรงงานใช้บวกที่แบตเก็บได้</p></div>
-    <div class="card top"><h3>พรุ่งนี้แบตจะเต็มไหม</h3><p>รวม PV กับโหลด ถ้า PV ส่วนเกินมากกว่าที่ว่างในแบต PV ส่วนที่เกินจะถูกทิ้ง</p></div>
+  <h2>เราทายล่วงหน้า 5 เรื่อง</h2>
+  <div class="g5" style="margin-top:22px">
+    <div class="card top"><h3>แสงแดด</h3><p>แดดมากหรือน้อย เป็นตัวกำหนดหลักว่าแผงผลิตไฟได้เท่าไร หน้าฝนเมฆเปลี่ยนเร็ว ไฟที่ผลิตได้จึงขึ้นลงมาก</p></div>
+    <div class="card top"><h3>ไฟที่แผงของไซต์ผลิตได้</h3><p>แดดเท่ากัน แต่ละไซต์ผลิตได้ไม่เท่ากัน ขึ้นกับจำนวนแผง ทิศ มุมแผง และสภาพอุปกรณ์ จึงต้องทายเป็น kW ของไซต์นี้โดยตรง</p></div>
+    <div class="card top"><h3>อุณหภูมิ</h3><p>แผงยิ่งร้อน ยิ่งผลิตได้น้อยลง ทุก 1 °C ที่ร้อนขึ้น ผลิตได้ลดลงประมาณ 0.3–0.5%</p></div>
+    <div class="card top"><h3>ไฟที่โรงงานใช้</h3><p>ระบบส่งไฟออกกริดไม่ได้ ไฟจากแผงจึงใช้ได้เท่าที่โรงงานใช้ บวกกับที่แบตเก็บได้เท่านั้น</p></div>
+    <div class="card top"><h3>พรุ่งนี้แบตจะเต็มไหม</h3><p>ถ้าแผงผลิตเกินกว่าที่โรงงานใช้จนแบตเต็ม ไฟส่วนที่เกินต้องทิ้ง คำตอบนี้ได้จากการรวมสองเรื่องข้างหน้า</p></div>
   </div>
-  <p class="small" style="margin-top:16px">ทั้งหมดพยากรณ์ล่วงหน้า 1 วัน · เทียบกับ “วิธีง่าย” คือทายว่าพรุ่งนี้เหมือนวันนี้ ซึ่งงานวิจัยกำหนดว่าวิธีใหม่ต้องแม่นกว่าก่อน</p>
+  <div class="card" style="margin-top:18px;background:var(--sunk)"><h3>เราวัดว่าทายแม่นแค่ไหนอย่างไร</h3>
+    <p>เทียบกับ <b style="color:var(--ink)">“วิธีง่าย”</b> คือทายว่าพรุ่งนี้จะเหมือนวันนี้ · ถ้าวิธีง่ายทายพลาด 100 kW แล้วเราทายพลาด 80 kW เรียกว่า <b style="color:var(--ink)">“แม่นกว่าวิธีง่าย 20%”</b> · งานวิจัยด้านนี้ถือว่าวิธีใหม่ต้องชนะวิธีง่ายก่อน จึงจะนับว่าพยากรณ์ได้จริง</p></div>
 </section>
 
 <!-- 4 -->
@@ -136,25 +138,25 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   <h2>ใช้ข้อมูล 4 แหล่ง ย้อนหลัง 2.4 ปี</h2>
   <div class="body" style="flex-direction:column;gap:14px">
     <div class="g2" style="grid-template-columns:repeat(4,1fr)">
-      <div class="card"><h3>ข้อมูลไซต์ ATVXX</h3><p>PV แบต กริด รายนาที มิ.ย. 2569 จาก Altervim</p></div>
-      <div class="card"><h3>พยากรณ์ ECMWF และ GFS</h3><p>ที่ออกล่วงหน้า 1 วัน 8 ตัวแปร 9 จุดรอบไซต์</p></div>
-      <div class="card"><h3>ดาวเทียม Himawari-9</h3><p>แสงแดดละเอียด ~5 กม. ใช้เป็นค่าจริงและหาตำแหน่งไซต์</p></div>
-      <div class="card"><h3>ERA5</h3><p>ข้อมูลย้อนหลังละเอียด ~31 กม. ลองใช้รอบแรก และใช้ตรวจอุณหภูมิ</p></div>
+      <div class="card"><h3>ข้อมูลของไซต์ ATVXX</h3><p>ไฟที่แผงผลิต ไฟเข้า–ออกแบต และไฟจากกริด บันทึกทุก 1 นาที ตลอดมิถุนายน 2569 ได้จาก Altervim</p></div>
+      <div class="card"><h3>พยากรณ์อากาศ ยุโรป (ECMWF) และสหรัฐฯ (GFS)</h3><p>พยากรณ์ที่ประกาศล่วงหน้า 1 วันจริงในอดีต เช่น แดด เมฆ ฝน ความชื้น อุณหภูมิ ทั้งที่ไซต์และพื้นที่รอบ ๆ</p></div>
+      <div class="card"><h3>ดาวเทียม Himawari-9 (ญี่ปุ่น)</h3><p>ใช้ภาพถ่ายเมฆคำนวณแดดที่ตกถึงพื้น ละเอียดระดับ 5 กม. ใช้เป็น “คำตอบที่ถูก” ให้โมเดลเรียน และใช้หาตำแหน่งไซต์</p></div>
+      <div class="card"><h3>ERA5</h3><p>ข้อมูลอากาศย้อนหลังที่หยาบกว่า (ระดับ 31 กม.) ลองใช้ในรอบแรก และใช้ตรวจความแม่นของการทายอุณหภูมิ</p></div>
     </div>
-    <div class="card" style="flex:1"><h3>ช่วงเวลาของข้อมูล</h3><div class="key" style="margin:4px 0 6px"><span><i style="background:var(--green)"></i>ใช้เทรน</span><span><i style="background:var(--amber)"></i>ใช้ทดสอบ (โมเดลไม่เคยเห็น)</span></div><div id="c-time"></div></div>
+    <div class="card" style="flex:1"><h3>ช่วงเวลาของข้อมูล</h3><div class="key" style="margin:4px 0 6px"><span><i style="background:var(--green)"></i>ใช้สอนโมเดล</span><span><i style="background:var(--amber)"></i>ใช้ทดสอบ (เก็บไว้ ไม่ให้โมเดลเห็นตอนเรียน)</span></div><div id="c-time"></div></div>
   </div>
 </section>
 
 <!-- 5 : 3D location -->
 <section class="slide" data-scene="loc">
   <div class="eyebrow">ขั้นที่ 1 · หาตำแหน่งไซต์</div>
-  <h2>ลูกค้าไม่ได้ให้พิกัด เราใช้ดาวเทียมหาตำแหน่งไซต์</h2>
+  <h2>ลูกค้าไม่ได้ให้พิกัดไซต์ เราใช้ภาพดาวเทียมหาตำแหน่ง</h2>
   <div class="body">
     <div class="stage3d" style="flex:2"><canvas id="gl-loc"></canvas><div class="hint">ลากเพื่อหมุน · เลื่อนเพื่อซูม</div></div>
     <div class="col" style="flex:1">
-      <div class="card"><h3>วิธีการ</h3><p>เทียบรูปแบบการขึ้นลงของ PV ที่เกิดจากเมฆ กับแสงแดดจากดาวเทียม 707 จุดรอบภาคกลาง แท่งยิ่งสูงยิ่งตรงกัน</p></div>
-      <div class="card"><h3 style="color:var(--red)">ตำแหน่งที่พบ</h3><p>ประมาณ 14.6°N 101.15°E แถว อ.แก่งคอย จ.สระบุรี อาจคลาดได้ 10–20 กม.</p></div>
-      <div class="card"><h3>ตำแหน่งที่สมมติในรอบแรก</h3><p>13.3°N 101.1°E คลาดไปประมาณ 140 กม. ทำให้รอบแรกพยากรณ์ได้ไม่ดี</p></div>
+      <div class="card"><h3>ทำอย่างไร</h3><p>เมฆที่ลอยผ่านไซต์ทำให้ไฟจากแผงตกลงเป็นช่วง ๆ เราเอาจังหวะขึ้นลงนี้ไปเทียบกับเมฆที่ดาวเทียมเห็นใน 707 จุดทั่วภาคกลาง จุดที่จังหวะตรงกันที่สุดคือที่ตั้งของไซต์ <b style="color:var(--ink)">ในภาพ แท่งยิ่งสูง ยิ่งตรงกัน</b></p></div>
+      <div class="card"><h3 style="color:var(--red)">ตำแหน่งที่พบ</h3><p>แถว อ.แก่งคอย จ.สระบุรี (ประมาณ 14.6°N 101.15°E) อาจคลาดได้ 10–20 กม.</p></div>
+      <div class="card"><h3>ตำแหน่งที่ใช้ในรอบแรก</h3><p>เดาไว้ห่างจากจุดจริงประมาณ 140 กม. จึงใช้เมฆของพื้นที่อื่นมาทาย รอบแรกจึงทายได้ไม่ดี</p></div>
     </div>
   </div>
 </section>
@@ -165,17 +167,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   <h2>ML เรียนจากพยากรณ์อากาศ 2.4 ปี ให้ทายว่าพรุ่งนี้เมฆจะบังแดดมากแค่ไหน</h2>
   <div class="flow" style="margin-top:22px">
     <div class="b"><b>พยากรณ์อากาศ</b><span>ECMWF + GFS · 9 จุด</span></div><div class="ar">→</div>
-    <div class="b"><b>โมเดล ML</b><span>gradient boosting · 91,182 ชม.</span></div><div class="ar">→</div>
+    <div class="b"><b>โมเดล ML</b><span>เรียนจากข้อมูลย้อนหลัง 2.4 ปี</span></div><div class="ar">→</div>
     <div class="b"><b>เมฆบังแค่ไหน</b><span>พรุ่งนี้ได้กี่ % ของฟ้าใส</span></div><div class="ar">→</div>
-    <div class="b"><b>× กำลังผลิตวันฟ้าใส</b><span>ของไซต์ ATVXX</span></div><div class="ar">→</div>
+    <div class="b"><b>คูณกับไฟวันฟ้าใส</b><span>ของไซต์ ATVXX</span></div><div class="ar">→</div>
     <div class="b last"><b>พยากรณ์ PV</b><span>รายชั่วโมง</span></div>
   </div>
   <div class="body" style="margin-top:18px">
     <div class="col" style="flex:1">
       <div class="step"><div class="no">1</div><div><h3>หาตำแหน่งไซต์</h3><p class="small">จากดาวเทียม (หน้าก่อน)</p></div></div>
       <div class="step"><div class="no">2</div><div><h3>วัดว่าเมฆบังแดดมากแค่ไหน</h3><p class="small">ตอนเช้าและเย็นแผงผลิตได้น้อยอยู่แล้วแม้ฟ้าใส จึงไม่ดูที่ kW ตรง ๆ แต่ดูว่าได้กี่ % ของวันฟ้าใส (ดูตัวอย่างด้านขวา)</p></div></div>
-      <div class="step"><div class="no">3</div><div><h3>เทรนด้วยข้อมูลภูมิภาค</h3><p class="small">ค่าจริงที่ใช้สอนคือดาวเทียม Himawari-9 โมเดลเรียนเองว่าควรเชื่อแหล่งไหน</p></div></div>
-      <div class="step"><div class="no">4</div><div><h3>แปลงเป็นกำลังผลิตของไซต์</h3><p class="small">ปรับเทียบด้วยข้อมูลไซต์ก่อนวันที่พยากรณ์เท่านั้น</p></div></div>
+      <div class="step"><div class="no">3</div><div><h3>สอนโมเดลด้วยข้อมูลย้อนหลัง</h3><p class="small">ให้โมเดลดูพยากรณ์อากาศย้อนหลัง เทียบกับเมฆที่ดาวเทียมเห็นจริงในวันนั้น จนเรียนรู้ว่าพยากรณ์แบบไหนมักพลาดไปทางไหน</p></div></div>
+      <div class="step"><div class="no">4</div><div><h3>แปลงเป็นไฟที่ไซต์จะผลิตได้</h3><p class="small">เอา % ที่ทายได้ คูณกับไฟที่ไซต์ผลิตในวันฟ้าใส ก็ได้ kW ของพรุ่งนี้ ใช้เฉพาะข้อมูลที่มีก่อนวันที่ทาย</p></div></div>
     </div>
     <div class="card" style="flex:1.25"><h3>ตัวอย่าง: วันที่ 3 มิ.ย. (เมฆมาก)</h3>
       <div class="key"><span><i class="ln" style="background:#8A9AA4"></i>ถ้าฟ้าใส ไซต์นี้ผลิตได้เท่าไร</span><span><i class="ln" style="background:#0F6E6C"></i>ผลิตได้จริงวันนั้น</span></div>
@@ -187,43 +189,45 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
 <!-- 7 : small multiples -->
 <section class="slide">
-  <div class="eyebrow">ผล · PV ของไซต์</div>
-  <h2>PV จริงกับค่าที่พยากรณ์ล่วงหน้า 1 วัน ตลอด 22 วัน</h2>
-  <div class="key" style="margin-top:10px"><span><i class="ln" style="background:#16232C"></i>ค่าจริง</span><span><i class="ln" style="background:#0F6E6C"></i>ML (พยากรณ์ตั้งแต่วันก่อน)</span><span><i class="ln" style="background:#8A9AA4"></i>วิธีง่าย (ฟ้าใสเท่าเมื่อวาน)</span>
-    <span style="margin-left:auto">แต่ละช่อง = 1 วัน · 06:00–18:00 · มุมขวาบนบอกว่าวันนั้นวิธีไหนใกล้ค่าจริงกว่า</span></div>
+  <div class="eyebrow">ผล · ไฟจากแผงของไซต์</div>
+  <h2>ไฟที่แผงผลิตจริง เทียบกับที่ทายไว้ล่วงหน้า 1 วัน ทั้ง 22 วัน</h2>
+  <div class="key" style="margin-top:10px"><span><i class="ln" style="background:#16232C"></i>ค่าจริง</span><span><i class="ln" style="background:#0F6E6C"></i>โมเดลของเรา (ทายไว้ตั้งแต่วันก่อน)</span><span><i class="ln" style="background:#8A9AA4"></i>วิธีง่าย (ทายว่าเหมือนเมื่อวาน)</span>
+    <span style="margin-left:auto">1 ช่อง = 1 วัน (06:00–18:00) · มุมขวาบน: วันนั้นวิธีไหนทายใกล้กว่า</span></div>
   <div class="body" style="margin-top:10px;gap:22px">
     <div id="c-small" style="flex:3.2;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;align-content:start"></div>
     <div class="col" style="flex:1">
-      <div class="card"><div class="num" id="sm-win">–</div><p class="small">วันที่ ML ใกล้ค่าจริงกว่าวิธีง่าย</p></div>
-      <div class="card"><h3>อ่านอย่างไร</h3><p>วิธีง่ายทายตามเมื่อวาน จึงพลาดมากเมื่อฟ้าเปลี่ยนจากเมื่อวาน เช่น 22, 23 และ 29 มิ.ย. ML ทายจากพยากรณ์อากาศ จึงไม่พลาดตาม แต่ในวันที่ฟ้าคล้ายเมื่อวาน เช่น 16–17 มิ.ย. วิธีง่ายใกล้กว่า</p></div>
-      <div class="card"><div class="num">12.1% <small>แม่นกว่าวิธีง่าย</small></div><p class="small">ยังยืนยันไม่ได้ เพราะข้อมูลไซต์มี 26 วัน (โอกาส 94% ที่ดีกว่าจริง)</p></div>
-      <p class="small">ค่าจริงคือกำลังที่แผงผลิตได้ ช่วงที่ถูกลดกำลังใช้ค่าประมาณ</p>
+      <div class="card"><div class="num" id="sm-win">–</div><p class="small">วันที่โมเดลของเราทายใกล้กว่าวิธีง่าย</p></div>
+      <div class="card"><h3>อ่านอย่างไร</h3><p>เส้นที่ทายยิ่งทับเส้นดำ ยิ่งแม่น · วิธีง่ายทายตามเมื่อวาน จึงพลาดมากเมื่อฟ้าวันนี้ต่างจากเมื่อวาน เช่น 22, 23 และ 29 มิ.ย. · วันที่ฟ้าคล้ายเมื่อวาน เช่น 16–17 มิ.ย. วิธีง่ายก็ทายได้ดี</p></div>
+      <div class="card"><div class="num">12.1% <small>แม่นกว่าวิธีง่าย</small></div><p class="small">ข้อมูลไซต์มีแค่ 26 วัน ยังสรุปแน่นอนไม่ได้ (โอกาส 94% ที่ดีกว่าจริง)</p></div>
+      <p class="small">ช่วงที่ระบบลดกำลังแผง ค่าจริงเป็นค่าประมาณว่าแผงจะผลิตได้เท่าไรถ้าไม่ถูกลด</p>
     </div>
   </div>
 </section>
 
 <!-- 8 -->
 <section class="slide">
-  <div class="eyebrow">ผล · แสงแดดและ PV</div>
-  <h2>ML แม่นที่สุด และพัฒนาจากรอบแรกชัดเจน</h2>
+  <div class="eyebrow">ผล · แสงแดดและไฟจากแผง</div>
+  <h2>ทายแดดได้ดีกว่าทุกแหล่ง และดีขึ้นมากจากรอบแรก</h2>
   <div class="body">
-    <div class="card" style="flex:1"><h3>ความคลาดเคลื่อนของแสงแดดรายชั่วโมง ฤดูฝน 2025</h3><p class="small">184 วันที่โมเดลไม่เคยเห็น · % ของค่าจริง · ยิ่งสั้นยิ่งดี</p><div id="c-rain"></div>
-      <p style="margin-top:8px"><b style="color:var(--ink)">ML แม่นกว่าวิธีง่าย 20.7%</b> <span class="chip ok">ยืนยันแล้ว</span></p></div>
-    <div class="card" style="flex:1"><h3>PV ของไซต์: แม่นกว่าวิธีง่ายเท่าไร</h3><p class="small">มิ.ย. 2026 · ยิ่งยาวยิ่งดี · แท่งสุดท้ายคือเพดาน</p><div id="c-prog"></div>
-      <p class="small" style="margin-top:6px">สองอย่างที่ทำให้ผลเปลี่ยน คือตำแหน่งที่ถูกต้อง และใช้ดาวเทียมแทน ERA5 เป็นค่าจริง</p></div>
+    <div class="card" style="flex:1"><h3>ทายแดดพลาดเท่าไร (หน้าฝน 2025)</h3><p class="small">ทดสอบ 184 วันที่โมเดลไม่เคยเห็น · พลาดเฉลี่ยกี่ % ของค่าจริง · แท่งยิ่งสั้นยิ่งดี</p><div id="c-rain"></div>
+      <p style="margin-top:8px">โมเดลของเราพลาดน้อยกว่าวิธีง่าย <b style="color:var(--ink)">20.7%</b> ทดสอบซ้ำหลายพันแบบแล้วผลยังเหมือนเดิม <span class="chip ok">ยืนยันแล้ว</span></p></div>
+    <div class="card" style="flex:1"><h3>ทายไฟจากแผงของไซต์: ดีขึ้นทีละขั้น</h3><p class="small">แม่นกว่าวิธีง่ายกี่ % · แท่งยิ่งยาวยิ่งดี</p><div id="c-prog"></div>
+      <p class="small" style="margin-top:6px">* ขีดสูงสุด = ถ้ารู้ล่วงหน้าว่าดาวเทียมจะเห็นเมฆพรุ่งนี้อย่างไรแบบไม่ผิดเลย · สิ่งที่ทำให้ดีขึ้นมากที่สุดคือ หาตำแหน่งไซต์ให้ถูก และใช้ดาวเทียมเป็นคำตอบให้โมเดลเรียน</p></div>
   </div>
 </section>
 
 <!-- 9 -->
 <section class="slide">
-  <div class="eyebrow">ผล · โหลดของโรงงาน</div>
-  <h2>โหลดช่วงเย็นบอกระดับการผลิตของวันพรุ่งนี้</h2>
+  <div class="eyebrow">ผล · ไฟที่โรงงานใช้</div>
+  <h2>โหลดตอนเย็นวันนี้ บอกได้ว่าพรุ่งนี้โรงงานจะใช้ไฟมากหรือน้อย</h2>
   <div class="body">
-    <div class="card" style="flex:1"><h3>โหลดเย็นวันนี้ กับโหลดเฉลี่ยวันพรุ่งนี้</h3><div class="key"><span><i style="background:var(--teal)"></i>วันทั่วไป</span><span><i style="background:var(--red)"></i>วันจันทร์ (โหลดต่ำ)</span></div><div id="c-ev"></div></div>
+    <div class="card" style="flex:1"><h3>โหลดตอนเย็นวันนี้ กับโหลดทั้งวันของพรุ่งนี้</h3>
+      <p class="small">1 จุด = 1 วัน · จุดเรียงขึ้นไปทางขวา แปลว่าเย็นวันไหนโหลดสูง วันรุ่งขึ้นมักโหลดสูงตาม · วันจันทร์ (สีแดง) โหลดต่ำกว่าที่คาด โมเดลจึงปรับตามวันในสัปดาห์ด้วย</p>
+      <div class="key"><span><i style="background:var(--teal)"></i>วันทั่วไป</span><span><i style="background:var(--red)"></i>วันจันทร์</span></div><div id="c-ev"></div></div>
     <div class="col" style="flex:1.1">
-      <div class="card"><h3>ตัวอย่างหนึ่งสัปดาห์ 15–21 มิ.ย.</h3><div class="key"><span><i class="ln" style="background:var(--ink)"></i>ค่าจริง</span><span><i class="ln" style="background:var(--grey)"></i>วิธีง่าย</span><span><i class="ln" style="background:var(--teal)"></i>โมเดล</span></div><div id="c-ldw"></div></div>
+      <div class="card"><h3>ตัวอย่างหนึ่งสัปดาห์ 15–21 มิ.ย.</h3><div class="key"><span><i class="ln" style="background:var(--ink)"></i>ค่าจริง</span><span><i class="ln" style="background:var(--grey)"></i>วิธีง่าย (เท่าเมื่อวาน)</span><span><i class="ln" style="background:var(--teal)"></i>โมเดลของเรา</span></div><div id="c-ldw"></div></div>
       <div class="g2"><div class="card"><div class="num">34.5% <small>แม่นกว่าวิธีง่าย</small></div><span class="chip ok">ยืนยันแล้ว</span></div>
-        <div class="card"><div class="num">12.9% <small>คลาดเคลื่อน</small></div><p class="small">วิธีง่ายคลาด 19.7%</p></div></div>
+        <div class="card"><div class="num">12.9% <small>เราทายพลาดเฉลี่ย</small></div><p class="small">วิธีง่ายพลาด 19.7%</p></div></div>
     </div>
   </div>
 </section>
@@ -231,69 +235,69 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <!-- 10 -->
 <section class="slide">
   <div class="eyebrow">ผล · อุณหภูมิ และแบตจะเต็มไหม</div>
-  <h2>อุณหภูมิพลาดเฉลี่ย 0.9 °C · ทายแบตเต็มถูก 19 จาก 22 วัน</h2>
+  <h2>ทายอุณหภูมิพลาดเฉลี่ยไม่ถึง 1 °C · ทายว่าแบตจะเต็มไหมถูก 19 จาก 22 วัน</h2>
   <div class="body" style="flex-direction:column">
-    <div class="card"><h3>อุณหภูมิอากาศ: พยากรณ์ ECMWF ล่วงหน้า 1 วัน เทียบ ERA5</h3><div class="key"><span><i class="ln" style="background:var(--ink)"></i>ERA5</span><span><i class="ln" style="background:var(--amber)"></i>พยากรณ์</span></div><div id="c-temp"></div></div>
-    <div class="card" style="flex:1"><h3>พรุ่งนี้แบตจะเต็มไหม: ทายเทียบกับจริง</h3>
-      <div class="key" style="margin-bottom:6px"><span><i style="background:var(--amber);border-radius:50%"></i>จริง: เต็ม</span><span><i style="background:var(--teal);border-radius:50%"></i>ทาย: เต็ม</span><span>วงโปร่ง = ไม่เต็ม</span><span><i style="border:2.5px solid var(--red);background:none"></i>ทายผิด</span></div>
+    <div class="card"><h3>อุณหภูมิอากาศ: ที่ทายไว้ล่วงหน้า 1 วัน เทียบกับที่เกิดขึ้นจริง</h3><div class="key"><span><i class="ln" style="background:var(--ink)"></i>ที่เกิดขึ้น (ERA5)</span><span><i class="ln" style="background:var(--amber)"></i>ที่ทายไว้</span></div><div id="c-temp"></div></div>
+    <div class="card" style="flex:1"><h3>พรุ่งนี้แบตจะเต็มไหม: ทายไว้ เทียบกับที่เกิดจริง</h3>
+      <div class="key" style="margin-bottom:6px"><span><i style="background:var(--amber);border-radius:50%"></i>วันนั้นแบตเต็มจริง</span><span><i style="background:var(--teal);border-radius:50%"></i>เราทายว่าเต็ม</span><span>วงโปร่ง = ไม่เต็ม</span><span><i style="border:2.5px solid var(--red);background:none"></i>ทายผิด</span></div>
       <div class="cal" id="cal"></div>
-      <p class="small" style="margin-top:8px">การทายว่า “เต็ม” ทุกวันถูก 15 วัน ส่วนต่างเพียง 4 วัน จึงยังยืนยันทางสถิติไม่ได้ <span class="chip wait">ยังยืนยันไม่ได้</span></p></div>
+      <p class="small" style="margin-top:8px">ถ้าทายว่า “เต็ม” ทุกวันโดยไม่ต้องคิด จะถูก 15 วัน เราถูกมากกว่า 4 วัน ซึ่งยังน้อยเกินกว่าจะสรุปได้แน่นอน <span class="chip wait">ยังสรุปแน่นอนไม่ได้</span></p></div>
   </div>
 </section>
 
 <!-- 11 -->
 <section class="slide">
   <div class="eyebrow">สรุปผล</div>
-  <h2>แม่นกว่าวิธีง่ายทุกค่าที่เทียบได้ สองค่ายืนยันแล้ว</h2>
+  <h2>ทายได้ดีกว่าวิธีง่ายทุกเรื่องที่เทียบได้ สองเรื่องยืนยันแล้ว</h2>
   <table style="margin-top:24px;font-size:1.02rem">
-    <thead><tr><th>สิ่งที่พยากรณ์ (ล่วงหน้า 1 วัน)</th><th class="n">โมเดลพลาด</th><th class="n">วิธีง่ายพลาด</th><th>ผล</th></tr></thead>
+    <thead><tr><th>สิ่งที่ทาย (ล่วงหน้า 1 วัน)</th><th class="n">เราทายพลาด</th><th class="n">วิธีง่ายพลาด</th><th>สรุป</th></tr></thead>
     <tbody>
-      <tr><td>แสงแดดรายชั่วโมง <span class="small">· ฤดูฝน 2025 · 184 วัน</span></td><td class="n">26.1%</td><td class="n">32.9%</td><td>แม่นกว่า 20.7% <span class="chip ok">ยืนยันแล้ว</span></td></tr>
-      <tr><td>กำลังผลิต PV ของไซต์ <span class="small">· มิ.ย. 2026 · 26 วัน</span></td><td class="n">21.7%</td><td class="n">24.7%</td><td>แม่นกว่า 12.1% <span class="chip wait">ยังยืนยันไม่ได้</span></td></tr>
-      <tr><td>อุณหภูมิรายชั่วโมง <span class="small">· เทียบ ERA5</span></td><td class="n">0.9 °C</td><td class="n">–</td><td><span class="chip info">ไม่มีวิธีง่ายเทียบ</span></td></tr>
-      <tr><td>โหลดของโรงงานรายชั่วโมง <span class="small">· 22 วัน</span></td><td class="n">12.9%</td><td class="n">19.7%</td><td>แม่นกว่า 34.5% <span class="chip ok">ยืนยันแล้ว</span></td></tr>
-      <tr><td>พรุ่งนี้แบตจะเต็มไหม <span class="small">· 22 วัน</span></td><td class="n">ถูก 19 วัน</td><td class="n">ถูก 15 วัน</td><td><span class="chip wait">ยังยืนยันไม่ได้</span></td></tr>
+      <tr><td>แสงแดดรายชั่วโมง <span class="small">· หน้าฝน 2025 · 184 วัน</span></td><td class="n">26.1%</td><td class="n">32.9%</td><td>แม่นกว่า 20.7% <span class="chip ok">ยืนยันแล้ว</span></td></tr>
+      <tr><td>ไฟที่แผงของไซต์ผลิตได้ <span class="small">· มิ.ย. 2026 · 26 วัน</span></td><td class="n">21.7%</td><td class="n">24.7%</td><td>แม่นกว่า 12.1% <span class="chip wait">ยังสรุปแน่นอนไม่ได้</span></td></tr>
+      <tr><td>อุณหภูมิรายชั่วโมง</td><td class="n">0.9 °C</td><td class="n">–</td><td><span class="chip info">ไม่มีวิธีง่ายให้เทียบ</span></td></tr>
+      <tr><td>ไฟที่โรงงานใช้รายชั่วโมง <span class="small">· 22 วัน</span></td><td class="n">12.9%</td><td class="n">19.7%</td><td>แม่นกว่า 34.5% <span class="chip ok">ยืนยันแล้ว</span></td></tr>
+      <tr><td>พรุ่งนี้แบตจะเต็มไหม <span class="small">· 22 วัน</span></td><td class="n">ถูก 19 วัน</td><td class="n">ถูก 15 วัน</td><td><span class="chip wait">ยังสรุปแน่นอนไม่ได้</span></td></tr>
     </tbody>
   </table>
-  <p class="small" style="margin-top:16px">“พลาด” = ค่าที่ทายคลาดเฉลี่ยต่อชั่วโมง เป็น % ของค่าจริง · “ยืนยันแล้ว” = สุ่มชุดวันทดสอบซ้ำ 5,000 รอบ แล้วยังดีกว่าวิธีง่ายอย่างน้อย 95% ของรอบ</p>
+  <p class="small" style="margin-top:16px">พลาด = ทายคลาดจากค่าจริงเฉลี่ยกี่ % ในแต่ละชั่วโมง · ยืนยันแล้ว = สุ่มชุดวันมาทดสอบใหม่ 5,000 แบบ แล้วยังดีกว่าวิธีง่ายเกือบทุกแบบ (อย่างน้อย 95 ใน 100) จึงไม่ใช่ความบังเอิญ</p>
 </section>
 
 <!-- 12 -->
 <section class="slide">
-  <div class="eyebrow">ต่อยอด · PV</div>
-  <h2>พยากรณ์ PV แม่นขึ้นได้อีก ยังมีช่องว่างถึงเพดาน</h2>
+  <div class="eyebrow">ต่อยอด · ไฟจากแผง</div>
+  <h2>ทายไฟจากแผงได้แม่นขึ้นอีก ถ้าได้ข้อมูลที่ตรงขึ้น</h2>
   <div class="body">
     <div class="col" style="flex:1.05">
-      <div class="card"><h3>ตอนนี้ไปได้ราว 40% ของเพดาน</h3><p class="small">แม่นกว่าวิธีง่าย (%) · เพดาน = ถ้ารู้แสงแดดจากดาวเทียมของพรุ่งนี้แบบสมบูรณ์</p><div id="c-gap"></div></div>
-      <div class="card"><h3>หลักฐานว่าข้อมูลมีผลจริง</h3><p>เปลี่ยนตำแหน่งให้ถูก และเปลี่ยนค่าจริงจาก ERA5 เป็นดาวเทียม ทำให้ผลเพิ่มจาก 0.8% เป็น 12.1% · ถ้าใช้ ERA5 ต่อให้รู้ล่วงหน้าแบบสมบูรณ์ ยังแย่กว่าวิธีง่าย (−6.8%) แปลว่าคุณภาพของข้อมูลสำคัญกว่าตัวโมเดล</p></div>
+      <div class="card"><h3>ตอนนี้มาได้ประมาณ 40% ของขีดสูงสุด</h3><p class="small">แม่นกว่าวิธีง่ายกี่ % · ขีดสูงสุด = ถ้ารู้ล่วงหน้าว่าดาวเทียมจะเห็นเมฆพรุ่งนี้อย่างไรแบบไม่ผิดเลย</p><div id="c-gap"></div></div>
+      <div class="card"><h3>ข้อมูลที่ถูกต้องสำคัญกว่าตัวโมเดล</h3><p>แค่หาตำแหน่งไซต์ให้ถูก และเปลี่ยนคำตอบที่ใช้สอนโมเดลจากข้อมูลหยาบ (ERA5) เป็นดาวเทียม ผลดีขึ้นจาก 0.8% เป็น 12.1% · ถ้าใช้ข้อมูลหยาบ ต่อให้รู้ล่วงหน้าแบบไม่ผิดเลย ก็ยังทายแย่กว่าวิธีง่าย</p></div>
     </div>
     <div class="col" style="flex:1">
       <h3>ข้อมูลที่จะช่วยให้แม่นขึ้น</h3>
-      <div class="card"><h3>1 · พิกัดจริงของไซต์</h3><p>ตำแหน่งตอนนี้เป็นค่าประมาณ อาจคลาด 10–20 กม. การหาตำแหน่งที่ถูกเป็นหนึ่งในสองอย่างที่ทำให้ผลดีขึ้นมากที่สุด</p></div>
-      <div class="card"><h3>2 · ข้อมูลไซต์หลายเดือน รวมฤดูแล้ง</h3><p>26 วันยังไม่พอยืนยันผล และยังไม่ได้ทดสอบฤดูแล้ง ข้อมูลที่ยาวขึ้นใช้ปรับเทียบกับไซต์ได้ดีขึ้นด้วย</p></div>
-      <div class="card"><h3>3 · เซนเซอร์แสงแดดและอุณหภูมิแผงที่ไซต์ (ถ้ามี)</h3><p>เป็นค่าจริงที่ตรงที่สุดสำหรับสอนโมเดล และแยกผลของอากาศออกจากปัญหาอุปกรณ์</p></div>
-      <div class="card"><h3>4 · log อินเวอร์เตอร์และการลดกำลัง</h3><p>บอกได้ชัดว่าชั่วโมงไหน PV ถูกลดกำลังหรืออุปกรณ์ผิดปกติ ไม่ต้องประมาณจากข้อมูล</p></div>
+      <div class="card"><h3>1 · พิกัดจริงของไซต์</h3><p>ตอนนี้ใช้ตำแหน่งที่หาจากดาวเทียม อาจคลาด 10–20 กม. ถ้าได้พิกัดจริง โมเดลจะดูเมฆได้ตรงจุดขึ้น</p></div>
+      <div class="card"><h3>2 · ข้อมูลไซต์หลายเดือน รวมหน้าแล้ง</h3><p>ตอนนี้มีแค่ 26 วันในหน้าฝน ยังสรุปผลแน่นอนไม่ได้ และยังไม่รู้ว่าหน้าแล้งทายได้ดีแค่ไหน</p></div>
+      <div class="card"><h3>3 · เครื่องวัดแดดและวัดอุณหภูมิแผงที่ไซต์ (ถ้ามี)</h3><p>เป็นค่าที่ตรงที่สุดให้โมเดลเรียน และช่วยแยกว่าไฟลดลงเพราะเมฆ หรือเพราะอุปกรณ์มีปัญหา</p></div>
+      <div class="card"><h3>4 · บันทึกของอินเวอร์เตอร์</h3><p>บอกได้ตรง ๆ ว่าช่วงไหนระบบลดกำลังแผง หรืออุปกรณ์ผิดปกติ ไม่ต้องเดาเอาจากข้อมูล</p></div>
     </div>
   </div>
 </section>
 
 <!-- 13 -->
 <section class="slide">
-  <div class="eyebrow">ต่อยอด · โหลด</div>
-  <h2>โหลดจะแม่นขึ้น ถ้าได้ข้อมูลที่ยาวขึ้น และข้อมูลแผนการผลิต</h2>
+  <div class="eyebrow">ต่อยอด · ไฟที่โรงงานใช้</div>
+  <h2>ทายโหลดได้แม่นขึ้น ถ้ารู้แผนการผลิตของโรงงาน</h2>
   <div class="body">
     <div class="col" style="flex:1">
-      <div class="card"><h3>ความคลาดเคลื่อนของโหลด (%)</h3><p class="small">ยิ่งสั้นยิ่งดี · 8–29 มิ.ย.</p><div id="c-lo"></div>
-        <p class="small" style="margin-top:6px">แท่งล่างสุด: ถ้ารู้ล่วงหน้าว่าวันพรุ่งนี้โรงงานจะผลิตระดับไหน (เช่น จากแผนการผลิต) ความคลาดเคลื่อนจะลดเหลือประมาณ 8.8%</p></div>
-      <div class="card"><h3>ข้อมูลเดิมที่ยาวขึ้น ช่วยเรื่องอะไร</h3><p class="small">โมเดลปัจจุบันเรียนรู้ได้เต็มที่ตั้งแต่ประมาณ 6–8 วัน (กราฟขวา) ข้อมูลที่ยาวขึ้นจึงช่วยส่วนอื่นมากกว่า</p></div>
+      <div class="card"><h3>ทายโหลดพลาดเท่าไร (%)</h3><p class="small">แท่งยิ่งสั้นยิ่งดี · 8–29 มิ.ย.</p><div id="c-lo"></div>
+        <p class="small" style="margin-top:6px">แท่งล่างสุด: ถ้ารู้ล่วงหน้าว่าพรุ่งนี้โรงงานจะผลิตมากหรือน้อย เช่น จากแผนการผลิต จะทายพลาดเหลือประมาณ 8.8%</p></div>
+      <div class="card"><h3>ข้อมูลแบบเดิมที่ยาวขึ้น ช่วยได้แค่ไหน</h3><p class="small">จากกราฟขวา โมเดลตอนนี้เห็นข้อมูลย้อนหลัง 6–8 วันก็ทายได้ดีที่สุดแล้ว ให้ดูมากกว่านั้นก็ไม่แม่นขึ้น ข้อมูลที่ยาวขึ้นจึงช่วยเรื่องอื่นมากกว่า (ด้านขวาล่าง)</p></div>
     </div>
     <div class="col" style="flex:1">
-      <div class="card"><h3>ความคลาดเคลื่อน เมื่อให้โมเดลเห็นข้อมูลย้อนหลังกี่วัน</h3><p class="small">โมเดลระดับจากช่วงเย็น · ทดสอบ 18–29 มิ.ย.</p><div id="c-learn"></div></div>
+      <div class="card"><h3>ให้โมเดลดูข้อมูลย้อนหลังกี่วัน แล้วทายพลาดเท่าไร</h3><p class="small">ทดสอบ 18–29 มิ.ย. · เส้นยิ่งต่ำยิ่งดี</p><div id="c-learn"></div></div>
       <div class="g2">
-        <div class="card"><h3>ML ที่ซับซ้อนขึ้น</h3><p class="small">gradient boosting แม่นกว่าวิธีง่าย 25.9% แต่ยังยืนยันไม่ได้ ต้องการข้อมูลหลายเดือน</p></div>
-        <div class="card"><h3>วันพิเศษและฤดูกาล</h3><p class="small">รูปแบบวันจันทร์มาจาก 5 วัน ยังไม่เคยเห็นวันหยุดยาวหรือฤดูอื่น</p></div>
-        <div class="card"><h3>ช่วงความเชื่อมั่น</h3><p class="small">ช่วงที่ควรครอบ 80% ครอบได้จริง 71% ต้องมีข้อมูลมากขึ้นจึงประเมินได้ถูก</p></div>
-        <div class="card"><h3>มิเตอร์โหลด</h3><p class="small">ตอนนี้โหลดคำนวณจากสมดุลพลังงาน มิเตอร์จริงจะลดความคลาดเคลื่อนของข้อมูลตั้งต้น</p></div>
+        <div class="card"><h3>โมเดลที่ซับซ้อนขึ้น (ML)</h3><p class="small">ตอนนี้แม่นกว่าวิธีง่าย 25.9% แต่ข้อมูลยังน้อยเกินจะสรุปได้ ต้องมีข้อมูลหลายเดือน</p></div>
+        <div class="card"><h3>วันหยุดและฤดูกาล</h3><p class="small">รูปแบบวันจันทร์เห็นมาแค่ 5 ครั้ง ยังไม่เคยเห็นวันหยุดยาวหรือฤดูอื่นเลย</p></div>
+        <div class="card"><h3>ช่วงที่ทายว่าค่าจะอยู่</h3><p class="small">ช่วงที่ควรถูก 8 ใน 10 วัน ถูกจริงแค่ประมาณ 7 ใน 10 วัน ต้องมีข้อมูลมากขึ้นจึงตั้งช่วงได้ถูก</p></div>
+        <div class="card"><h3>มิเตอร์วัดโหลด</h3><p class="small">ตอนนี้ไม่มีมิเตอร์วัดไฟที่โรงงานใช้โดยตรง เราคำนวณจากไฟแผง แบต และกริด ถ้ามีมิเตอร์ ข้อมูลตั้งต้นจะแม่นขึ้น</p></div>
       </div>
     </div>
   </div>
@@ -302,22 +306,22 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <!-- 14 -->
 <section class="slide">
   <div class="eyebrow">สรุป</div>
-  <h2>พยากรณ์ได้แล้ว และแม่นขึ้นได้อีกด้วยข้อมูลที่ตรงจุด</h2>
+  <h2>ทายล่วงหน้าได้แล้ว และแม่นขึ้นได้อีกถ้าได้ข้อมูลที่ตรงจุด</h2>
   <div class="body">
     <div class="col" style="flex:1">
-      <div class="card top"><h3>1 · แม่นกว่าวิธีง่ายทุกค่าที่เทียบได้</h3><p>แสงแดดแม่นกว่า 20.7% และโหลดแม่นกว่า 34.5% ยืนยันทางสถิติแล้ว PV ของไซต์แม่นกว่า 12.1% รอยืนยันด้วยข้อมูลที่ยาวขึ้น</p></div>
-      <div class="card top"><h3>2 · ความแม่นมาจากข้อมูลที่ถูกต้อง</h3><p>ตำแหน่งไซต์และค่าจริงจากดาวเทียมทำให้ผลเปลี่ยนมากกว่าการเปลี่ยนโมเดล</p></div>
-      <div class="card top"><h3>3 · ยังมีช่องว่างให้พัฒนา</h3><p>PV ไปได้ราว 40% ของเพดาน โหลดลดความคลาดเคลื่อนได้อีกถ้ารู้แผนการผลิต</p></div>
+      <div class="card top"><h3>1 · ทายได้ดีกว่าวิธีง่ายทุกเรื่องที่เทียบได้</h3><p>ทายแดดพลาดน้อยกว่าวิธีง่าย 20.7% ทายโหลดพลาดน้อยกว่า 34.5% สองเรื่องนี้ยืนยันแล้ว · ทายไฟจากแผงของไซต์พลาดน้อยกว่า 12.1% รอข้อมูลเพิ่มเพื่อยืนยัน</p></div>
+      <div class="card top"><h3>2 · สิ่งที่ทำให้แม่นขึ้นคือข้อมูลที่ถูกต้อง</h3><p>การหาตำแหน่งไซต์ให้ถูก และใช้ดาวเทียมสอนโมเดล ช่วยได้มากกว่าการเปลี่ยนโมเดล</p></div>
+      <div class="card top"><h3>3 · ยังพัฒนาต่อได้</h3><p>ทายไฟจากแผงมาได้ประมาณ 40% ของขีดสูงสุด ทายโหลดจะพลาดลดลงอีกถ้ารู้แผนการผลิต</p></div>
     </div>
     <div class="col" style="flex:1">
       <div class="card" style="flex:1"><h3>ข้อมูลที่ขอเพิ่มเติม</h3>
         <ol style="padding-left:20px;display:flex;flex-direction:column;gap:8px;margin-top:8px">
           <li>พิกัดของไซต์ ATVXX</li>
-          <li>ข้อมูลรายนาทีต่อเนื่องหลายเดือน รวมฤดูแล้ง</li>
+          <li>ข้อมูลรายนาทีต่อเนื่องหลายเดือน รวมหน้าแล้ง</li>
           <li>แผนการผลิต กะทำงาน และวันหยุดของโรงงาน</li>
-          <li>ข้อมูลเซนเซอร์แสงแดดและอุณหภูมิแผง ถ้ามี</li>
-          <li>log อินเวอร์เตอร์ การลดกำลัง และสัญญาณสั่งงานของ EMS</li>
-          <li>ความหมายของคอลัมน์ pv_power 1 และ 2</li>
+          <li>ข้อมูลเครื่องวัดแดดและอุณหภูมิแผง ถ้ามี</li>
+          <li>บันทึกของอินเวอร์เตอร์ การลดกำลังแผง และคำสั่งของระบบ EMS</li>
+          <li>ความหมายของคอลัมน์ pv_power 1 และ pv_power 2 ในข้อมูล</li>
         </ol></div>
     </div>
   </div>
@@ -375,7 +379,7 @@ function lines(id,rows,ser,o){const W=o.W||560,H=o.H||230,x0=46,x1=W-(o.right?44
   const seg=[[2024,2025.33,"#2F7A3E"],[2025.33,2025.83,"#B8752B"],[2025.83,2026.42,"#2F7A3E"],[2026.42,2026.5,"#B8752B"]];
   [["พยากรณ์ ECMWF + GFS",seg],["ดาวเทียม Himawari-9",seg],["ข้อมูลไซต์ ATVXX",[[2026.42,2026.5,"#B8752B"]]]].forEach(([lab,sg],i)=>{const y=6+i*38;
     el("text",{x:0,y:y+19,"font-size":15,style:"fill:#3B4C57"},s,lab);sg.forEach(([a,b,c])=>el("rect",{x:X(a),y:y,width:X(b)-X(a),height:26,rx:3,style:`fill:${c}`},s));});
-  el("text",{x:X(2025.58),y:H-30,"text-anchor":"middle","font-size":13,style:"fill:#B8752B"},s,"ทดสอบ: ฤดูฝน 2025");})();
+  el("text",{x:X(2025.58),y:H-30,"text-anchor":"middle","font-size":13,style:"fill:#B8752B"},s,"ทดสอบ: หน้าฝน 2025");})();
 // clear-sky index example: top = kW lines, bottom = % bars
 (function(){const c=D.num.clear,rows=[];for(let h=7;h<=17;h++)rows.push({h,ref:c.ref[h],a:c.d03[h],k:Math.min(1,c.d03[h]/c.ref[h])});
   lines("c-csi",rows,[["ref","#8A9AA4",2.5,1],["a","#0F6E6C",3]],{W:600,H:170,lo:0,hi:2000,step:1000,fmt:v=>v+" kW",xl:(r,i)=>String(r.h).padStart(2,"0")+":00",
@@ -386,16 +390,16 @@ function lines(id,rows,ser,o){const W=o.W||560,H=o.H||230,x0=46,x1=W-(o.right?44
     el("text",{x:x+bw*0.32,y:y1-h-4,"text-anchor":"middle","font-size":12,"font-family":MONO,style:"fill:#16232C"},s,Math.round(100*r.k)+"%");});
   el("line",{x1:x0,x2:x1,y1:y1,y2:y1,style:"stroke:#D9E1E5"},s);
   el("text",{x:x0-6,y:y0+10,"text-anchor":"end","font-size":11,style:"fill:#5A6E79"},s,"100%");})();
-hbars("c-rain",D.num.rain.map(([k,v])=>({k,v,c:k.startsWith("ML")?"#0F6E6C":(k==="วิธีง่าย"?"#16232C":"#8A9AA4")})),{fmt:v=>v.toFixed(1)+"%",x0:110,rh:52});
-hbars("c-prog",D.num.prog.map(([k,v],i)=>({k,v,c:i===3?"#0F6E6C":(i===4?"#B8752B":"#8A9AA4")})),{fmt:v=>"+"+v.toFixed(1)+"%",x0:200,rh:44});
-hbars("c-gap",[{k:"รอบแรก",v:D.num.prog[0][1],c:"#8A9AA4"},{k:"ตอนนี้ (ML + ดาวเทียม)",v:D.num.prog[3][1],c:"#0F6E6C"},{k:"เพดาน",v:D.num.prog[4][1],c:"#B8752B"}],{fmt:v=>"+"+v.toFixed(1)+"%",x0:190,rh:44});
-hbars("c-lo",[{k:"วิธีง่าย (เท่าเมื่อวาน)",v:D.num.load[1],c:"#8A9AA4"},{k:"โมเดลตอนนี้",v:D.num.load[0],c:"#0F6E6C"},{k:"ถ้ารู้ระดับการผลิตล่วงหน้า",v:D.num.load_oracle,c:"#B8752B"}],{fmt:v=>v.toFixed(1)+"%",x0:210,rh:44});
+hbars("c-rain",D.num.rain.map(([k,v])=>({k:({"GFS":"GFS (สหรัฐฯ)","ECMWF":"ECMWF (ยุโรป)"})[k]||k,v,c:k.startsWith("ML")?"#0F6E6C":(k==="วิธีง่าย"?"#16232C":"#8A9AA4")})),{fmt:v=>v.toFixed(1)+"%",x0:110,rh:52});
+hbars("c-prog",D.num.prog.map(([k,v],i)=>({k:["รอบแรก: เฉลี่ยพยากรณ์ 2 แหล่ง","ใช้พยากรณ์ยุโรปอย่างเดียว","ML สอนด้วยข้อมูลหยาบ","ML สอนด้วยดาวเทียม (ตอนนี้)","ขีดสูงสุดที่ทำได้*"][i],v,c:i===3?"#0F6E6C":(i===4?"#B8752B":"#8A9AA4")})),{fmt:v=>"+"+v.toFixed(1)+"%",x0:250,rh:44});
+hbars("c-gap",[{k:"รอบแรก",v:D.num.prog[0][1],c:"#8A9AA4"},{k:"ตอนนี้",v:D.num.prog[3][1],c:"#0F6E6C"},{k:"ขีดสูงสุด",v:D.num.prog[4][1],c:"#B8752B"}],{fmt:v=>"+"+v.toFixed(1)+"%",x0:190,rh:44});
+hbars("c-lo",[{k:"วิธีง่าย (เท่าเมื่อวาน)",v:D.num.load[1],c:"#8A9AA4"},{k:"โมเดลของเราตอนนี้",v:D.num.load[0],c:"#0F6E6C"},{k:"ถ้ารู้ว่าพรุ่งนี้ผลิตมากหรือน้อย",v:D.num.load_oracle,c:"#B8752B"}],{fmt:v=>v.toFixed(1)+"%",x0:240,rh:44});
 (function(){const R=D.learn.filter(r=>r.e!==null&&r.n>=6);lines("c-learn",R.map(r=>({n:r.n,e:100*r.e,p:100*D.learn_persist})),[["p","#8A9AA4",2,1],["e","#0F6E6C",3]],
   {W:560,H:200,lo:0,hi:20,step:5,fmt:v=>v+"%",xl:r=>r.n+" วัน",after:(s,X,Y)=>{R.forEach((r,i)=>el("circle",{cx:X(i),cy:Y(100*r.e),r:4,style:"fill:#0F6E6C"},s));
    el("text",{x:X(R.length-1),y:Y(100*D.learn_persist)-8,"text-anchor":"end","font-size":12.5,style:"fill:#5A6E79"},s,"วิธีง่าย");}});})();
 (function(){const P=D.num.evening,W=560,H=330,x0=56,x1=W-10,y0=8,y1=H-40;const s=svg("c-ev",W,H);const lo=650,hi=1550,X=v=>x0+(x1-x0)*(v-lo)/(hi-lo),Y=v=>y1-(y1-y0)*(v-lo)/(hi-lo);
   for(let v=700;v<=1500;v+=200){el("line",{x1:x0,x2:x1,y1:Y(v),y2:Y(v),style:"stroke:#E3E9EC"},s);el("text",{x:x0-6,y:Y(v)+4,"text-anchor":"end","font-size":12,"font-family":MONO,style:"fill:#5A6E79"},s,v);el("text",{x:X(v),y:y1+16,"text-anchor":"middle","font-size":12,"font-family":MONO,style:"fill:#5A6E79"},s,v);}
-  el("text",{x:(x0+x1)/2,y:H-4,"text-anchor":"middle","font-size":13,style:"fill:#3B4C57"},s,"โหลดเฉลี่ย 16:00–22:00 น. วันนี้ (kW)");el("text",{x:x0+6,y:y0+14,"font-size":13,style:"fill:#3B4C57"},s,"โหลดเฉลี่ยวันพรุ่งนี้ (kW)");
+  el("text",{x:(x0+x1)/2,y:H-4,"text-anchor":"middle","font-size":13,style:"fill:#3B4C57"},s,"โหลดตอนเย็นวันนี้ 16:00–22:00 น. (kW)");el("text",{x:x0+6,y:y0+14,"font-size":13,style:"fill:#3B4C57"},s,"โหลดทั้งวันของพรุ่งนี้ (kW)");
   P.forEach(p=>el("circle",{cx:X(p.ev),cy:Y(p.next),r:7,style:`fill:${p.mon?"#A83E36":"#0F6E6C"};opacity:.85`},s));})();
 lines("c-ldw",D.num.ldw,[["pers","#8A9AA4",1.8],["ev","#0F6E6C",2.2],["act","#16232C",2.2]],{W:600,H:190,lo:400,hi:1800,step:700,xl:(r,i)=>i%24===12?r.t.slice(3,5)+" มิ.ย.":null});
 lines("c-temp",D.num.temp,[["act","#16232C",2.2],["fc","#B8752B",2.2]],{W:1150,H:170,lo:20,hi:36,step:8,fmt:v=>v+"°",xl:(r,i)=>i%24===12?r.t.slice(0,2)+" มิ.ย.":null});
@@ -460,7 +464,7 @@ function label(text,color,size){const c=document.createElement('canvas');const c
   const tw=new THREE.Group();const steel=new THREE.MeshStandardMaterial({color:0x8a939c,metalness:.4,roughness:.7});
   for(const dx of [-1.5,1.5])for(const dz of [-1.5,1.5]){const l=new THREE.Mesh(new THREE.CylinderGeometry(.25,.4,26),steel);l.position.set(dx,13,dz);l.castShadow=true;tw.add(l);}
   for(const y of [20,24]){const a=new THREE.Mesh(new THREE.BoxGeometry(12,.35,.35),steel);a.position.y=y;tw.add(a);}tw.position.set(64,0,-6);S.add(tw);
-  const grLab=label("กริด (ไม่ส่งไฟออก)","#16232C",4);grLab.position.set(64,31,-6);S.add(grLab);
+  const grLab=label("กริด","#16232C",4);grLab.position.set(64,31,-6);S.add(grLab);
   // clouds
   const clouds=[];const cm=new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,transparent:true,opacity:.92});
   for(let i=0;i<22;i++){const g=new THREE.Group();const n=4+(i%3);for(let j=0;j<n;j++){const b=new THREE.Mesh(new THREE.SphereGeometry(5+((i*7+j*3)%5),14,10),cm);b.position.set(j*6-n*3,((j*5)%3)*1.5,((i+j)%3-1)*4);b.castShadow=true;g.add(b);}
@@ -495,7 +499,7 @@ function label(text,color,size){const c=document.createElement('canvas');const c
   const pin=(lat,lon,col,txt,h)=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.7,.7,h,12),new THREE.MeshStandardMaterial({color:col}));c.position.set(X(lon),h/2,Z(lat));S.add(c);
     const ring=new THREE.Mesh(new THREE.TorusGeometry(4,.5,10,32),new THREE.MeshStandardMaterial({color:col}));ring.rotation.x=Math.PI/2;ring.position.set(X(lon),.6,Z(lat));S.add(ring);
     const l=label(txt,col===0xa83e36?"#A83E36":"#16232C",5.5);l.position.set(X(lon),h+5,Z(lat));S.add(l);};
-  pin(14.6,101.15,0xa83e36,"ตำแหน่งที่พบ ~14.6°N 101.15°E",50);pin(13.3,101.1,0x16232c,"ตำแหน่งที่สมมติในรอบแรก",22);
+  pin(14.6,101.15,0xa83e36,"ตำแหน่งที่พบ ~14.6°N 101.15°E",50);pin(13.3,101.1,0x16232c,"ตำแหน่งที่ใช้ในรอบแรก",22);
   for(const lat of [13,14,15,16]){const l=label(lat+"°N","#5A6E79",3.5);l.position.set(X(100.2),1,Z(lat));S.add(l);}
   for(const lon of [100.5,101,101.5,102]){const l=label(lon.toFixed(1)+"°E","#5A6E79",3.5);l.position.set(X(lon),1,Z(12.35));S.add(l);}
   v.tick=dt=>{if(!v.drag)v.th+=dt*v.auto;};})();
