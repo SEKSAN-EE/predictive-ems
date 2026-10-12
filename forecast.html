@@ -178,8 +178,10 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       <div class="step"><div class="no">4</div><div><h3>แปลงเป็นกำลังผลิตของไซต์</h3><p class="small">ปรับเทียบด้วยข้อมูลไซต์ก่อนวันที่พยากรณ์เท่านั้น</p></div></div>
     </div>
     <div class="card" style="flex:1.25"><h3>ตัวอย่าง: วันที่ 3 มิ.ย. (เมฆมาก)</h3>
-      <div class="key"><span><i class="ln" style="background:var(--grey)"></i>ฟ้าใส</span><span><i class="ln" style="background:var(--teal)"></i>ค่าจริง</span><span><i class="ln" style="background:var(--amber)"></i>ความใสของท้องฟ้า (แกนขวา 0–1)</span></div>
-      <div id="c-csi"></div></div>
+      <div class="key"><span><i class="ln" style="background:#8A9AA4"></i>ถ้าฟ้าใส ไซต์นี้ผลิตได้เท่าไร</span><span><i class="ln" style="background:#0F6E6C"></i>ผลิตได้จริงวันนั้น</span></div>
+      <div id="c-csi"></div>
+      <p class="small" style="margin:2px 0 0"><b style="color:#B8752B">แท่งสีส้ม = ความใสของท้องฟ้า</b> คือผลิตได้จริงกี่ % ของวันฟ้าใส (จริง ÷ ฟ้าใส) ตัดผลของเวลาออก เหลือเฉพาะผลของเมฆ</p>
+      <div id="c-csi2"></div></div>
   </div>
 </section>
 
@@ -374,11 +376,16 @@ function lines(id,rows,ser,o){const W=o.W||560,H=o.H||230,x0=46,x1=W-(o.right?44
   [["พยากรณ์ ECMWF + GFS",seg],["ดาวเทียม Himawari-9",seg],["ข้อมูลไซต์ ATVXX",[[2026.42,2026.5,"#B8752B"]]]].forEach(([lab,sg],i)=>{const y=6+i*38;
     el("text",{x:0,y:y+19,"font-size":15,style:"fill:#3B4C57"},s,lab);sg.forEach(([a,b,c])=>el("rect",{x:X(a),y:y,width:X(b)-X(a),height:26,rx:3,style:`fill:${c}`},s));});
   el("text",{x:X(2025.58),y:H-30,"text-anchor":"middle","font-size":13,style:"fill:#B8752B"},s,"ทดสอบ: ฤดูฝน 2025");})();
-// clear-sky index example
-(function(){const c=D.num.clear,rows=[];for(let h=6;h<=18;h++)rows.push({h,ref:c.ref[h],a:c.d03[h],k:c.ref[h]>20?Math.min(1.2,c.d03[h]/c.ref[h]):0});
-  lines("c-csi",rows,[["ref","#8A9AA4",2.5,1],["a","#0F6E6C",3]],{W:600,H:250,lo:0,hi:2000,step:500,right:true,xl:(r,i)=>i%2?null:String(r.h).padStart(2,"0")+":00",
-    after:(s,X,Y,x1)=>{const Yk=v=>222-(222-10)*v/1;el("polyline",{points:rows.map((r,i)=>`${X(i)},${Yk(r.k)}`).join(" "),fill:"none",style:"stroke:#B8752B;stroke-width:3"},s);
-      rows.forEach((r,i)=>el("circle",{cx:X(i),cy:Yk(r.k),r:3.5,style:"fill:#B8752B"},s));for(const v of [0,0.5,1])el("text",{x:x1+6,y:Yk(v)+4,"font-size":12,"font-family":MONO,style:"fill:#B8752B"},s,v.toFixed(1));}});})();
+// clear-sky index example: top = kW lines, bottom = % bars
+(function(){const c=D.num.clear,rows=[];for(let h=7;h<=17;h++)rows.push({h,ref:c.ref[h],a:c.d03[h],k:Math.min(1,c.d03[h]/c.ref[h])});
+  lines("c-csi",rows,[["ref","#8A9AA4",2.5,1],["a","#0F6E6C",3]],{W:600,H:170,lo:0,hi:2000,step:1000,fmt:v=>v+" kW",xl:(r,i)=>String(r.h).padStart(2,"0")+":00",
+    after:(s,X,Y)=>{const i=3,r=rows[i];el("line",{x1:X(i),x2:X(i),y1:Y(r.ref),y2:Y(r.a),style:"stroke:#B8752B;stroke-width:2;stroke-dasharray:3 3"},s);
+      el("text",{x:X(5.15),y:Y(650),"font-size":13,style:"fill:#B8752B"},s,`ตัวอย่าง 10:00 → ${r.a.toLocaleString()} ÷ ${r.ref.toLocaleString()} = ${Math.round(100*r.k)}%`);}});
+  const W=600,H=110,x0=46,x1=W-10,y0=8,y1=H-8;const s=svg("c-csi2",W,H);const n=rows.length,bw=(x1-x0)/n;
+  rows.forEach((r,i)=>{const h=(y1-y0)*r.k,x=x0+bw*i+bw*0.18;el("rect",{x:x,y:y1-h,width:bw*0.64,height:Math.max(h,1),rx:2,style:"fill:#B8752B"},s);
+    el("text",{x:x+bw*0.32,y:y1-h-4,"text-anchor":"middle","font-size":12,"font-family":MONO,style:"fill:#16232C"},s,Math.round(100*r.k)+"%");});
+  el("line",{x1:x0,x2:x1,y1:y1,y2:y1,style:"stroke:#D9E1E5"},s);
+  el("text",{x:x0-6,y:y0+10,"text-anchor":"end","font-size":11,style:"fill:#5A6E79"},s,"100%");})();
 hbars("c-rain",D.num.rain.map(([k,v])=>({k,v,c:k.startsWith("ML")?"#0F6E6C":(k==="วิธีง่าย"?"#16232C":"#8A9AA4")})),{fmt:v=>v.toFixed(1)+"%",x0:110,rh:52});
 hbars("c-prog",D.num.prog.map(([k,v],i)=>({k,v,c:i===3?"#0F6E6C":(i===4?"#B8752B":"#8A9AA4")})),{fmt:v=>"+"+v.toFixed(1)+"%",x0:200,rh:44});
 hbars("c-gap",[{k:"รอบแรก",v:D.num.prog[0][1],c:"#8A9AA4"},{k:"ตอนนี้ (ML + ดาวเทียม)",v:D.num.prog[3][1],c:"#0F6E6C"},{k:"เพดาน",v:D.num.prog[4][1],c:"#B8752B"}],{fmt:v=>"+"+v.toFixed(1)+"%",x0:190,rh:44});
