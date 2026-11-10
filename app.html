@@ -692,9 +692,9 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
       <div class="ph-a"><label class="sw-l" for="acDetail"><span>รายละเอียดทางวิศวกรรม</span><input type="checkbox" id="acDetail" class="sw-i"><i class="sw-t"></i></label></div></header>
     <div class="gh fu"><span>ความแม่นของพยากรณ์</span><em>พยากรณ์ล่วงหน้า 1 วัน เทียบค่าที่เกิดจริง</em></div>
     <div class="grid g4 fu">
-      <div class="card kpi tile"><div class="l0"><i class="dot g2"></i>PV คลาดเฉลี่ย</div><div class="v" id="aPV">–</div><div class="l" id="aPV2"></div><div class="l mut" id="aPV3"></div></div>
-      <div class="card kpi tile"><div class="l0"><i class="dot g1"></i>โหลดคลาดเฉลี่ย</div><div class="v" id="aLD">–</div><div class="l" id="aLD2"></div><div class="l mut" id="aLD3"></div></div>
-      <div class="card kpi tile"><div class="l0"><i class="dot ink"></i>แดดคลาดเฉลี่ย</div><div class="v" id="aSun">–</div><div class="l" id="aSun2"></div><div class="l mut" id="aSun3"></div></div>
+      <div class="card kpi tile"><div class="l0"><i class="dot g2"></i>PV แม่นเฉลี่ย</div><div class="v" id="aPV">–</div><div class="l" id="aPV2"></div><div class="l mut" id="aPV3"></div></div>
+      <div class="card kpi tile"><div class="l0"><i class="dot g1"></i>โหลดแม่นเฉลี่ย</div><div class="v" id="aLD">–</div><div class="l" id="aLD2"></div><div class="l mut" id="aLD3"></div></div>
+      <div class="card kpi tile"><div class="l0"><i class="dot ink"></i>แดดแม่นเฉลี่ย</div><div class="v" id="aSun">–</div><div class="l" id="aSun2"></div><div class="l mut" id="aSun3"></div></div>
       <div class="card kpi tile"><div class="l0"><i class="dot red"></i>รายได้ที่คลาดได้ต่อวัน</div><div class="v red" id="aRisk">–</div><div class="l" id="aRisk2"></div><div class="l mut" id="aRisk3"></div></div>
     </div>
     <section class="card sc fu"><div class="sc-h"><div><h3>พยากรณ์เทียบค่าจริง 30 วันล่าสุด</h3><p id="acVsSub"></p></div></div>
@@ -1025,6 +1025,7 @@ const dShort = s => { const d = dt(s); return d.getDate() + " " + TH_M[d.getMont
 const dLong = s => { const d = dt(s); return TH_D[d.getDay()] + " " + d.getDate() + " " + TH_M[d.getMonth()] + " " + (d.getFullYear() + 543); };
 const fmt = (v, p = 0) => v == null || !isFinite(v) ? "–" : v.toLocaleString("en-US", { minimumFractionDigits: p, maximumFractionDigits: p });
 const pct = (v, p = 0) => v == null || !isFinite(v) ? "–" : fmt(v * 100, p) + "%";
+const acc = (e, p = 0) => e == null || !isFinite(e) ? "–" : pct(Math.max(0, 1 - e), p);
 const sum = a => a.reduce((s, v) => s + (v || 0), 0);
 const mean = a => a.length ? sum(a) / a.length : NaN;
 const quant = (a, q) => { const s = [...a].filter(isFinite).sort((x, y) => x - y); if (!s.length) return NaN; const i = (s.length - 1) * q, lo = Math.floor(i); return s[lo] + (s[Math.min(lo + 1, s.length - 1)] - s[lo]) * (i - lo); };
@@ -1461,9 +1462,9 @@ function renderAcc() {
   const sunKwh = mean(last.map(r => Math.abs(r.p1 - r.act))) * kWhPerUnit(), sunMean = mean(last.map(r => r.act));
   $("#acDesc").textContent = `เทียบพยากรณ์ล่วงหน้า 1 วันกับค่าที่เกิดจริง ทั้งแดด PV และโหลด เป็น kWh และบาท · ข้อมูลแดดถึง ${dLong(M.last_sat)}`;
   const f1 = v => fmt(v, 1);
-  countUp("#aPV", E.pv.err * 100, f1, "<small>%</small>"); $("#aPV2").textContent = `≈ ${fmt(E.pv.kwh)} kWh ต่อวัน`; $("#aPV3").textContent = `${E.src} · วิธีเดิม ${pct(E.pv.errS, 1)}`;
-  countUp("#aLD", E.load.err * 100, f1, "<small>%</small>"); $("#aLD2").textContent = `≈ ${fmt(E.load.kwh)} kWh ต่อวัน`; $("#aLD3").textContent = `${E.src} · วิธีเดิม ${pct(E.load.errS, 1)}`;
-  countUp("#aSun", L1.ml * 100, f1, "<small>%</small>"); $("#aSun2").textContent = `แดดเฉลี่ย ${fmt(sunMean, 1)} kWh/m² ต่อวัน`; $("#aSun3").textContent = `ดาวเทียม 12 เดือนล่าสุด · วิธีเดิม ${pct(L1.pers, 1)}`;
+  countUp("#aPV", (1 - E.pv.err) * 100, f1, "<small>%</small>"); $("#aPV2").textContent = `คลาดเฉลี่ย ≈ ${fmt(E.pv.kwh)} kWh ต่อวัน`; $("#aPV3").textContent = `${E.src} · วิธีเดิม ${acc(E.pv.errS, 1)}`;
+  countUp("#aLD", (1 - E.load.err) * 100, f1, "<small>%</small>"); $("#aLD2").textContent = `คลาดเฉลี่ย ≈ ${fmt(E.load.kwh)} kWh ต่อวัน`; $("#aLD3").textContent = `${E.src} · วิธีเดิม ${acc(E.load.errS, 1)}`;
+  countUp("#aSun", (1 - L1.ml) * 100, f1, "<small>%</small>"); $("#aSun2").textContent = `แดดเฉลี่ย ${fmt(sunMean, 1)} kWh/m² ต่อวัน`; $("#aSun3").textContent = `ดาวเทียม 12 เดือนล่าสุด · วิธีเดิม ${acc(L1.pers, 1)}`;
   countUp("#aRisk", sunKwh * PRICE, v => "฿" + fmt(v)); $("#aRisk2").textContent = `≈ ${fmt(sunKwh)} kWh PV ต่อวัน`; $("#aRisk3").textContent = "ความคลาดเฉลี่ยของพยากรณ์แดด แปลงเป็นยอดขาย";
   // forecast vs actual, last 30 days, as PV energy
   const k = kWhPerUnit(), rows = Array.from({ length: 30 }, (_, i) => byDay[addD(M.last_sat, i - 29)] || { d: addD(M.last_sat, i - 29) }), ok = rows.filter(r => r.act != null && r.p1 != null);
@@ -1474,7 +1475,7 @@ function renderAcc() {
     onPick: i => { if (rows[i].act == null) return; S.accSel = rows[i].d; if (!$("#acDetail").checked) { $("#acDetail").checked = true; } ANIM = false; renderAcc(); },
     tip: i => { const r = rows[i]; if (r.act == null) return { t: dLong(r.d), rows: [["#A9A08E", "ข้อมูลดาวเทียมไม่ครบ", "—"]] }; return { t: dLong(r.d), rows: [["#D9D1C0", "จริง", fmt(r.act * k) + " kWh"], ["#2A2823", "พยากรณ์", fmt(r.p1 * k) + " kWh"], [COL.waste, "คลาด", (r.p1 >= r.act ? "+" : "−") + fmt(Math.abs(r.p1 - r.act) * k) + " kWh"]] }; } });
   const err = r => Math.abs(r.p1 - r.act) / r.act, st = accStats(ok), best = [...ok].sort((a, b) => err(a) - err(b))[0], worst = [...ok].sort((a, b) => err(b) - err(a))[0];
-  $("#acMini").innerHTML = mini("คะแนนโมเดล 30 วัน", pct(1 - st.ml), `วิธีเดิม ${pct(1 - st.pers)}`) + mini("วันที่แม่นที่สุด", dShort(best.d), `คลาด ${pct(err(best), 1)}`) +
+  $("#acMini").innerHTML = mini("คะแนนโมเดล 30 วัน", pct(1 - st.ml), `วิธีเดิม ${pct(1 - st.pers)}`) + mini("วันที่แม่นที่สุด", dShort(best.d), `แม่น ${acc(err(best), 1)}`) +
     mini("วันที่คลาดมากสุด", dShort(worst.d), `${worst.p1 >= worst.act ? "+" : "−"}${fmt(Math.abs(worst.p1 - worst.act) * k)} kWh`) + mini("ค่าจริงอยู่ในช่วงต่ำ–สูง", pct(st.cover), "เป้า 80%");
   $("#acFoot").textContent = `แดดจริงจากดาวเทียม Himawari-9 · PV เทียบด้วยค่า PV ต่อแดดของไซต์ ${fmt(kWhPerUnit())} kWh ต่อ 1 kWh/m² · ความแม่นของ PV และโหลดวัดจาก${E.src} · วิธีเดิม = ใช้ค่าของเมื่อวานเป็นพยากรณ์ของพรุ่งนี้`;
   const more = $("#acDetail").checked; $("#acMore").hidden = !more; if ($("#acMoreH")) $("#acMoreH").hidden = !more;
@@ -1573,14 +1574,14 @@ function renderAccDetail() {
     n: rows.length, label: i => dShort(rows[i].d), unit: "kWh/ตร.ม.",
     bars: rows.map(r => r.act), line: rows.map(r => r.p1), dash: rows.map(r => r.pers1), lo: rows.map(r => r.lo1), hi: rows.map(r => r.hi1),
     sel: rows.findIndex(r => r.d === S.accSel), onPick: i => { if (rows[i].act == null) return; S.accSel = rows[i].d; ANIM = false; renderAccDetail(); },
-    tip: i => { const r = rows[i]; if (r.act == null) return `<b>${dLong(r.d)}</b><br>ข้อมูลดาวเทียมของวันนี้ไม่ครบ ไม่นำมาคิด`; return `<b>${dLong(r.d)}</b><br>แดดจริง <b>${fmt(r.act, 2)}</b> · พยากรณ์ <b>${fmt(r.p1, 2)}</b><br>คลาด ${pct(Math.abs(r.p1 - r.act) / r.act)} · baseline ${pct(Math.abs(r.pers1 - r.act) / r.act)}`; }
+    tip: i => { const r = rows[i]; if (r.act == null) return `<b>${dLong(r.d)}</b><br>ข้อมูลดาวเทียมของวันนี้ไม่ครบ ไม่นำมาคิด`; return `<b>${dLong(r.d)}</b><br>แดดจริง <b>${fmt(r.act, 2)}</b> · พยากรณ์ <b>${fmt(r.p1, 2)}</b><br>แม่น ${acc(Math.abs(r.p1 - r.act) / r.act)} · baseline ${acc(Math.abs(r.pers1 - r.act) / r.act)}`; }
   });
   // hourly
   const d = S.accSel, h = LAB.hourly[d], r = byDay[d];
   $("#hrTitle").textContent = dLong(d);
   if (h && h.sat) {
     const e = Math.abs(r.p1 - r.act) / r.act;
-    $("#hrSub").innerHTML = strip([["Actual", fmt(r.act, 2) + " kWh/m²"], ["พยากรณ์", fmt(r.p1, 2) + " kWh/m²"], ["Error", pct(e)], ["≈ PV", (r.p1 >= r.act ? "+" : "−") + fmt(Math.abs(r.p1 - r.act) * kWhPerUnit()) + " kWh"]]);
+    $("#hrSub").innerHTML = strip([["Actual", fmt(r.act, 2) + " kWh/m²"], ["พยากรณ์", fmt(r.p1, 2) + " kWh/m²"], ["แม่น", acc(e)], ["≈ PV", (r.p1 >= r.act ? "+" : "−") + fmt(Math.abs(r.p1 - r.act) * kWhPerUnit()) + " kWh"]]);
     hourChart($("#chHour"), { unit: "W/ตร.ม.", lines: [{ v: h.cs, stroke: css("--faint"), dash: "1.5 3.5" }, { v: h.sat, stroke: css("--ink") }, { v: h.ml, stroke: css("--ink"), dash: "5 4" }],
       tip: k => h.cs[k] > 0 ? `${String(k).padStart(2, "0")}:00–${String(k + 1).padStart(2, "0")}:00<br>จริง <b>${fmt(h.sat[k])}</b> · พยากรณ์ <b>${fmt(h.ml[k])}</b> W/ตร.ม.` : "" });
   } else {
@@ -1784,10 +1785,10 @@ function accCard(title, m, unitWord, extra) {
     <div class="accrow"><div class="kpi"><div class="l0">Accuracy รายวัน</div><div class="v">${fmt((1 - m.err) * 100)}<small>%</small></div>
       <div class="l">${isFinite(m.errS) ? `${delta(m.errS, m.err)} vs baseline ${fmt((1 - m.errS) * 100)}%` : "&nbsp;"}</div></div></div>
     <table class="mt"><thead><tr><th></th><th class="n">Forecast</th><th class="n">Baseline</th></tr></thead><tbody>
-    <tr><td title="ผลรวมความคลาด ÷ ผลรวมค่าจริง รายวัน">WAPE รายวัน</td><td class="n">${pct(m.err, 1)}</td><td class="n">${pct(m.errS, 1)}</td></tr>
-    <tr><td title="ผลรวมความคลาด ÷ ผลรวมค่าจริง รายชั่วโมง">WAPE รายชั่วโมง</td><td class="n">${pct(m.errH, 1)}</td><td class="n">${pct(m.errHS, 1)}</td></tr>
+    <tr><td title="100% − (ผลรวมความคลาด ÷ ผลรวมค่าจริง) รายวัน">แม่นรายวัน</td><td class="n">${acc(m.err, 1)}</td><td class="n">${acc(m.errS, 1)}</td></tr>
+    <tr><td title="100% − (ผลรวมความคลาด ÷ ผลรวมค่าจริง) รายชั่วโมง">แม่นรายชั่วโมง</td><td class="n">${acc(m.errH, 1)}</td><td class="n">${acc(m.errHS, 1)}</td></tr>
     <tr><td title="+ พยากรณ์สูงกว่าจริงโดยรวม · − ต่ำกว่าจริง">Bias</td><td class="n">${m.bias >= 0 ? "+" : "−"}${pct(Math.abs(m.bias), 1)}</td><td class="n">–</td></tr>
-    <tr><td>วันที่คลาด ≤ 15%</td><td class="n">${m.within} / ${m.n}</td><td class="n">–</td></tr>
+    <tr><td>วันที่แม่น ≥ 85%</td><td class="n">${m.within} / ${m.n}</td><td class="n">–</td></tr>
     ${isFinite(m.cover) ? `<tr><td title="สัดส่วนวันที่ค่าจริงอยู่ในช่วงต่ำ–สูง เป้า 80%">P10–P90 coverage</td><td class="n">${pct(m.cover)}</td><td class="n">–</td></tr>` : ""}</tbody></table>`;
 }
 function renderUpload() {
@@ -1812,26 +1813,26 @@ function renderUpload() {
   dayChart($("#chUp"), { n: rows.length, unit: "kWh", label: i => dShort(rows[i].d), bars: rows.map(r => r.act), line: rows.map(r => r[pk]), dash: rows.map(r => r.simple),
     lo: v === "pv" ? rows.map(r => upd ? r.loU : r.lo) : null, hi: v === "pv" ? rows.map(r => upd ? r.hiU : r.hi) : null,
     sel: rows.findIndex(r => r.d === S.upSel), onPick: i => { S.upSel = rows[i].d; renderUpload(); },
-    tip: i => { const r = rows[i]; return `<b>${dLong(r.d)}</b><br>จริง <b>${fmt(r.act)}</b> · พยากรณ์ <b>${fmt(r[pk])}</b> kWh<br>error ${pct(Math.abs(r[pk] - r.act) / r.act)}${r.simple != null ? " · baseline " + pct(Math.abs(r.simple - r.act) / r.act) : ""}`; } });
+    tip: i => { const r = rows[i]; return `<b>${dLong(r.d)}</b><br>จริง <b>${fmt(r.act)}</b> · พยากรณ์ <b>${fmt(r[pk])}</b> kWh<br>แม่น ${acc(Math.abs(r[pk] - r.act) / r.act)}${r.simple != null ? " · baseline " + acc(Math.abs(r.simple - r.act) / r.act) : ""}`; } });
   $("#upLegend").innerHTML = `<span><i class="box" style="background:#D9D1C0"></i>Actual</span><span><i class="d"></i>Forecast</span>${v === "pv" ? `<span><i class="box" style="background:var(--sky1)"></i>P10–P90</span>` : ""}<span><i class="dot"></i>Baseline (ค่าเมื่อวาน)</span>`;
   // hourly
   const d = S.upSel, x = U.hours[d], h = LAB.hourly[d], r = rows.find(q => q.d === d);
   $("#upHrTitle").textContent = (v === "pv" ? "PV" : "โหลด") + " รายชั่วโมง " + dLong(d);
   if (v === "pv") {
     const fw = upd ? r.fw : M.fac, bad = x.pv.map((_, k) => !!(x.soc && x.soc[k] != null && x.soc[k] >= 93.5 && h.cs[k] > 50));
-    $("#upHrSub").innerHTML = strip([["Actual", fmt(r.act) + " kWh"], ["Forecast", fmt(r[pk]) + " kWh"], ["Error", pct(Math.abs(r[pk] - r.act) / r.act)], ["ชั่วโมงที่นับ", r.hrs.length]]);
+    $("#upHrSub").innerHTML = strip([["Actual", fmt(r.act) + " kWh"], ["Forecast", fmt(r[pk]) + " kWh"], ["แม่น", acc(Math.abs(r[pk] - r.act) / r.act)], ["ชั่วโมงที่นับ", r.hrs.length]]);
     hourChart($("#chUpHr"), { unit: "kW", bad, lines: [{ v: x.pv, stroke: css("--ink") }, { v: h.ml.map(g => Math.min(fw * g, M.cap)), stroke: css("--ink"), dash: "5 4" }],
       tip: k => `${String(k).padStart(2, "0")}:00${bad[k] ? " (แบตเต็ม)" : ""}<br>จริง <b>${fmt(x.pv[k])}</b> · พยากรณ์ <b>${fmt(Math.min(fw * h.ml[k], M.cap))}</b> kW` });
   } else {
-    $("#upHrSub").innerHTML = strip([["Actual", fmt(r.act) + " kWh"], ["Forecast", fmt(r.pred) + " kWh"], ["Error", pct(Math.abs(r.pred - r.act) / r.act)], r.simple != null && ["Baseline error", pct(Math.abs(r.simple - r.act) / r.act)]]);
+    $("#upHrSub").innerHTML = strip([["Actual", fmt(r.act) + " kWh"], ["Forecast", fmt(r.pred) + " kWh"], ["แม่น", acc(Math.abs(r.pred - r.act) / r.act)], r.simple != null && ["Baseline แม่น", acc(Math.abs(r.simple - r.act) / r.act)]]);
     hourChart($("#chUpHr"), { unit: "kW", lines: [{ v: x.load, stroke: css("--ink") }, { v: r.h, stroke: css("--ink"), dash: "5 4" }].concat(r.hs ? [{ v: r.hs, stroke: css("--actd"), dash: "1.5 3.5" }] : []),
       tip: k => `${String(k).padStart(2, "0")}:00<br>จริง <b>${fmt(x.load[k])}</b> · พยากรณ์ <b>${fmt(r.h[k])}</b> kW` });
   }
   // table
   const pr = Object.fromEntries(R.pv.map(q => [q.d, q])), lr = Object.fromEntries(R.load.map(q => [q.d, q]));
   const ds = [...new Set(R.pv.map(q => q.d).concat(R.load.map(q => q.d)))].sort();
-  const e = (a, b) => a == null || !b ? "–" : pct(Math.abs(a - b) / b);
-  $("#upTbl").innerHTML = `<thead><tr><th>วันที่</th><th class="n">PV จริง (kWh)</th><th class="n">PV พยากรณ์</th><th class="n">คลาด</th><th class="n">โหลดจริง (kWh)</th><th class="n">โหลดพยากรณ์</th><th class="n">คลาด</th></tr></thead><tbody>` +
+  const e = (a, b) => a == null || !b ? "–" : acc(Math.abs(a - b) / b);
+  $("#upTbl").innerHTML = `<thead><tr><th>วันที่</th><th class="n">PV จริง (kWh)</th><th class="n">PV พยากรณ์</th><th class="n">แม่น</th><th class="n">โหลดจริง (kWh)</th><th class="n">โหลดพยากรณ์</th><th class="n">แม่น</th></tr></thead><tbody>` +
     ds.map(d => { const p = pr[d], l = lr[d]; return `<tr data-d="${d}" class="${d === S.upSel ? "sel" : ""}"><td>${dLong(d)}</td><td class="n">${p ? fmt(p.act) : "–"}</td><td class="n">${p ? fmt(p[upd ? "predU" : "pred"]) : "–"}</td><td class="n">${p ? e(p[upd ? "predU" : "pred"], p.act) : "–"}</td><td class="n">${l ? fmt(l.act) : "–"}</td><td class="n">${l ? fmt(l.pred) : "–"}</td><td class="n">${l ? e(l.pred, l.act) : "–"}</td></tr>`; }).join("") + "</tbody>";
   $$("#upTbl tbody tr").forEach(tr => tr.addEventListener("click", () => { S.upSel = tr.dataset.d; renderUpload(); }));
   // apply
