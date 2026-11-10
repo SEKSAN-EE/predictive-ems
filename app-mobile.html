@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ATVXX Energy Mobile</title>
@@ -339,33 +340,33 @@ table.jobs td.mut{white-space:normal}table.jobs tr:last-child td{border-bottom:0
    Sukhumvit Set), sunflower-yellow gradient for the active state and solar series, taupe for the battery, brick for waste. */
 :root{
   --bg:#EEEDEA; --card:rgba(255,255,255,.52); --line:rgba(42,40,35,.08); --line2:rgba(42,40,35,.15);
-  --ink:#2A2823; --ink2:#4A463E; --mut:#8A8274; --faint:#B8AF9C;
-  --sky1:#F6E4A6; --sky2:#FBF3D9; --sky3:#FBF7EC;
+  --ink:#232A22; --ink2:#424A3E; --mut:#7F877A; --faint:#B2B9A8;
+  --sky1:#D7EBB0; --sky2:#EEF6DD; --sky3:#F6FAEE;
   --red:#D4573F; --redBg:#FBEAE4; --ok:#5E9B6A;
-  --solar:#EDB82A; --taupe:#A88E7A;
-  --sun:linear-gradient(135deg,#F5B223 0%,#F5D53F 100%);
+  --solar:#7CC043; --taupe:#6DB83E;
+  --sun:linear-gradient(135deg,#C9E64B 0%,#5DB437 100%);
   --frost:rgba(255,255,255,.5); --frostB:rgba(255,255,255,.78);
   --sans:"Outfit","Sukhumvit Set","IBM Plex Sans Thai",system-ui,sans-serif;
   --num:"Outfit","Sukhumvit Set","IBM Plex Sans Thai",system-ui,sans-serif;
 }
 html{background:#EAE9E6}
-body{background:linear-gradient(180deg,#E8E7E4 0%,#ECEAE4 26%,#F3EDDA 60%,#F7F0D5 100%) fixed;color:var(--ink);font-family:var(--sans)}
-body::before{background:#E8E7E4}
-button:focus-visible,input:focus-visible{outline:2px solid #D9A514;outline-offset:2px}
+body{background:linear-gradient(180deg,#E8EAE5 0%,#EBEEE6 26%,#EEF4E0 60%,#F1F7DC 100%) fixed;color:var(--ink);font-family:var(--sans)}
+body::before{background:#E8EAE5}
+button:focus-visible,input:focus-visible{outline:2px solid #4E9A2E;outline-offset:2px}
 /* shell: top bar instead of the sidebar */
 .app-x{display:block;max-width:1500px;margin:0 auto;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
-.topnav-x{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;align-items:center;gap:20px;padding-block:16px;background:linear-gradient(180deg,rgba(232,231,228,.94),rgba(232,231,228,.72));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.topnav-x{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;align-items:center;gap:20px;padding-block:16px;background:linear-gradient(180deg,rgba(232,234,229,.94),rgba(232,234,229,.72));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .topnav-x .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:600;letter-spacing:-.02em;padding:0;white-space:nowrap}
 .topnav-x .logo svg{width:32px;height:32px;color:var(--ink);flex:none}
 .topnav-x .nav{flex-direction:row;margin:0 auto;gap:4px;padding:5px;border-radius:18px;background:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.6);overflow-x:auto}
 .topnav-x .nav button{padding:10px 20px;border-radius:14px;font-size:14.5px;font-weight:500;color:var(--ink2);white-space:nowrap;transition:background .25s,box-shadow .25s,color .25s}
 .topnav-x .nav button:hover{background:rgba(255,255,255,.65)}
-.topnav-x .nav button.on{background:var(--sun);color:var(--ink);box-shadow:0 8px 18px -10px rgba(221,160,20,.9)}
+.topnav-x .nav button.on{background:var(--sun);color:var(--ink);box-shadow:0 8px 18px -10px rgba(80,160,45,.55)}
 .tn-r{display:flex;align-items:center;gap:10px}
 .bell{width:46px;height:46px;border-radius:15px;background:var(--frost);border:1px solid var(--frostB);display:grid;place-items:center;position:relative;transition:transform .2s}
 .bell:hover{transform:translateY(-1px)}
 .bell svg{width:22px;height:22px}
-.bell i{position:absolute;top:11px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px #F2F0EA}
+.bell i{position:absolute;top:11px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 2px #EFF2EA}
 .who{display:flex;flex-direction:column;justify-content:center;line-height:1.25;height:46px;background:var(--frost);border:1px solid var(--frostB);border-radius:15px;padding:0 16px}
 .who b{font-size:14px;font-weight:600}.who span{font-size:11.5px;color:var(--mut)}
 .mainwrap{display:block}
@@ -377,7 +378,7 @@ main#scroll{max-width:none;padding:6px 0 56px}
 .eyebrow{font-size:11px;letter-spacing:.16em;color:var(--mut)}
 .hbox{background:var(--frost);border:1px solid var(--frostB);border-radius:16px;padding:10px 18px}
 /* frosted cards */
-.card{background:var(--card);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid rgba(255,255,255,.72);border-radius:26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 24px 46px -36px rgba(110,80,20,.45)}
+.card{background:var(--card);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid rgba(255,255,255,.72);border-radius:26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 24px 46px -36px rgba(60,95,30,.45)}
 .card.sc{padding:0}
 .sc-h{border-bottom:0;padding:22px 26px 4px;align-items:center}
 .sc-h h3{font-size:19px;font-weight:500;letter-spacing:-.015em}
@@ -391,7 +392,7 @@ main#scroll{max-width:none;padding:6px 0 56px}
 .tile .v,.kpi .v{font-family:var(--num);font-weight:500;letter-spacing:-.02em}
 .tile .v{font-size:34px}
 .tile .v small{font-weight:400}
-.tile:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 30px 50px -34px rgba(110,80,20,.55)}
+.tile:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 30px 50px -34px rgba(60,95,30,.55)}
 .dot.ink,.dot.live{background:var(--solar)}.dot.g1{background:var(--taupe)}.dot.g2,.dot.info{background:var(--faint)}
 .minis{border-top:1px solid var(--line)}
 .mini p{font-weight:500}.mini b{font-weight:500;font-size:18px}
@@ -399,12 +400,12 @@ main#scroll{max-width:none;padding:6px 0 56px}
 /* segmented controls and pills */
 .seg{background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);border-radius:16px;padding:4px}
 .seg button{border-radius:12px;color:var(--ink2);font-weight:500}
-.seg button.on{background:var(--sun);color:var(--ink);font-weight:600;box-shadow:0 6px 14px -8px rgba(221,160,20,.85)}
+.seg button.on{background:var(--sun);color:var(--ink);font-weight:600;box-shadow:0 6px 14px -8px rgba(80,160,45,.5)}
 .pillsel{border:1px solid var(--line2);border-radius:14px;padding:8px 16px;font-size:14px;color:var(--ink2);background:rgba(255,255,255,.4)}
 .kebab{font-size:22px;line-height:1;color:var(--ink2);padding:0 4px}
-.lnk{color:#B5850F}
+.lnk{color:#3F8A25}
 .sw-l{background:var(--frost);border-color:var(--frostB);border-radius:16px}
-.sw-i:checked+.sw-t{background:#E3A81B}
+.sw-i:checked+.sw-t{background:#5DB437}
 .btn{background:var(--ink);border-radius:14px}
 .btn.ghost{background:var(--frost);border:1px solid var(--line2)}
 /* overview composition: 3D on the left, chart card on the right, three cards below */
@@ -419,7 +420,7 @@ main#scroll{max-width:none;padding:6px 0 56px}
 .scrub-t b{display:block;font-family:var(--num);font-size:17px;font-weight:600}.scrub-t span{display:block;font-size:11px;color:var(--mut)}
 .scrub .dpick{background:transparent;border:0;padding:0}
 .scrub .dpick span{min-width:150px;font-weight:500}
-.scrub input{accent-color:#E3A81B}
+.scrub input{accent-color:#5DB437}
 .playb{background:var(--ink)}
 .grid.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:22px}
 .gaugebox{text-align:center;padding-top:22px}
@@ -455,22 +456,22 @@ main#scroll{max-width:none;padding:6px 0 56px}
 .trio b small{font-size:11px;color:var(--mut);font-weight:400;margin-left:2px}
 .trio em{display:block;font-style:normal;font-size:11.5px;color:var(--mut)}
 /* charts and tooltips */
-.lchart text{fill:#8A8274;font-family:var(--num)}
-.ltip{border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 16px 34px -18px rgba(110,80,20,.45)}
+.lchart text{fill:#7F877A;font-family:var(--num)}
+.ltip{border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);box-shadow:0 16px 34px -18px rgba(60,95,30,.45)}
 .sc .lg,#upLegend{color:var(--ink2)}
 /* battery state colours */
-.b-c{background:#F1D77E}.b-f{background:#D9A514}.b-d{background:#B29A86}.b-i{background:#ECE6DA}
+.b-c{background:#BFE08A}.b-f{background:#4E9A2E}.b-d{background:#8FA889}.b-i{background:#E6EADF}
 /* tables */
-.dt th{background:rgba(251,248,240,.96);color:var(--mut);font-weight:500}
+.dt th{background:rgba(247,250,242,.96);color:var(--mut);font-weight:500}
 .dt td{border-bottom:1px solid var(--line)}
-.dt tbody tr:hover{background:rgba(237,184,42,.07)}
-.dt tr.sel td{background:#FBF1CF}
+.dt tbody tr:hover{background:rgba(124,192,67,.07)}
+.dt tr.sel td{background:#EAF4D6}
 table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--line)}
-.cf i{background:rgba(42,40,35,.14)}.cf-1 i:nth-child(1),.cf-2 i:nth-child(-n+2),.cf-3 i{background:#D9A514}
+.cf i{background:rgba(42,40,35,.14)}.cf-1 i:nth-child(1),.cf-2 i:nth-child(-n+2),.cf-3 i{background:#4E9A2E}
 /* upload */
-.drop{border:1.5px dashed rgba(170,140,60,.35);background:rgba(255,255,255,.4)}
-.drop.over{border-color:#D9A514;background:rgba(251,241,207,.7)}
-.drop-i{background:rgba(237,184,42,.15);color:#B5850F;border-radius:16px}
+.drop{border:1.5px dashed rgba(100,160,60,.35);background:rgba(255,255,255,.4)}
+.drop.over{border-color:#4E9A2E;background:rgba(251,241,207,.7)}
+.drop-i{background:rgba(124,192,67,.15);color:#3F8A25;border-radius:16px}
 .msg.info{background:var(--frost)}
 .lossbar{background:rgba(42,40,35,.06)}
 .insp b{font-weight:500}
@@ -557,21 +558,21 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
 </style>
 <style>
 /* Phone: same warm theme — cream gradient screen, frosted cards, sunflower active tab, Outfit for Latin and numbers. */
-:root{--studio:#ECE9E1;--studio2:#F6F1E2;--bg:#F1EEE6;--card:rgba(255,255,255,.55);--line:rgba(42,40,35,.08);--line2:rgba(42,40,35,.15);
-  --ink:#2A2823;--ink2:#4A463E;--mut:#8A8274;--faint:#B8AF9C;--sky1:#F6E4A6;--sky2:#FBF3D9;--sky3:#F6F0E0;--red:#D4573F;--ok:#5E9B6A;
+:root{--studio:#E9ECE4;--studio2:#F1F6E4;--bg:#EEF1E8;--card:rgba(255,255,255,.55);--line:rgba(42,40,35,.08);--line2:rgba(42,40,35,.15);
+  --ink:#232A22;--ink2:#424A3E;--mut:#7F877A;--faint:#B2B9A8;--sky1:#D7EBB0;--sky2:#EEF6DD;--sky3:#F2F6EA;--red:#D4573F;--ok:#5E9B6A;
   --sans:"Outfit","Sukhumvit Set","IBM Plex Sans Thai",system-ui,sans-serif;--num:"Outfit","Sukhumvit Set",system-ui,sans-serif}
-.screen{background:linear-gradient(180deg,#ECEBE7 0%,#F1EDE2 40%,#F7F0D7 100%)}
-.card{background:rgba(255,255,255,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.75);border-radius:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 18px 34px -30px rgba(110,80,20,.45)}
-.navbar{background:rgba(250,247,238,.88)}
-.navbar button.on{color:#B5850F}
+.screen{background:linear-gradient(180deg,#EBEDE7 0%,#EEF3E4 40%,#F1F7DC 100%)}
+.card{background:rgba(255,255,255,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.75);border-radius:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 18px 34px -30px rgba(60,95,30,.45)}
+.navbar{background:rgba(246,249,240,.9)}
+.navbar button.on{color:#3F8A25}
 .ptitle{font-weight:500;letter-spacing:-.02em}
 .seg,.seg2{background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.7)}
-.seg button.on,.seg2 button.on{background:linear-gradient(135deg,#F5B223,#F5D53F);color:#2A2823}
-.hero{background:linear-gradient(180deg,#EDEBE5 0%,#F4EEDC 100%)}
+.seg button.on,.seg2 button.on{background:linear-gradient(135deg,#C9E64B,#5DB437);color:#232A22}
+.hero{background:linear-gradient(180deg,#ECEEE7 0%,#EEF5E0 100%)}
 .ph h2{font-weight:400}
 .tile .v,.kpi .v{font-weight:500}
-.pillbtn.dark{background:#2A2823;border-color:#2A2823}
-.ctl input[type=range]{accent-color:#E3A81B}
+.pillbtn.dark{background:#232A22;border-color:#232A22}
+.ctl input[type=range]{accent-color:#5DB437}
 </style>
 <aside class="side">
   <div class="tag"><i></i>โหมดสาธิต · เล่นซ้ำข้อมูลจริงของไซต์</div>
@@ -703,12 +704,12 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
     <div id="ahOne">
       <section class="card sc fu"><div class="sc-h"><div><h3>รายชั่วโมง</h3><p>PV ที่ผลิตได้ แบ่งเป็นส่วนที่ขายตรง ส่วนที่เข้าแบต และส่วนที่ต้องทิ้ง เทียบกับโหลดโรงงาน</p></div></div>
         <div class="sc-b"><div class="lchart" id="chHourly"></div>
-          <div class="lg"><span><i class="box" style="background:#EDB82A"></i>ขายตรง</span><span><i class="box" style="background:#E2CFA6"></i>เข้าแบต</span><span><i class="box" style="background:#D4573F"></i>ต้องทิ้ง</span><span><i style="border-color:#3B4148"></i>โหลดโรงงาน</span></div>
+          <div class="lg"><span><i class="box" style="background:#7CC043"></i>ขายตรง</span><span><i class="box" style="background:#CFE3A8"></i>เข้าแบต</span><span><i class="box" style="background:#D4573F"></i>ต้องทิ้ง</span><span><i style="border-color:#3B4148"></i>โหลดโรงงาน</span></div>
           <div class="minis" id="ahMini1"></div></div></section>
     </div>
     <section class="card sc fu" id="ahMany" hidden><div class="sc-h"><div><h3>รายวัน</h3><p id="ahManySub"></p></div></div>
       <div class="sc-b"><div class="lchart" id="chDays"></div>
-        <div class="lg"><span><i class="box" style="background:#EDB82A"></i>ขายตรงจาก PV</span><span><i class="box" style="background:#B29A86"></i>ขายจากแบต</span><span><i class="box" style="background:#D4573F"></i>ต้องทิ้ง</span></div>
+        <div class="lg"><span><i class="box" style="background:#7CC043"></i>ขายตรงจาก PV</span><span><i class="box" style="background:#8FA889"></i>ขายจากแบต</span><span><i class="box" style="background:#D4573F"></i>ต้องทิ้ง</span></div>
         <div class="bw" id="ahBW"></div></div></section>
     <section class="card sc fu"><div class="sc-h"><div><h3>รายละเอียดรายวัน</h3><p>ท้องฟ้า PV ยอดขาย รายได้ ไฟที่ทิ้ง เวลาที่แบตเต็ม และความมั่นใจ · คลิกแถวเพื่อดูรายชั่วโมง</p></div><button class="lnk" id="ahAll"></button></div>
       <div class="sc-b np"><div class="tblwrap"><table class="dt" id="ahTbl"></table></div></div></section>
@@ -758,10 +759,10 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
 
     <section class="card sc fu"><div class="sc-h"><div><h3>กำลังไฟและเพดานชาร์จ</h3><p>kW · ราย 15 นาที · ส่วนจางคือช่วงที่ยังไม่ถึงในวันนั้น</p></div></div>
       <div class="sc-b"><div class="lchart" id="chCt1"></div>
-        <div class="lg"><span><i class="box" style="background:#EDB82A"></i>PV ที่แผงทำได้</span><span><i style="border-color:#4A463E"></i>โหลดโรงงาน</span><span><i class="box" style="background:#B29A86"></i>ชาร์จจริงตามแผน</span><span><i class="d"></i>เพดานชาร์จที่สั่ง</span></div></div></section>
+        <div class="lg"><span><i class="box" style="background:#7CC043"></i>PV ที่แผงทำได้</span><span><i style="border-color:#424A3E"></i>โหลดโรงงาน</span><span><i class="box" style="background:#8FA889"></i>ชาร์จจริงตามแผน</span><span><i class="d"></i>เพดานชาร์จที่สั่ง</span></div></div></section>
     <section class="card sc fu"><div class="sc-h"><div><h3>ระดับแบต: แผนใหม่เทียบแบบเดิม</h3><p>% · จุดแดงคือไฟไหลออกกริดที่เกิดจริงตอนแบตเต็ม</p></div></div>
       <div class="sc-b"><div class="lchart" id="chCt2"></div>
-        <div class="lg"><span><i></i>ตามแผน</span><span><i class="dot"></i>แบบเดิม</span><span><i class="box" style="background:#D4573F;border-radius:50%"></i>ไฟไหลออกกริดที่ยังเกิด</span><span><i class="box" style="background:#E2CFA6;border-radius:50%"></i>แบตรับไว้ได้ตามแผน</span></div></div></section>
+        <div class="lg"><span><i></i>ตามแผน</span><span><i class="dot"></i>แบบเดิม</span><span><i class="box" style="background:#D4573F;border-radius:50%"></i>ไฟไหลออกกริดที่ยังเกิด</span><span><i class="box" style="background:#CFE3A8;border-radius:50%"></i>แบตรับไว้ได้ตามแผน</span></div></div></section>
 
     <div class="grid g-2">
       <section class="card sc fu"><div class="sc-h"><div><h3>บันทึกคำสั่ง</h3><p>คำสั่งที่ส่งถึงเวลาที่จำลอง</p></div></div><div class="sc-b np"><div class="tblwrap" style="max-height:380px"><table class="dt" id="ctLog"></table></div></div></section>
@@ -807,7 +808,7 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
     </div>
     <section class="card sc fu"><div class="sc-h"><div><h3>พยากรณ์เทียบค่าจริง 30 วันล่าสุด</h3><p id="acVsSub"></p></div></div>
       <div class="sc-b"><div class="lchart" id="chVs"></div>
-        <div class="lg"><span><i class="box" style="background:#D9D1C0"></i>PV ที่ได้จริงตามแดดจริง</span><span><i class="d"></i>พยากรณ์ล่วงหน้า 1 วัน</span><span><i class="box" style="background:var(--sky1)"></i>ช่วงต่ำ–สูง</span></div>
+        <div class="lg"><span><i class="box" style="background:#D3D9CB"></i>PV ที่ได้จริงตามแดดจริง</span><span><i class="d"></i>พยากรณ์ล่วงหน้า 1 วัน</span><span><i class="box" style="background:var(--sky1)"></i>ช่วงต่ำ–สูง</span></div>
         <div class="minis" id="acMini"></div></div></section>
     <div class="gh fu"><span>เทียบกับข้อมูลจริงของไซต์</span><em>อัปโหลดไฟล์กำลังผลิตและโหลด ไฟล์ประมวลผลในเบราว์เซอร์นี้เท่านั้น</em></div>
     <div class="card drop fu" id="drop">
@@ -831,7 +832,7 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
       </div>
       <section class="card sc"><div class="sc-h"><div><h3>ผลิตจริงเทียบกับที่ควรได้</h3><p>แต่ละวันเทียบกับ PV ที่แดดจริงควรให้ · แท่งแดงคือวันที่ผลิตต่ำกว่า 90%</p></div></div>
         <div class="sc-b"><div class="lchart" id="chMeas"></div>
-          <div class="lg"><span><i class="box" style="background:#EAE3D3"></i>ควรผลิตได้</span><span><i class="box" style="background:#EDB82A"></i>ผลิตจริง</span><span><i class="box" style="background:#D4573F"></i>ต่ำกว่า 90%</span></div></div></section>
+          <div class="lg"><span><i class="box" style="background:#E3E8DA"></i>ควรผลิตได้</span><span><i class="box" style="background:#7CC043"></i>ผลิตจริง</span><span><i class="box" style="background:#D4573F"></i>ต่ำกว่า 90%</span></div></div></section>
       <section class="card sc"><div class="sc-h"><div><h3>พลังงานหายไปไหน</h3><p id="lossSub"></p></div></div><div class="sc-b" id="lossSplit"></div></section>
       <section class="card sc"><div class="sc-h"><div><h3>วันที่ผลิตต่ำกว่าที่ควร</h3><p id="flagSub"></p></div></div><div class="sc-b np"><div class="tblwrap"><table class="dt" id="flagTbl"></table></div></div></section>
       <section class="card sc"><div class="sc-h"><div><h3>ความแม่นของพยากรณ์ในช่วงไฟล์นี้</h3><p>พยากรณ์ล่วงหน้า 1 วันเทียบค่าจริงในไฟล์</p></div>
@@ -841,7 +842,7 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
         <div class="sc-b"><div class="lchart" id="chUp"></div><div class="lg" id="upLegend"></div></div></section>
       <div class="grid g-2">
         <section class="card sc"><div class="sc-h"><div><h3 id="upHrTitle">–</h3><p>kW</p></div></div><div class="sc-b"><div id="upHrSub"></div><div class="lchart" id="chUpHr"></div>
-          <div class="lg"><span><i></i>จริง</span><span><i class="d"></i>พยากรณ์</span><span><i class="dot"></i>วิธีเดิม</span><span><i class="box" style="background:#F1EBDD;border:1px solid #A9A08E"></i>แบตเต็ม</span></div></div></section>
+          <div class="lg"><span><i></i>จริง</span><span><i class="d"></i>พยากรณ์</span><span><i class="dot"></i>วิธีเดิม</span><span><i class="box" style="background:#ECF0E4;border:1px solid #9DA593"></i>แบตเต็ม</span></div></div></section>
         <section class="card sc"><div class="sc-h"><div><h3>ใช้ไฟล์นี้ปรับพยากรณ์</h3></div></div><div class="sc-b" id="upApply"></div></section>
       </div>
       <section class="card sc"><div class="sc-h"><div><h3>รายวัน</h3><p>คลาด = |พยากรณ์ − จริง| ÷ จริง</p></div></div><div class="sc-b np"><div class="tblwrap"><table class="dt" id="upTbl"></table></div></div></section>
@@ -856,10 +857,10 @@ table.mt td,table.mt th,table.jobs td,table.jobs th{border-bottom-color:var(--li
       </div>
       <section class="card sc fu"><div class="sc-h"><div><h3>แดดรายวัน 120 วัน</h3><p>kWh/m² · คลิกวันเพื่อดูรายชั่วโมง</p></div></div>
         <div class="sc-b"><div class="lchart" id="chDaily"></div>
-          <div class="lg"><span><i class="box" style="background:#D9D1C0"></i>จริง (Himawari-9)</span><span><i class="d"></i>พยากรณ์</span><span><i class="box" style="background:var(--sky1)"></i>ช่วงต่ำ–สูง</span><span><i class="dot"></i>วิธีเดิม</span></div></div></section>
+          <div class="lg"><span><i class="box" style="background:#D3D9CB"></i>จริง (Himawari-9)</span><span><i class="d"></i>พยากรณ์</span><span><i class="box" style="background:var(--sky1)"></i>ช่วงต่ำ–สูง</span><span><i class="dot"></i>วิธีเดิม</span></div></div></section>
       <section class="card sc fu"><div class="sc-h"><div><h3>พยากรณ์ที่ออก 7 · 3 · 1 วันก่อนถึงวัน</h3><p>ยิ่งใกล้วัน ค่าพยากรณ์ยิ่งเข้าใกล้ค่าจริง</p></div></div>
         <div class="sc-b"><div class="lchart" id="chEvo"></div>
-          <div class="lg"><span><i class="box" style="background:#EAE3D3"></i>จริง</span><span><i class="box" style="background:#C9BFAE;border-radius:50%"></i>7 วันก่อน</span><span><i class="box" style="background:#8A8274;border-radius:50%"></i>3 วันก่อน</span><span><i class="box" style="background:#2A2823;border-radius:50%"></i>1 วันก่อน</span><span><i class="box" style="background:#fff;border:2px solid #2A2823;border-radius:50%"></i>ล่าสุด</span></div></div></section>
+          <div class="lg"><span><i class="box" style="background:#E3E8DA"></i>จริง</span><span><i class="box" style="background:#C2CAB8;border-radius:50%"></i>7 วันก่อน</span><span><i class="box" style="background:#7F877A;border-radius:50%"></i>3 วันก่อน</span><span><i class="box" style="background:#232A22;border-radius:50%"></i>1 วันก่อน</span><span><i class="box" style="background:#fff;border:2px solid #232A22;border-radius:50%"></i>ล่าสุด</span></div></div></section>
       <div class="grid g-2">
         <section class="card sc fu"><div class="sc-h"><div><h3>ความแม่นรายเดือน</h3><p>ฝึกโมเดลใหม่ทุกต้นเดือน ทดสอบกับเดือนที่โมเดลไม่เคยเห็น</p></div></div>
           <div class="sc-b"><div class="lchart" id="chMon"></div><div class="lg"><span><i></i>โมเดล</span><span><i class="dot"></i>วิธีเดิม</span><span><i class="box" style="background:var(--sky2)"></i>หน้าฝน</span></div></div></section>
@@ -999,6 +1000,9 @@ function renderOverview(){const k=D[di],d=A.days[k],n=ti+1;
   $("#L-fac").innerHTML=`<div class="v">${f0(sell)}<small>kW</small></div><div class="t">ขายให้โรงงาน</div>`;
   $("#L-grid").innerHTML=`<div class="v">${f0(gin>5?gin:gout)}<small>kW</small></div><div class="t">${gout>5&&gin<=5?"ไหลออกกริด":"โรงงานซื้อจากกริด"}</div>`;
   $("#L-bat").innerHTML=`<div class="v">${Math.round(soc)}<small>%</small></div><div class="t">แบต · ${dis>5?"คาย "+f0(dis)+" kW":ch>5?"ชาร์จ "+f0(ch)+" kW":"พัก"}</div>`;
+  if(window.VIEW==="factory"){$("#L-pv").innerHTML=`<div class="v">${f0(pvu)}<small>kW</small></div><div class="t">โซลาร์ผลิต</div>`;
+    $("#L-fac").innerHTML=`<div class="v">${f0(ld)}<small>kW</small></div><div class="t">โรงงานใช้ไฟ</div>`;
+    $("#L-grid").innerHTML=`<div class="v">${f0(Math.max(0,gin))}<small>kW</small></div><div class="t">ซื้อจากกริด</div>`;factoryTiles(k,d,n);return;}
   if(!$("#o-salesbar")){overviewTiles(k,d,n);return;}
   $("#asof").textContent="ถึง "+hm(ti);
   const sales=S(d.ld,n)-S(d.gin,n),fcs=fcSales(d);
@@ -1020,12 +1024,12 @@ function renderOverview(){const k=D[di],d=A.days[k],n=ti+1;
 function skyGradient(hour,sunrise,sunset,cover){const isDay=hour>sunrise-.5&&hour<sunset+.5,span=Math.max(.1,sunset-sunrise),edge=Math.min(Math.abs(hour-sunrise),Math.abs(hour-sunset));
   if(!isDay)return "radial-gradient(60% 55% at 50% 60%, rgba(120,128,150,.16) 0%, rgba(120,128,150,0) 70%)";
   const golden=Math.max(0,Math.min(1,1-edge/2.2)),sunX=78-56*((hour-sunrise)/span),a=(.38-cover*.22)*(1+golden*.4);
-  return `radial-gradient(42% 52% at ${sunX}% 18%, rgba(255,214,120,${a.toFixed(2)}) 0%, rgba(255,214,120,0) 70%), radial-gradient(55% 45% at 50% 70%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 70%)`;}
+  return `radial-gradient(42% 52% at ${sunX}% 18%, rgba(205,236,120,${a.toFixed(2)}) 0%, rgba(205,236,120,0) 70%), radial-gradient(55% 45% at 50% 70%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 70%)`;}
 function cu(id,v,unit){const e=$(id);if(!e)return;const from=e._v!=null?e._v:0;e._v=v;cancelAnimationFrame(e._raf);if(from===v||matchMedia("(prefers-reduced-motion: reduce)").matches){e.innerHTML=f0(v)+unit;return;}
   const t0=performance.now(),st=now=>{const p=Math.min(1,(now-t0)/650),k=1-Math.pow(1-p,3);e.innerHTML=f0(from+(v-from)*k)+unit;if(p<1)e._raf=requestAnimationFrame(st);};e._raf=requestAnimationFrame(st);}
 function overviewTiles(k,d,n){const sales=S(d.ld,n)-S(d.gin,n),curt=S(d.curt,n),soc=d.soc[ti],ch=d.ch[ti],dis=d.dis[ti],hr=ti/4,fcs=Math.max(1,fcSales(d)),pr=sales/fcs;
   cu("#o-sales",sales,"<small>kWh</small>");$("#o-sales2").innerHTML=f0(sales*SELL)+"<small>บาท</small>";$("#o-sales3").textContent=`ถึง ${hm(ti)} · ${DOWs[d.dow]} ${+k} มิ.ย. 2569`;
-  const g=$("#ovGauge");if(g){if(!g.firstChild)g.innerHTML='<path d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#ECE3D3" stroke-width="18" stroke-linecap="round"/><path id="ovGaugeV" d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#A88E7A" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>';
+  const g=$("#ovGauge");if(g){if(!g.firstChild)g.innerHTML='<path d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#E3EBD6" stroke-width="18" stroke-linecap="round"/><path id="ovGaugeV" d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#6DB83E" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>';
     const v=Math.max(.5,Math.min(100,pr*100));$("#ovGaugeV").style.strokeDashoffset=100-v;cu("#ovGaugePct",Math.round(pr*100),"%");$("#ovGaugeLab").textContent=`ของพยากรณ์ทั้งวัน ${f0(fcs)} kWh`;}
   cu("#o-cur",curt,"<small>kWh</small>");$("#o-cur2").textContent="≈ "+f0(curt*SELL)+" บาท";
   cu("#o-bat",soc,"<small>%</small>");$("#o-bat2").textContent=soc>=94?"เต็ม":dis>5?"จ่าย "+f0(dis)+" kW":ch>5?"ชาร์จ "+f0(ch)+" kW":"พัก";
@@ -1033,6 +1037,19 @@ function overviewTiles(k,d,n){const sales=S(d.ld,n)-S(d.gin,n),curt=S(d.curt,n),
   $("#o-pv2").textContent=cur>5?`แผงทำได้ ${f0(pot)} kW · ลดกำลัง ${f0(cur)} kW เพราะแบตเต็ม`:`PV 2,372 kWp · ${hm(ti)}`;
   if(mtr){const w=Math.min(100,100*pvu/2372);mtr.style.width=w+"%";$("#ovMeterMk").style.left=w+"%";$("#ovMeterLab").textContent=w<5?"ไม่มีแดด":w<33?"ต่ำ":w<66?"ปานกลาง":"สูง";}
   const cr=clearRef[ti]>80?d.pv[ti]/clearRef[ti]:1,hero=document.querySelector("#p-ov .hero");if(hero)hero.style.background=skyGradient(hr,6,18.6,Math.max(0,Math.min(1,1-cr)));
+  const dn=$("#dayNight");if(dn)dn.textContent=hr>=6&&hr<18.6?"กลางวัน":"กลางคืน";}
+
+/* factory view: today's energy by source and what it cost, at the replayed time */
+function factoryTiles(k,d,n){const on=i=>d.weekday&&i>=36&&i<88,rate=i=>on(i)?4.3462:2.766;let used=0,grid=0,cost=0,all=0;
+  for(let i=0;i<n;i++){const l=d.ld[i],g=Math.max(0,d.gin[i]),a=Math.max(0,l-g);used+=l*.25;grid+=g*.25;cost+=a*.25*SELL+g*.25*rate(i);all+=l*.25*rate(i);}
+  const share=used>0?(used-grid)/used:0,g0=$("#fxGauge");
+  if(g0){if(!g0.firstChild)g0.innerHTML='<path d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#E3EBD6" stroke-width="18" stroke-linecap="round"/><path id="fxGaugeV" d="M18 118a92 92 0 0 1 184 0" fill="none" stroke="#6DB83E" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>';
+    $("#fxGaugeV").style.strokeDashoffset=100-Math.max(.5,Math.min(100,share*100));cu("#fxGaugePct",Math.round(share*100),"%");}
+  $("#fx-day").textContent=`ถึง ${hm(ti)} · ${DOWs[d.dow]} ${+k} มิ.ย. 2569`;cu("#fx-used",used,"<small>kWh</small>");cu("#fx-save",all-cost,"<small>บาท</small>");
+  const l=d.ld[ti],g=Math.max(0,d.gin[ti]);cu("#fx-now",l,"");cu("#fx-alt",Math.max(0,l-g),"<small>kW</small>");cu("#fx-grid",g,"<small>kW</small>");cu("#fx-cost",cost,"<small>บาท</small>");
+  $("#fx-rate").textContent=on(ti)?"on-peak 4.35 บาท":"off-peak 2.77 บาท";$("#fx-now2").textContent=`${hm(ti)} · จาก Altervim ${l>0?Math.round(100*Math.max(0,l-g)/l):0}%`;
+  const w=Math.min(100,100*l/2000);$("#fxMeter").style.width=w+"%";$("#fxMeterMk").style.left=w+"%";$("#fxMeterLab").textContent=w<33?"ต่ำ":w<66?"ปานกลาง":"สูง";
+  const hr=ti/4,cr=clearRef[ti]>80?d.pv[ti]/clearRef[ti]:1,hero=document.querySelector("#p-ov .hero");if(hero)hero.style.background=skyGradient(hr,6,18.6,Math.max(0,Math.min(1,1-cr)));
   const dn=$("#dayNight");if(dn)dn.textContent=hr>=6&&hr<18.6?"กลางวัน":"กลางคืน";}
 
 /* ================= forecast detail ================= */
@@ -1102,7 +1119,7 @@ function renderReport(){const k=D[di],d=A.days[k];
     el("polyline",{points:fcp.join(" "),fill:"none",stroke:K.ink,"stroke-width":1.6,"stroke-dasharray":"5 4"},s);const t=V2.june_tot;kv("#m-grid",[["คืนที่ชาร์จ",t.nights+" คืน"],["ซื้อไฟกริดเข้าแบต",f0(t.grid_in)+" kWh · "+f0(t.grid_in*2.766)+" บาท"],["ขายไฟจากกริดให้โรงงาน",f0(t.grid_sold)+" kWh"],["ไฟจากแผงที่ทิ้งเพิ่ม",f0(t.pv_lost)+" kWh","red"],["ขายเพิ่มสุทธิ",f0(t.extra)+" kWh"],["กำไร",(t.profit>=0?"+":"")+f0(t.profit)+" บาท"]]);}}
 
 function renderAlerts(){if(!$("#al-list"))return;const al=A.alert,miss=D.filter(k=>A.days[k].tot.full_act&&!A.days[k].tot.full_fc);
-  $("#al-list").innerHTML=`<div class="alert"><div class="ai">!</div><div><h4>แผงชุดที่ 2 ผลิตได้ต่ำกว่าปกติ</h4><p>ผลิตได้ประมาณ ${Math.round(100*al.ratio)}% ของปกติ ยอดขายที่หายไปประมาณ ${f0(al.loss_lo)}–${f0(al.loss_hi)} kWh ในเดือนนี้ (${f0(al.loss_lo*SELL)}–${f0(al.loss_hi*SELL)} บาท) ควรตรวจอินเวอร์เตอร์ของชุดที่ 2</p><div class="when">ตั้งแต่ ${al.since}</div></div></div>
+  $("#al-list").innerHTML=`<div class="alert"><div class="ai">!</div><div><h4>แผงชุดที่ 2 เคยผลิตได้ต่ำกว่าปกติ</h4><p>ช่วง 1–7 มิ.ย. ผลิตได้ประมาณ ${Math.round(100*al.ratio)}% ของปกติ ยอดขายที่หายไปประมาณ ${f0(al.loss_lo)}–${f0(al.loss_hi)} kWh ใน 7 วันนั้น (${f0(al.loss_lo*SELL)}–${f0(al.loss_hi*SELL)} บาท) กลับมาปกติตั้งแต่ 7 มิ.ย. ประมาณ 14:00</p><div class="when">1–7 มิ.ย. 2569 · แก้ไขแล้ว</div></div></div>
   <div class="alert"><div class="ai">!</div><div><h4>พยากรณ์ว่าแบตไม่เต็ม แต่เต็มจริง</h4><p>${miss.length} วันใน ${D.length} วัน (วันที่ ${miss.map(k=>+k).join(", ")} มิ.ย.) วิธีใหม่วางแผนเผื่อแดดออกดี (P90) จึงลดผลของวันลักษณะนี้: ไฟจากแผงที่ทิ้งเพิ่มเพราะชาร์จกริดลดจาก 3,063 เหลือ 697 kWh ใน 22 วัน</p><div class="when">ปรับเทียบช่วงพยากรณ์กับข้อมูลไซต์หลายเดือนจะช่วยได้อีก</div></div></div>`;}
 
 /* ================= wiring ================= */
@@ -1144,8 +1161,8 @@ const acc = (e, p = 0) => e == null || !isFinite(e) ? "–" : pct(Math.max(0, 1 
 const sum = a => a.reduce((s, v) => s + (v || 0), 0);
 const mean = a => a.length ? sum(a) / a.length : NaN;
 const quant = (a, q) => { const s = [...a].filter(isFinite).sort((x, y) => x - y); if (!s.length) return NaN; const i = (s.length - 1) * q, lo = Math.floor(i); return s[lo] + (s[Math.min(lo + 1, s.length - 1)] - s[lo]) * (i - lo); };
-const PAL = { "--ink": "#2A2823", "--act": "#D9D1C0", "--band": "#F6E4A6", "--band2": "#FBF3D9", "--actd": "#A9A08E", "--faint": "#B8AF9C", "--mut": "#8A8274", "--redBg": "#FBEDEB", "--bg": "#F3EEE2", "--sky3": "#FBF7EC", "--card": "#FFFFFF" };
-const COL = { solar: "#EDB82A", batt: "#B29A86", chg: "#E2CFA6", waste: "#D4573F", ink: "#2A2823", load: "#4A463E" };
+const PAL = { "--ink": "#232A22", "--act": "#D3D9CB", "--band": "#D7EBB0", "--band2": "#EEF6DD", "--actd": "#9DA593", "--faint": "#B2B9A8", "--mut": "#7F877A", "--redBg": "#FBEDEB", "--bg": "#EEF1E8", "--sky3": "#F6FAEE", "--card": "#FFFFFF" };
+const COL = { solar: "#7CC043", batt: "#8FA889", chg: "#CFE3A8", waste: "#D4573F", ink: "#232A22", load: "#424A3E" };
 const css = n => PAL[n];
 
 /* ---------------- state ---------------- */
@@ -1202,7 +1219,7 @@ function dayChart(host, o) {
     el("rect", { x: L + bw * z.a, y: T, width: bw * (z.b - z.a), height: H - T - B, fill: z.fill }, s);
     if (z.label && bw * (z.b - z.a) > 90) { const t = el("text", { x: L + bw * z.a + 6, y: T + 12 }, s); t.textContent = z.label; }
   }
-  if (o.sel != null && o.sel >= 0) { el("rect", { x: L + bw * o.sel, y: T, width: bw, height: H - T - B, fill: "#F1EBDD" }, s); el("rect", { x: L + bw * o.sel, y: H - B, width: bw, height: 3, fill: css("--ink") }, s); }
+  if (o.sel != null && o.sel >= 0) { el("rect", { x: L + bw * o.sel, y: T, width: bw, height: H - T - B, fill: "#ECF0E4" }, s); el("rect", { x: L + bw * o.sel, y: H - B, width: bw, height: 3, fill: css("--ink") }, s); }
   for (let k = 0; k <= 4; k++) {
     const v = y0 + (ymax - y0) * k / 4, y = Y(v);
     el("line", { x1: L, x2: W - R, y1: y, y2: y, stroke: "rgba(42,40,35,.07)" }, s);
@@ -1210,18 +1227,18 @@ function dayChart(host, o) {
   }
   if (o.unit) { const t = el("text", { x: L - 8, y: T - 6, "text-anchor": "end" }, s); t.textContent = o.unit; }
   if (o.lo && o.hi && o.bandAsWhisker) {
-    for (let i = 0; i < o.n; i++) if (o.lo[i] != null) { const x = X(i) + Math.min(bw * .62, 26) / 2 + 3; el("line", { x1: x, x2: x, y1: Y(o.hi[i]), y2: Y(o.lo[i]), stroke: "#A9A08E", "stroke-width": 2 }, s); }
+    for (let i = 0; i < o.n; i++) if (o.lo[i] != null) { const x = X(i) + Math.min(bw * .62, 26) / 2 + 3; el("line", { x1: x, x2: x, y1: Y(o.hi[i]), y2: Y(o.lo[i]), stroke: "#9DA593", "stroke-width": 2 }, s); }
   } else if (o.lo && o.hi) {
     let seg = [];
     const flush = () => { if (seg.length) { const up = seg.map(i => [X(i), Y(o.hi[i])]), dn = seg.map(i => [X(i), Y(o.lo[i])]).reverse(); if (seg.length === 1) { el("rect", { x: X(seg[0]) - bw * .3, y: Y(o.hi[seg[0]]), width: bw * .6, height: Math.max(1, Y(o.lo[seg[0]]) - Y(o.hi[seg[0]])), fill: css("--band"), rx: 3 }, s); } else el("path", { d: pathOf(up.concat(dn)) + "Z", fill: css("--band"), opacity: .9 }, s); } seg = []; };
     for (let i = 0; i < o.n; i++) { if (o.lo[i] != null && o.hi[i] != null) seg.push(i); else flush(); }
     flush();
   }
-  const band = el("rect", { x: 0, y: T, width: bw, height: H - T - B, fill: "rgba(237,184,42,.10)", opacity: 0 }, s);
+  const band = el("rect", { x: 0, y: T, width: bw, height: H - T - B, fill: "rgba(124,192,67,.10)", opacity: 0 }, s);
   const gr = (e, i) => { if (an) { e.setAttribute("class", "gr"); e.style.animationDelay = Math.min(i * 16, 500) + "ms"; } return e; };
   if (o.ghost) {
     const w = Math.max(3, Math.min(bw * .74, 34));
-    o.ghost.forEach((v, i) => { if (v != null) gr(el("rect", { x: X(i) - w / 2, y: Y(v), width: w, height: Math.max(0, Y(0) - Y(v)), rx: Math.min(4, w / 3), fill: "#EAE3D3" }, s), i); });
+    o.ghost.forEach((v, i) => { if (v != null) gr(el("rect", { x: X(i) - w / 2, y: Y(v), width: w, height: Math.max(0, Y(0) - Y(v)), rx: Math.min(4, w / 3), fill: "#E3E8DA" }, s), i); });
   }
   if (o.stack) {
     const w = Math.max(2, Math.min(bw * .6, 96));
@@ -1250,7 +1267,7 @@ function dayChart(host, o) {
     const y = Y(o.avg); el("line", { x1: L, x2: W - R, y1: y, y2: y, stroke: COL.solar, "stroke-width": 1.4, "stroke-dasharray": "6 5" }, s);
     const lab = o.avgLabel || "เฉลี่ย " + fmt(o.avg), tw = lab.length * 6.4 + 18;
     el("rect", { x: L + 4, y: y - 11, width: tw, height: 22, rx: 11, fill: "#FFFFFF", stroke: "rgba(42,40,35,.08)" }, s);
-    const t = el("text", { x: L + 4 + tw / 2, y: y + 4, "text-anchor": "middle", style: "fill:#4A463E;font-size:11px" }, s); t.textContent = lab;
+    const t = el("text", { x: L + 4 + tw / 2, y: y + 4, "text-anchor": "middle", style: "fill:#424A3E;font-size:11px" }, s); t.textContent = lab;
   }
   const every = Math.max(1, Math.ceil(46 / bw));
   for (let i = 0; i < o.n; i++) if ((o.n - 1 - i) % every === 0) { const t = el("text", { x: X(i), y: H - 10, "text-anchor": "middle" }, s); t.textContent = o.label(i); }
@@ -1270,7 +1287,7 @@ function hourChart(host, o) {
   const vals = [].concat(o.area || [], o.area2 || [], ...cum, ...(o.lines || []).map(l => l.v)).filter(v => v != null && isFinite(v));
   const ymax = o.ymax || niceMax(Math.max(...vals, 1) * 1.08), s = svg(W, H);
   const N = o.n || 24, X = h => L + (W - L - R) * h / N, Y = v => T + (H - T - B) * (1 - v / ymax);
-  if (o.bad) o.bad.forEach((b, h) => { if (b) el("rect", { x: X(h), y: T, width: X(1) - X(0), height: H - T - B, fill: "#F1EBDD" }, s); });
+  if (o.bad) o.bad.forEach((b, h) => { if (b) el("rect", { x: X(h), y: T, width: X(1) - X(0), height: H - T - B, fill: "#ECF0E4" }, s); });
   for (let k = 0; k <= 4; k++) { const v = ymax * k / 4, y = Y(v); el("line", { x1: L, x2: W - R, y1: y, y2: y, stroke: "rgba(42,40,35,.07)" }, s); const t = el("text", { x: L - 8, y: y + 4, "text-anchor": "end" }, s); t.textContent = fmt(v); }
   if (o.unit) { const t = el("text", { x: L - 8, y: T - 6, "text-anchor": "end" }, s); t.textContent = o.unit; }
   const ctr = h => X(h + .5);
@@ -1443,7 +1460,8 @@ function fadeUp(page) {
 let ANIM = true;                                        // charts grow in on data changes, not on resize
 
 /* ================= navigation ================= */
-const LIVE = { ov: () => renderOvLive(), ah: () => renderAhead(), ct: () => { renderCpPlan(); renderCtrl(); }, ac: () => { renderAcc(); if (S.up) renderUpload(); } };
+const LIVE = { ov: () => window.VIEW === "factory" ? renderFxOv() : renderOvLive(), ah: () => renderAhead(), ct: () => { renderCpPlan(); renderCtrl(); }, ac: () => { renderAcc(); if (S.up) renderUpload(); },
+  fb: () => renderFxBill(), ff: () => renderFxFc() };
 const ALIAS = { cp: "ct", up: "ac" };                     // old page names still open the merged pages
 let cur = "ov";
 function render(p) { if (LIVE[p]) LIVE[p](); }
@@ -1481,7 +1499,7 @@ function renderOvLive() {
   $("#ovMonSub").textContent = `${mName(MS[0])} – ${mName(lastM)} · มิ.ย. จากมิเตอร์ เดือนอื่นจำลองจากแดดจริง`;
   dayChart($("#chOvMon"), { n: MS.length, h: 270, unit: "kWh", avg: allSold / MS.length, avgLabel: "เฉลี่ย " + fmt(allSold / MS.length) + " kWh", label: i => mShort(MS[i]),
     stack: [{ v: MS.map(o => o.sold), fill: COL.solar }, { v: MS.map(o => o.waste), fill: COL.waste }],
-    tip: i => ({ t: mName(MS[i]) + ` · ${MS[i].days} วัน · ${MS[i].real ? "มิเตอร์" : "จำลอง"}`, rows: [[COL.solar, "ขายได้", fmt(MS[i].sold) + " kWh"], [COL.waste, "ทิ้ง", fmt(MS[i].waste) + " kWh"], ["#A9A08E", "รายได้", "฿" + baht(MS[i].sold)]] }) });
+    tip: i => ({ t: mName(MS[i]) + ` · ${MS[i].days} วัน · ${MS[i].real ? "มิเตอร์" : "จำลอง"}`, rows: [[COL.solar, "ขายได้", fmt(MS[i].sold) + " kWh"], [COL.waste, "ทิ้ง", fmt(MS[i].waste) + " kWh"], ["#9DA593", "รายได้", "฿" + baht(MS[i].sold)]] }) });
   $("#ovMonMini").innerHTML = mini(`${TH_M[+lastM.key.slice(5) - 1]} ขายได้`, fmt(lastM.sold) + " kWh", `ถึง ${dShort(M.last_sat)}`) + mini("รายได้เดือนนี้", "฿" + baht(lastM.sold)) +
     mini("ทิ้งเดือนนี้", fmt(lastM.waste) + " kWh", "", "red") + mini(`รวม ${MS.length} เดือน`, "฿" + baht(allSold));
   // what to watch
@@ -1491,7 +1509,7 @@ function renderOvLive() {
     ["info", `พรุ่งนี้ขายได้ ≈ ${fmt(t.mid.sales)} kWh (≈ ${baht(t.mid.sales)} บาท)`, `${sky(t.r)[1]}${t.r.cloud != null ? ` · เมฆกลางวัน ${fmt(t.r.cloud)}% · ฝน ${fmt(t.r.rain, 1)} มม.` : ""} · ${t.mid.fullAt != null ? "แบตเต็ม " + hm(t.mid.fullAt) : "แบตไม่เต็ม"}`],
     ["warn", `วันที่ขายได้น้อยสุดในสัปดาห์: ${dLong(weak.d)}`, `≈ ${fmt(weak.mid.sales)} kWh · ต่ำกว่าค่าเฉลี่ยสัปดาห์ ${pct(1 - weak.mid.sales / (sold / 7))} · ${sky(weak.r)[1]}`],
     waste > 40 ? ["warn", `ไฟที่ต้องทิ้ง 7 วัน ≈ ${fmt(waste)} kWh (≈ ${baht(waste)} บาท)`, `เกิดเมื่อแบตเต็มและโรงงานใช้ไม่ทัน · ${spill} วันในสัปดาห์นี้`] : ["gain", "สัปดาห์นี้แทบไม่ต้องทิ้งไฟ", "โหลดโรงงานและแบตรับ PV ได้เกือบทั้งหมด"],
-    window.APP && APP.alert ? ["risk", `PV ชุดที่ 2 ผลิตได้ ${pct(APP.alert.ratio)} ตั้งแต่ ${APP.alert.since}`, `ยอดขายหายเดือนละ ${fmt(APP.alert.loss_lo)}–${fmt(APP.alert.loss_hi)} kWh · ควรตรวจสอบหน้างาน`] : null,
+    window.APP && APP.alert ? ["info", `แผงชุดที่ 2 เคยผลิตได้ ${pct(APP.alert.ratio)} ของปกติ ช่วง 1–7 มิ.ย.`, `ยอดขายหายไป ${fmt(APP.alert.loss_lo)}–${fmt(APP.alert.loss_hi)} kWh ใน 7 วันนั้น · กลับมาปกติ 7 มิ.ย. ประมาณ 14:00`] : null,
     ["info", `${TH_MF[dt(M.horizon_end).getMonth()]} คาดขายได้ ≈ ${fmt(mSold)} kWh`, `≈ ${baht(mSold)} บาท · ${MONTH_CACHE.filter(c => c.r.src === "nwp").length} วันแรกจากพยากรณ์อากาศ ที่เหลือจากสถิติแดด ${yrsBE("–")}`],
     ["info", `พยากรณ์แดดล่วงหน้า 1 วัน แม่น ${pct(1 - LAB.lead["1"].ml)}`, `12 เดือนล่าสุด · วิธีเดิม ${pct(1 - LAB.lead["1"].pers)}`]
   ].filter(Boolean);
@@ -1555,7 +1573,7 @@ function renderAhead() {
     dayChart($("#chDays"), { n: C.length, unit: "kWh", h: 290, label: i => dShort(C[i].d),
       stack: [{ v: C.map(c => c.mid.direct), fill: COL.solar }, { v: C.map(c => c.mid.dis), fill: COL.batt }, { v: C.map(c => c.mid.curt), fill: COL.waste }],
       onPick: i => { S.ahSel = C[i].d; S.ahPer = "1"; ANIM = true; renderAhead(); fadeUp($("#p-ah")); },
-      tip: i => ({ t: dLong(C[i].d) + " · " + sky(C[i].r)[1], rows: [[COL.solar, "ขายตรง", fmt(C[i].mid.direct) + " kWh"], [COL.batt, "ขายจากแบต", fmt(C[i].mid.dis) + " kWh"], [COL.waste, "ต้องทิ้ง", fmt(C[i].mid.curt) + " kWh"], ["#A9A08E", "รายได้", "฿" + baht(C[i].mid.sales)]] }) });
+      tip: i => ({ t: dLong(C[i].d) + " · " + sky(C[i].r)[1], rows: [[COL.solar, "ขายตรง", fmt(C[i].mid.direct) + " kWh"], [COL.batt, "ขายจากแบต", fmt(C[i].mid.dis) + " kWh"], [COL.waste, "ต้องทิ้ง", fmt(C[i].mid.curt) + " kWh"], ["#9DA593", "รายได้", "฿" + baht(C[i].mid.sales)]] }) });
     const best = [...C].sort((a, b) => b.mid.sales - a.mid.sales)[0], weak = [...C].sort((a, b) => a.mid.sales - b.mid.sales)[0];
     $("#ahBW").innerHTML = `<span><b class="up">↗</b>วันที่ดีที่สุด ${dLong(best.d)} · ${fmt(best.mid.sales)} kWh</span><span><b>↘</b>วันที่น้อยที่สุด ${dLong(weak.d)} · ${fmt(weak.mid.sales)} kWh</span>`;
   }
@@ -1588,7 +1606,7 @@ function renderAcc() {
   dayChart($("#chVs"), { n: 30, unit: "kWh", h: 280, label: i => dShort(rows[i].d), bars: rows.map(r => r.act != null ? r.act * k : null), line: rows.map(r => r.p1 != null && r.act != null ? r.p1 * k : null),
     lo: rows.map(r => r.lo1 != null ? r.lo1 * k : null), hi: rows.map(r => r.hi1 != null ? r.hi1 * k : null),
     onPick: i => { if (rows[i].act == null) return; S.accSel = rows[i].d; if (!$("#acDetail").checked) { $("#acDetail").checked = true; } ANIM = false; renderAcc(); },
-    tip: i => { const r = rows[i]; if (r.act == null) return { t: dLong(r.d), rows: [["#A9A08E", "ข้อมูลดาวเทียมไม่ครบ", "—"]] }; return { t: dLong(r.d), rows: [["#D9D1C0", "จริง", fmt(r.act * k) + " kWh"], ["#2A2823", "พยากรณ์", fmt(r.p1 * k) + " kWh"], [COL.waste, "คลาด", (r.p1 >= r.act ? "+" : "−") + fmt(Math.abs(r.p1 - r.act) * k) + " kWh"]] }; } });
+    tip: i => { const r = rows[i]; if (r.act == null) return { t: dLong(r.d), rows: [["#9DA593", "ข้อมูลดาวเทียมไม่ครบ", "—"]] }; return { t: dLong(r.d), rows: [["#D3D9CB", "จริง", fmt(r.act * k) + " kWh"], ["#232A22", "พยากรณ์", fmt(r.p1 * k) + " kWh"], [COL.waste, "คลาด", (r.p1 >= r.act ? "+" : "−") + fmt(Math.abs(r.p1 - r.act) * k) + " kWh"]] }; } });
   const err = r => Math.abs(r.p1 - r.act) / r.act, st = accStats(ok), best = [...ok].sort((a, b) => err(a) - err(b))[0], worst = [...ok].sort((a, b) => err(b) - err(a))[0];
   $("#acMini").innerHTML = mini("คะแนนโมเดล 30 วัน", pct(1 - st.ml), `วิธีเดิม ${pct(1 - st.pers)}`) + mini("วันที่แม่นที่สุด", dShort(best.d), `แม่น ${acc(err(best), 1)}`) +
     mini("วันที่คลาดมากสุด", dShort(worst.d), `${worst.p1 >= worst.act ? "+" : "−"}${fmt(Math.abs(worst.p1 - worst.act) * k)} kWh`) + mini("ค่าจริงอยู่ในช่วงต่ำ–สูง", pct(st.cover), "เป้า 80%");
@@ -1650,9 +1668,9 @@ function renderCpPlan() {
     mini("แบตเต็ม", P.fullAt != null ? hm(P.fullAt) : "ไม่เต็ม", auto && slowed ? `แบบเดิม ${G.fullAt != null ? hm(G.fullAt) : "ไม่เต็ม"}` : (P.curt > 40 ? `หลังจากนั้นทิ้ง ${fmt(P.curt)} kWh` : "ไม่ต้องทิ้งไฟ")) +
     mini("เพดานชาร์จที่จะสั่ง", slowed ? fmt(t.plan.cap) + " kW" : "ไม่จำกัด", slowed ? "ส่งให้ super locker ช่วงที่มีไฟเกิน" : "ชาร์จเต็มกำลัง 1,118 kW") +
     mini("แบตค้างเต็ม", P.full + " ชม.", auto ? `แบบเดิม ${G.socp.filter(v => v >= 94).length} ชม.` : (empty >= 0 ? `แบตหมด ${hm(empty + 1)}` : ""));
-  hourChart($("#chCpSoc"), { unit: "%", h: 190, ymax: 100, hlines: [{ v: 94, label: "เต็ม" }], area: P.socp, areaFill: "#F4E3AE",
-    lines: [{ v: P.socp, stroke: COL.ink, w: 2.2 }].concat(auto ? [{ v: G.socp, stroke: "#A9A08E", dash: "2 4", w: 2 }] : []),
-    tip: h => ({ t: hm(h), rows: [[COL.ink, auto ? "ตามแผน" : "แบบเดิม", fmt(P.socp[h]) + "%"]].concat(auto ? [["#A9A08E", "แบบเดิม", fmt(G.socp[h]) + "%"]] : []).concat(P.capH[h] != null ? [[COL.solar, "เพดานชาร์จ", fmt(P.capH[h]) + " kW"]] : []) }) });
+  hourChart($("#chCpSoc"), { unit: "%", h: 190, ymax: 100, hlines: [{ v: 94, label: "เต็ม" }], area: P.socp, areaFill: "#D9EDB4",
+    lines: [{ v: P.socp, stroke: COL.ink, w: 2.2 }].concat(auto ? [{ v: G.socp, stroke: "#9DA593", dash: "2 4", w: 2 }] : []),
+    tip: h => ({ t: hm(h), rows: [[COL.ink, auto ? "ตามแผน" : "แบบเดิม", fmt(P.socp[h]) + "%"]].concat(auto ? [["#9DA593", "แบบเดิม", fmt(G.socp[h]) + "%"]] : []).concat(P.capH[h] != null ? [[COL.solar, "เพดานชาร์จ", fmt(P.capH[h]) + " kW"]] : []) }) });
   $("#cpTbl").innerHTML = `<thead><tr><th>วัน</th><th>วิธี</th><th class="n">เริ่มชาร์จ</th><th class="n">แบตเต็ม</th><th class="n">แบตค้างเต็ม</th><th class="n">ขายได้</th><th class="n">ทิ้ง</th></tr></thead><tbody>` +
     C.map(c => { const x = auto ? c.plan : c.mid, f = x.chgH.findIndex(v => v > 1), sl = auto && c.plan.cap < PMAX - 1;
       return `<tr><td>${dLong(c.d)}</td><td>${sl ? `ชะลอ · ${fmt(c.plan.cap)} kW` : '<span class="mut">แบบเดิม</span>'}</td><td class="n">${f >= 0 ? hm(f) : "—"}</td><td class="n">${x.fullAt != null ? hm(x.fullAt) : '<span class="mut">ไม่เต็ม</span>'}</td><td class="n">${sl ? `<span class="mut">${c.mid.socp.filter(v => v >= 94).length} →</span> ` : ""}${x.full} ชม.</td><td class="n"><b>${fmt(x.sales)}</b></td><td class="n">${x.curt > 40 ? `<span class="red">${fmt(x.curt)}</span>` : '<span class="mut">—</span>'}</td></tr>`; }).join("") + "</tbody>";
@@ -1669,10 +1687,10 @@ function renderCompare(U) {
   countUp("#cWaste", W, v => fmt(v), U_KWH); $("#cWaste2").textContent = `≈ ${baht(W)} บาทที่ขายไม่ได้`;
   $("#cWasteN").textContent = U.info.waste != null ? "จากข้อมูลรายนาที วิธีเดียวกับรายงาน" : "ประมาณจากชั่วโมงที่ SOC ≥ 94%";
   dayChart($("#chMeas"), { n: D.length, unit: "kWh", h: 280, label: i => dShort(D[i].d), ghost: D.map(r => r.exp), bars: D.map(r => r.act), barFill: i => D[i].pi < .9 ? COL.waste : COL.solar,
-    tip: i => ({ t: dLong(D[i].d), rows: [["#E6DECD", "ควรผลิตได้", fmt(D[i].exp) + " kWh"], [D[i].pi < .9 ? COL.waste : COL.solar, "ผลิตจริง", fmt(D[i].act) + " kWh"], ["#A9A08E", "ช่วงแบตยังไม่เต็ม", pct(D[i].pi) + " ของที่ควรได้"]] }) });
+    tip: i => ({ t: dLong(D[i].d), rows: [["#DFE5D4", "ควรผลิตได้", fmt(D[i].exp) + " kWh"], [D[i].pi < .9 ? COL.waste : COL.solar, "ผลิตจริง", fmt(D[i].act) + " kWh"], ["#9DA593", "ช่วงแบตยังไม่เต็ม", pct(D[i].pi) + " ของที่ควรได้"]] }) });
   const eq = Math.max(0, P.under), w = W, share = eq + w > 0 ? eq / (eq + w) * 100 : 0;
   $("#lossSub").textContent = `${D.length} วันในไฟล์ · ขาดไปรวม ${fmt(eq + w)} kWh ≈ ${baht(eq + w)} บาท`;
-  $("#lossSplit").innerHTML = `<div class="lossbar"><i style="width:${share}%;background:#2A2823"></i><i style="width:${100 - share}%;background:#D4573F"></i></div>
+  $("#lossSplit").innerHTML = `<div class="lossbar"><i style="width:${share}%;background:#232A22"></i><i style="width:${100 - share}%;background:#D4573F"></i></div>
     <div class="lossgrid"><div><p><i class="dot ink"></i>สูญเสียจากอุปกรณ์</p><b>${fmt(eq)} kWh</b><span>≈ ${baht(eq)} บาท ที่แผงควรผลิตได้แต่ไม่ได้ผลิต เช่น string เสีย ฝุ่น หรือเงา ไม่ใช่เพราะสภาพอากาศ</span></div>
     <div><p><i class="dot red"></i>ทิ้งเพราะแบตเต็ม</p><b class="red">${fmt(w)} kWh</b><span>≈ ${baht(w)} บาท ของแดดที่ใช้ไม่ได้ เพราะแบตเต็มแล้วและส่งออกกริดไม่ได้</span></div></div>`;
   $("#flagSub").textContent = flagged.length ? `เรียงตามพลังงานที่หายไป · แย่ที่สุด ${dLong(flagged[0].d)}` : "ไม่มีวันที่ต่ำกว่า 90% ในช่วงนี้";
@@ -1711,7 +1729,7 @@ function renderAccDetail() {
     const a = 1 - lead[L].ml, b = 1 - lead[L].pers;
     html += `<div class="cmph">ล่วงหน้า ${L} วัน</div>
       <div class="cmpbar"><span>โมเดล</span><div class="tr"><i style="width:${a * 100}%;background:var(--ink)"></i></div><b>${pct(a)}</b></div>
-      <div class="cmpbar"><span>วิธีเดิม</span><div class="tr"><i style="width:${b * 100}%;background:#A9A08E"></i></div><b>${pct(b)}</b></div>`;
+      <div class="cmpbar"><span>วิธีเดิม</span><div class="tr"><i style="width:${b * 100}%;background:#9DA593"></i></div><b>${pct(b)}</b></div>`;
   }
   html += `<div class="cmpbar" style="margin-top:12px"><span>ค่าปกติตามฤดู</span><div class="tr"><i style="width:${(1 - cl) * 100}%;background:var(--sky1)"></i></div><b>${pct(1 - cl)}</b></div>`;
   $("#leadBars").innerHTML = html;
@@ -1929,7 +1947,7 @@ function renderUpload() {
     lo: v === "pv" ? rows.map(r => upd ? r.loU : r.lo) : null, hi: v === "pv" ? rows.map(r => upd ? r.hiU : r.hi) : null,
     sel: rows.findIndex(r => r.d === S.upSel), onPick: i => { S.upSel = rows[i].d; renderUpload(); },
     tip: i => { const r = rows[i]; return `<b>${dLong(r.d)}</b><br>จริง <b>${fmt(r.act)}</b> · พยากรณ์ <b>${fmt(r[pk])}</b> kWh<br>แม่น ${acc(Math.abs(r[pk] - r.act) / r.act)}${r.simple != null ? " · baseline " + acc(Math.abs(r.simple - r.act) / r.act) : ""}`; } });
-  $("#upLegend").innerHTML = `<span><i class="box" style="background:#D9D1C0"></i>Actual</span><span><i class="d"></i>Forecast</span>${v === "pv" ? `<span><i class="box" style="background:var(--sky1)"></i>P10–P90</span>` : ""}<span><i class="dot"></i>Baseline (ค่าเมื่อวาน)</span>`;
+  $("#upLegend").innerHTML = `<span><i class="box" style="background:#D3D9CB"></i>Actual</span><span><i class="d"></i>Forecast</span>${v === "pv" ? `<span><i class="box" style="background:var(--sky1)"></i>P10–P90</span>` : ""}<span><i class="dot"></i>Baseline (ค่าเมื่อวาน)</span>`;
   // hourly
   const d = S.upSel, x = U.hours[d], h = LAB.hourly[d], r = rows.find(q => q.d === d);
   $("#upHrTitle").textContent = (v === "pv" ? "PV" : "โหลด") + " รายชั่วโมง " + dLong(d);
@@ -1985,8 +2003,8 @@ function renderModelLoop() {
   const futStart = past.length;
   dayChart($("#chEvo"), { n: cols.length, unit: "kWh/ตร.ม.", h: 280, label: i => dShort(cols[i].d), bars: cols.map(c => c.act),
     zones: [{ a: futStart, b: cols.length, fill: css("--sky3"), label: "วันข้างหน้า" }],
-    barFill: () => "#EFE8D8",
-    dots: [{ v: cols.map(c => c.p7), fill: "#C9BFAE", dx: -.18 }, { v: cols.map(c => c.p3), fill: "#8A8274", dx: 0 }, { v: cols.map(c => c.p1), fill: "#2A2823", dx: .18 }],
+    barFill: () => "#E8ECE0",
+    dots: [{ v: cols.map(c => c.p7), fill: "#C2CAB8", dx: -.18 }, { v: cols.map(c => c.p3), fill: "#7F877A", dx: 0 }, { v: cols.map(c => c.p1), fill: "#232A22", dx: .18 }],
     hollow: cols.map(c => c.now),
     tip: i => { const c = cols[i]; return `<b>${dLong(c.d)}</b><br>7 วันก่อน ${fmt(c.p7, 2)} · 3 วันก่อน ${fmt(c.p3, 2)} · 1 วันก่อน ${fmt(c.p1, 2)}<br>${c.act != null ? "จริง <b>" + fmt(c.act, 2) + "</b>" : "ล่าสุด <b>" + fmt(c.now, 2) + "</b>"}`; } });
   // monthly track record
@@ -2050,10 +2068,10 @@ function renderCtrl() {
     lines: [{ v: d.load, stroke: COL.load, w: 1.8 }, { v: auto ? d.chg_p : d.chg_g, stroke: COL.batt, w: 2.6 }], steps: [{ v: capLine, stroke: COL.ink, dash: "5 4", w: 1.8 }],
     tip: k => ({ t: hm15(k), rows: [[COL.solar, "PV ที่แผงทำได้", fmt(d.pv[k]) + " kW"], [COL.load, "โหลดโรงงาน", fmt(d.load[k]) + " kW"], [COL.batt, "ชาร์จแบต", fmt((auto ? d.chg_p : d.chg_g)[k]) + " kW"], [COL.ink, "เพดานชาร์จ", capLine[k] != null ? fmt(capLine[k]) + " kW" : "ไม่จำกัด"]] }) });
   const marks = d.exp.map((v, k) => v > 0 && (auto ? d.soc_p : d.soc_g)[k] >= 94 ? { i: k, v: 97 } : null).filter(Boolean)
-    .concat(auto ? d.exp.map((v, k) => v > 0 && d.soc_g[k] >= 94 && d.soc_p[k] < 94 ? { i: k, v: 97, fill: "#E2CFA6" } : null).filter(Boolean) : []);
+    .concat(auto ? d.exp.map((v, k) => v > 0 && d.soc_g[k] >= 94 && d.soc_p[k] < 94 ? { i: k, v: 97, fill: "#CFE3A8" } : null).filter(Boolean) : []);
   hourChart($("#chCt2"), { n: 96, h: 220, unit: "%", ymax: 100, now: i, hlines: [{ v: 94, label: "เต็ม" }], marks,
-    lines: [{ v: auto ? d.soc_p : d.soc_g, stroke: COL.ink, w: 2.2 }].concat(auto ? [{ v: d.soc_g, stroke: "#A9A08E", dash: "2 4", w: 2 }] : []),
-    tip: k => ({ t: hm15(k), rows: [[COL.ink, auto ? "ตามแผน" : "แบบเดิม", fmt((auto ? d.soc_p : d.soc_g)[k]) + "%"]].concat(auto ? [["#A9A08E", "แบบเดิม", fmt(d.soc_g[k]) + "%"]] : []).concat(d.exp[k] > 0 ? [[COL.waste, "ไฟไหลออกกริด (จริง)", fmt(d.exp[k]) + " kW"]] : []) }) });
+    lines: [{ v: auto ? d.soc_p : d.soc_g, stroke: COL.ink, w: 2.2 }].concat(auto ? [{ v: d.soc_g, stroke: "#9DA593", dash: "2 4", w: 2 }] : []),
+    tip: k => ({ t: hm15(k), rows: [[COL.ink, auto ? "ตามแผน" : "แบบเดิม", fmt((auto ? d.soc_p : d.soc_g)[k]) + "%"]].concat(auto ? [["#9DA593", "แบบเดิม", fmt(d.soc_g[k]) + "%"]] : []).concat(d.exp[k] > 0 ? [[COL.waste, "ไฟไหลออกกริด (จริง)", fmt(d.exp[k]) + " kW"]] : []) }) });
   // command log up to now
   const rows = []; for (let k = i; k >= 0; k--) { if (d.pv[k] <= 5) continue; const s = ctState(d, k); rows.push(`<tr><td class="n">${hm15(k)}</td><td>${s.badge}</td><td class="n">${s.cap}</td><td class="n">${s.lim}</td><td class="ok">${auto ? "ยืนยันแล้ว" : "–"}</td></tr>`); }
   $("#ctLog").innerHTML = `<thead><tr><th>เวลา</th><th>คำสั่ง</th><th class="n">เพดานชาร์จ</th><th class="n">จำกัด PV</th><th>สถานะ</th></tr></thead><tbody>${rows.join("") || '<tr><td colspan="5" class="mut">ยังไม่มีคำสั่ง (ยังไม่มีแดด)</td></tr>'}</tbody>`;
@@ -2078,8 +2096,105 @@ if ($("#ctPlay")) {
   $$("#ctMode button").forEach(b => b.addEventListener("click", () => { CT.mode = b.dataset.m; ANIM = true; renderCpPlan(); renderCtrl(); }));
 }
 
+/* ================= FACTORY VIEW (the buyer of the power) ================= */
+const FX = window.VIEW === "factory";
+const RATE = { on: 4.3462, off: 2.766, demand: 132.93 };        // PEA TOU, large business 22-33 kV, Ft included, VAT excluded
+const isOn = (weekday, h) => weekday && h >= 9 && h < 22;
+const TH_DOWF = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+let FXB = null;
+/* June replay (15-min): energy by source, what was paid, and what an all-grid bill would have been */
+function fxBill() {
+  if (FXB) return FXB;
+  const A = window.APP, keys = Object.keys(A.days).sort(), days = [];
+  const T = { load: 0, alt: 0, gOn: 0, gOff: 0, altCost: 0, gCost: 0, allCost: 0, lOn: 0, lOff: 0 }, peaks = [];
+  let pkG = { v: 0 }, pkL = { v: 0 };
+  const wk = { wd: { alt: 0, save: 0, n: 0 }, we: { alt: 0, save: 0, n: 0 } };
+  for (const k of keys) {
+    const d = A.days[k], date = "2026-06-" + k, o = { d: date, load: 0, alt: 0, grid: 0, altCost: 0, gCost: 0, allCost: 0 };
+    for (let i = 0; i < 96; i++) {
+      const h = i / 4, on = isOn(d.weekday, h), r = on ? RATE.on : RATE.off, ld = d.ld[i], g = Math.max(0, d.gin[i]), a = Math.max(0, ld - g), e = .25;
+      o.load += ld * e; o.alt += a * e; o.grid += g * e; o.altCost += a * e * 3.5; o.gCost += g * e * r; o.allCost += ld * e * r;
+      if (on) { T.gOn += g * e; T.lOn += ld * e; peaks.push({ d: date, i, g, ld, a }); if (g > pkG.v) pkG = { v: g, d: date, i }; if (ld > pkL.v) pkL = { v: ld, d: date, i }; }
+      else { T.gOff += g * e; T.lOff += ld * e; }
+    }
+    days.push(o); for (const x of ["load", "alt", "altCost", "gCost", "allCost"]) T[x] += o[x];
+    const b = d.weekday ? wk.wd : wk.we; b.alt += o.alt; b.save += o.allCost - o.altCost - o.gCost; b.n++;
+  }
+  peaks.sort((a, b) => b.g - a.g);
+  const top = []; for (const p of peaks) { if (top.every(t => t.d !== p.d)) top.push(p); if (top.length === 5) break; }
+  FXB = { days, T, pkG, pkL, top, wk, from: days[0].d, to: days[days.length - 1].d,
+    paid: T.altCost + T.gCost + pkG.v * RATE.demand, all: T.allCost + pkL.v * RATE.demand };
+  return FXB;
+}
+const qh = i => String(Math.floor(i / 4)).padStart(2, "0") + ":" + String((i % 4) * 15).padStart(2, "0");
+function renderFxOv() {
+  const B = fxBill(), n = B.days.length;
+  $("#fxRange").textContent = `${dShort(B.from)} – ${dShort(B.to)} 2569 · พยากรณ์อัปเดต ${dShort(M.today)}`;
+  $("#fxDailySub").textContent = `kWh · ${dShort(B.from)} – ${dShort(B.to)} · ไฟจาก Altervim ${pct(B.T.alt / B.T.load)} ของที่ใช้`;
+  dayChart($("#fxDaily"), { n, h: 270, unit: "kWh", avg: B.T.load / n, avgLabel: "เฉลี่ย " + fmt(B.T.load / n) + " kWh", label: i => dShort(B.days[i].d),
+    stack: [{ v: B.days.map(o => o.alt), fill: COL.solar }, { v: B.days.map(o => o.grid), fill: "#C2CAB8" }],
+    tip: i => { const o = B.days[i]; return { t: dLong(o.d), rows: [[COL.solar, "จาก Altervim", fmt(o.alt) + " kWh"], ["#C2CAB8", "จากกริด", fmt(o.grid) + " kWh"], [COL.ink, "ประหยัด", "฿" + fmt(o.allCost - o.altCost - o.gCost)]] }; } });
+  $("#fxDailyMini").innerHTML = mini("ใช้ไฟรวม", fmt(B.T.load) + " kWh") + mini("จาก Altervim", pct(B.T.alt / B.T.load)) + mini("ประหยัดรวม", "฿" + fmt(B.all - B.paid)) + mini("ไฟสูงสุดจากกริด", fmt(B.pkG.v) + " kW");
+  const we = B.wk.we, wd = B.wk.wd;
+  const items = [
+    ["info", `เดือนนี้ประหยัด ≈ ${fmt(B.all - B.paid)} บาท`, `${pct((B.all - B.paid) / B.all)} ของบิลถ้าซื้อจากกริดอย่างเดียว · รวมค่าความต้องการไฟฟ้าที่ลดลง ${fmt((B.pkL.v - B.pkG.v) * RATE.demand)} บาท`],
+    we.save < 0 ? ["warn", "วันเสาร์-อาทิตย์ ไฟ Altervim แพงกว่าไฟกริด", `ไฟกริดวันหยุดคิดอัตรา off-peak ${RATE.off.toFixed(2)} บาท ต่ำกว่า 3.50 บาท · ${we.n} วันหยุดจ่ายเพิ่มรวม ${fmt(-we.save)} บาท`] : null,
+    ["warn", `ไฟสูงสุดจากกริด ${fmt(B.pkG.v)} kW`, `${dLong(B.pkG.d)} ${qh(B.pkG.i)} · เป็นฐานค่าความต้องการไฟฟ้า ${fmt(B.pkG.v * RATE.demand)} บาท`],
+    ["info", "พรุ่งนี้ต้องซื้อไฟจากกริด", `ดูได้ในหน้าพยากรณ์ · พยากรณ์อัปเดตทุกวัน`]
+  ].filter(Boolean);
+  const SEV = { warn: ["w", "ควรรู้"], info: ["i", "ข้อมูล"] };
+  $("#fxNotes").innerHTML = items.map(([t, a, b]) => { const [c, l] = SEV[t]; return `<li><span class="ni ni-${c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.4"/></svg></span><div><b>${a}</b><em class="sev-${c}">${l}</em><span>${b}</span></div></li>`; }).join("");
+  $("#fxFoot").textContent = `ภาพ 3 มิติและตัวเลขรายวันเล่นซ้ำข้อมูลจริงของไซต์ ${dShort(B.from)} – ${dShort(B.to)} 2569 · ค่าไฟคิดตามอัตรา TOU ของ PEA (on-peak ${RATE.on.toFixed(2)} off-peak ${RATE.off.toFixed(2)} บาท รวม Ft ไม่รวม VAT) ไฟจาก Altervim 3.50 บาท/หน่วย`;
+  const bell = $("#bell"); if (bell && !bell._b) { bell._b = 1; bell.addEventListener("click", () => { go("ov"); $("#fxNotes").scrollIntoView({ behavior: "smooth", block: "center" }); }); }
+}
+function renderFxBill() {
+  const B = fxBill(), T = B.T, n = B.days.length;
+  $("#fbDesc").textContent = `${dLong(B.from)} – ${dLong(B.to)} (${n} วัน) · อัตรา TOU ของ PEA กิจการขนาดใหญ่ 22–33 kV รวม Ft ไม่รวม VAT · ไฟจาก Altervim 3.50 บาท/หน่วย`;
+  countUp("#fbPaid", B.paid, v => "฿" + fmt(v)); $("#fbPaid2").textContent = `เฉลี่ย ${fmt(B.paid / T.load, 2)} บาท/หน่วย`;
+  countUp("#fbAll", B.all, v => "฿" + fmt(v)); $("#fbAll2").textContent = `เฉลี่ย ${fmt(B.all / T.load, 2)} บาท/หน่วย`;
+  countUp("#fbSave", B.all - B.paid, v => "฿" + fmt(v)); $("#fbSave2").textContent = `${pct((B.all - B.paid) / B.all, 1)} ของบิลกริดอย่างเดียว`;
+  $("#fbSave3").textContent = `ค่าไฟ ${fmt(T.allCost - T.altCost - T.gCost)} + ค่าความต้องการไฟฟ้า ${fmt((B.pkL.v - B.pkG.v) * RATE.demand)}`;
+  countUp("#fbPeak", B.pkG.v, v => fmt(v), "<small>kW</small>"); $("#fbPeak2").textContent = `ค่าความต้องการไฟฟ้า ${fmt(B.pkG.v * RATE.demand)} บาท`;
+  $("#fbPeak3").textContent = `${dLong(B.pkG.d)} ${qh(B.pkG.i)} · ถ้าไม่มีโซลาร์ ${fmt(B.pkL.v)} kW`;
+  dayChart($("#fbDaily"), { n, h: 280, unit: "บาท", label: i => dShort(B.days[i].d), stack: [{ v: B.days.map(o => o.altCost), fill: COL.solar }, { v: B.days.map(o => o.gCost), fill: "#C2CAB8" }], line: B.days.map(o => o.allCost),
+    tip: i => { const o = B.days[i]; return { t: dLong(o.d), rows: [[COL.solar, "จ่ายให้ Altervim", "฿" + fmt(o.altCost)], ["#C2CAB8", "ค่าไฟกริด", "฿" + fmt(o.gCost)], [COL.ink, "ถ้าซื้อกริดอย่างเดียว", "฿" + fmt(o.allCost)], [COL.solar, "ประหยัด", "฿" + fmt(o.allCost - o.altCost - o.gCost)]] }; } });
+  $("#fbMini").innerHTML = mini("ซื้อจาก Altervim", fmt(T.alt) + " kWh", "฿" + fmt(T.altCost)) + mini("ซื้อจากกริด", fmt(T.gOn + T.gOff) + " kWh", "฿" + fmt(T.gCost)) + mini("ประหยัดเฉลี่ย", "฿" + fmt((B.all - B.paid) / n) + "/วัน") + mini("ไฟจาก Altervim", pct(T.alt / T.load), "ของไฟที่ใช้");
+  const row = (a, b, c, d) => `<tr><td>${a}</td><td class="n">${b}</td><td class="n">${c}</td><td class="n">${d}</td></tr>`;
+  $("#fbTbl").innerHTML = `<thead><tr><th>รายการ</th><th class="n">จ่ายจริง</th><th class="n">กริดอย่างเดียว</th><th class="n">ต่าง</th></tr></thead><tbody>` +
+    row(`ไฟจาก Altervim ${fmt(T.alt)} kWh × 3.50`, "฿" + fmt(T.altCost), "–", "") +
+    row(`ไฟกริด on-peak × ${RATE.on.toFixed(2)}`, "฿" + fmt(T.gOn * RATE.on), "฿" + fmt(T.lOn * RATE.on), "") +
+    row(`ไฟกริด off-peak × ${RATE.off.toFixed(2)}`, "฿" + fmt(T.gOff * RATE.off), "฿" + fmt(T.lOff * RATE.off), "") +
+    row(`ค่าความต้องการไฟฟ้า × ${RATE.demand.toFixed(2)}`, `฿${fmt(B.pkG.v * RATE.demand)} <span class="mut">(${fmt(B.pkG.v)} kW)</span>`, `฿${fmt(B.pkL.v * RATE.demand)} <span class="mut">(${fmt(B.pkL.v)} kW)</span>`, "") +
+    `<tr class="tot"><td>รวม</td><td class="n">฿${fmt(B.paid)}</td><td class="n">฿${fmt(B.all)}</td><td class="n"><b>−฿${fmt(B.all - B.paid)}</b></td></tr></tbody>`;
+  const W = B.wk, card = (lab, w) => `<div class="dtype"><p>${lab} <span class="mut">${w.n} วัน</span></p><b class="${w.save < 0 ? "red" : ""}">${w.save < 0 ? "−" : ""}฿${fmt(Math.abs(w.save))}</b><span>${w.save < 0 ? "จ่ายเพิ่ม" : "ประหยัด"} ${fmt(Math.abs(w.save / Math.max(1, w.alt)), 2)} บาทต่อหน่วยที่ซื้อจาก Altervim</span></div>`;
+  $("#fbDayType").innerHTML = `<div class="dtypes">${card("วันทำงาน", W.wd)}${card("เสาร์-อาทิตย์", W.we)}</div><p class="note">วันทำงานช่วง 09:00–22:00 ไฟกริดราคา ${RATE.on.toFixed(2)} บาท แพงกว่าไฟ Altervim 3.50 บาท จึงประหยัด ส่วนวันเสาร์-อาทิตย์ไฟกริดคิด ${RATE.off.toFixed(2)} บาททั้งวัน ถูกกว่า 3.50 บาท ไฟจาก Altervim ในวันหยุดจึงแพงกว่า</p>`;
+  $("#fbPeaks").innerHTML = `<thead><tr><th>วันและเวลา</th><th class="n">ไฟจากกริด</th><th class="n">ไฟที่ใช้ทั้งหมด</th><th class="n">จาก Altervim ขณะนั้น</th></tr></thead><tbody>` +
+    B.top.map((p, k) => `<tr class="${k === 0 ? "sel" : ""}"><td>${dLong(p.d)} ${qh(p.i)}</td><td class="n"><b>${fmt(p.g)} kW</b></td><td class="n">${fmt(p.ld)} kW</td><td class="n">${fmt(p.a)} kW</td></tr>`).join("") + "</tbody>";
+  $("#fbFoot").textContent = "คำนวณจากข้อมูลจริงรายนาทีของไซต์ รวมเป็นราย 15 นาที · ค่าความต้องการไฟฟ้าคิดจากไฟสูงสุดราย 15 นาทีช่วง on-peak ของช่วงข้อมูล · ยังไม่รวมวันหยุดนักขัตฤกษ์ ค่าบริการรายเดือน และ VAT";
+}
+function renderFxFc() {
+  const lm = loadModelAhead(S.loadHist), C = fut.filter(r => r.lead >= 1 && r.lead <= 7).map(r => dayCalc(r.d, lm));
+  const cost = c => { const wd = dt(c.d).getDay() % 6 !== 0; let a = 0, g = 0, all = 0, pk = 0;
+    for (let h = 0; h < 24; h++) { const r = isOn(wd, h) ? RATE.on : RATE.off, alt = c.mid.directH[h] + c.mid.disH[h], gr = Math.max(0, c.ld[h] - alt);
+      a += alt * 3.5; g += gr * r; all += c.ld[h] * r; if (isOn(wd, h)) pk = Math.max(pk, gr); }
+    return { a, g, all, pk, grid: c.load - c.mid.sales }; };
+  const t = C[0], k = cost(t);
+  $("#ffDesc").textContent = `ไฟที่โรงงานจะใช้ ไฟที่ได้จาก Altervim และไฟที่ต้องซื้อจากกริด · พยากรณ์อัปเดต ${dLong(M.today)}`;
+  countUp("#ffLoad", t.load, v => fmt(v), U_KWH); $("#ffLoad2").textContent = `${dLong(t.d)} · สูงสุด ${fmt(Math.max(...t.ld))} kW`;
+  countUp("#ffAlt", t.mid.sales, v => fmt(v), U_KWH); $("#ffAlt2").textContent = `${pct(t.mid.sales / t.load)} ของไฟที่ใช้ · ${sky(t.r)[1]}`; $("#ffAlt3").textContent = `ช่วง ${fmt(t.lo.sales)}–${fmt(t.hi.sales)} kWh`;
+  countUp("#ffGrid", k.grid, v => fmt(v), U_KWH); $("#ffGrid2").textContent = `ไฟจากกริดสูงสุดช่วง on-peak ≈ ${fmt(k.pk)} kW`; $("#ffGrid3").textContent = dt(t.d).getDay() % 6 === 0 ? "วันหยุด คิดอัตรา off-peak ทั้งวัน" : "วันทำงาน 09:00–22:00 เป็น on-peak";
+  countUp("#ffCost", k.a + k.g, v => "฿" + fmt(v)); $("#ffCost2").textContent = `ถ้าซื้อกริดอย่างเดียว ฿${fmt(k.all)} · ${k.all - k.a - k.g >= 0 ? "ประหยัด" : "จ่ายเพิ่ม"} ฿${fmt(Math.abs(k.all - k.a - k.g))}`;
+  $("#ffHrT").textContent = "รายชั่วโมง " + dLong(t.d);
+  const altH = t.ld.map((_, h) => t.mid.directH[h] + t.mid.disH[h]), gH = t.ld.map((l, h) => Math.max(0, l - altH[h]));
+  hourChart($("#ffHourly"), { unit: "kW", h: 280, stack: [{ v: altH, fill: COL.solar }, { v: gH, fill: "#C2CAB8" }], lines: [{ v: t.ld, stroke: COL.load, w: 1.8 }],
+    tip: h => ({ t: `${hm(h)}–${hm(h + 1)}`, rows: [[COL.solar, "จาก Altervim", fmt(altH[h]) + " kW"], ["#C2CAB8", "จากกริด", fmt(gH[h]) + " kW"], [COL.load, "ใช้ทั้งหมด", fmt(t.ld[h]) + " kW"]] }) });
+  $("#ffTbl").innerHTML = `<thead><tr><th>วัน</th><th>ท้องฟ้า</th><th class="n">ใช้ไฟ</th><th class="n">จาก Altervim</th><th class="n">จากกริด</th><th class="n">ค่าไฟประมาณ</th><th class="n">ประหยัด</th><th class="n">ไฟกริดสูงสุด</th></tr></thead><tbody>` +
+    C.map(c => { const x = cost(c), sv = x.all - x.a - x.g, sk = sky(c.r); return `<tr><td>${dLong(c.d)}</td><td><span class="sky">${SKY[sk[0]]}${sk[1]}</span></td><td class="n mut">${fmt(c.load)}</td><td class="n"><b>${fmt(c.mid.sales)}</b> <span class="mut">${pct(c.mid.sales / c.load)}</span></td><td class="n">${fmt(x.grid)}</td><td class="n">฿${fmt(x.a + x.g)}</td><td class="n ${sv < 0 ? "red" : ""}">${sv < 0 ? "−" : ""}฿${fmt(Math.abs(sv))}</td><td class="n">${fmt(x.pk)} kW</td></tr>`; }).join("") + "</tbody>";
+  $("#ffFoot").textContent = `การใช้ไฟของโรงงานพยากรณ์จากรูปแบบเดือน มิ.ย. 2569 (ยังไม่มีข้อมูลล่าสุด) · ไฟจาก Altervim มาจากพยากรณ์แดดล่วงหน้า 1–7 วัน · ไฟกริดสูงสุดเป็นค่ารายชั่วโมง ไม่ใช่ราย 15 นาที · ยังไม่รวมวันหยุดนักขัตฤกษ์`;
+}
+
 /* ---------------- boot ---------------- */
 const h0 = (location.hash || "").slice(1);
-if ((LIVE[h0] || ALIAS[h0]) && h0 !== "ov") go(h0); else { renderOvLive(); fadeUp($("#p-ov")); }
+if ((LIVE[h0] || ALIAS[h0]) && h0 !== "ov") go(h0); else { LIVE.ov(); fadeUp($("#p-ov")); }
 })();
 </script>
